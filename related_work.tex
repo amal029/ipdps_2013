@@ -1,0 +1,29 @@
+\section{Related work}
+\label{sec:related-work}
+
+A significant amount of research literature exists for extracting
+parallelism from programs~\cite{mgri98,jdon06,mgor06,gsih93,pcar09}. The
+polyhedral optimization model~\cite{mgri98} concentrates on extracting
+parallelism from loops, which is a form of data-parallelism. The
+polyhedral optimization community has concentrated on optimizing for
+CPUs and GPUs separately, but to our knowledge has not explored the
+combination of the two. Carpenter et.al~\cite{pcar09} have again
+explored ideas for partitioning onto heterogeneous architectures, but at
+a much smaller scale and again ignoring data-allocation costs and
+depending upon the polyhedral model for vectorization. The
+StreamIt~\cite{wthi02} community has also explored parallelization
+techniques, but they have only targeted homogeneous RAW~\cite{ewai97}
+architecture. There are the classical algorithms such as critical path
+scheduling~\cite{Kohler1975} and list scheduling~\cite{atho74}, which
+have been used for scheduling task parallel process onto homogeneous
+architectures. Declustering~\cite{gsih93}, is another technique, which
+misses the opportunity to mix SIMD and task-parallel optimizations
+together.
+
+Cluster based partitioning techniques~\cite{mmah99,adou04,tbra01} only
+consider independent tasks without communication. The proposed
+heuristics for partitioning data-parallel applications onto
+clusters~\cite{ssan05,skum02} do not consider vectorization potential
+available on the compute clusters and only concentrate on partitioning
+task parallel processes.
+

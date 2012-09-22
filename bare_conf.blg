@@ -1,0 +1,81 @@
+This is BibTeX, Version 0.99d (TeX Live 2012/MacPorts 2012_3)
+Capacity: max_strings=35307, hash_size=35307, hash_prime=30011
+The top-level auxiliary file: bare_conf.aux
+The style file: IEEEtran.bst
+Reallocated singl_function (elt_size=4) to 100 items from 50.
+Reallocated singl_function (elt_size=4) to 100 items from 50.
+Reallocated singl_function (elt_size=4) to 100 items from 50.
+Reallocated wiz_functions (elt_size=4) to 6000 items from 3000.
+Reallocated singl_function (elt_size=4) to 100 items from 50.
+Database file #1: /Users/amal029/Dropbox/BIBLIOGRAPHY_DATABASE/main_bib.bib.bib
+Repeated entry---line 4090 of file /Users/amal029/Dropbox/BIBLIOGRAPHY_DATABASE/main_bib.bib.bib
+ : @techreport{ewai97
+ :                   ,
+I'm skipping whatever remains of this entry
+Repeated entry---line 4102 of file /Users/amal029/Dropbox/BIBLIOGRAPHY_DATABASE/main_bib.bib.bib
+ : @techreport{ewai97
+ :                   ,
+I'm skipping whatever remains of this entry
+Repeated entry---line 4114 of file /Users/amal029/Dropbox/BIBLIOGRAPHY_DATABASE/main_bib.bib.bib
+ : @techreport{ewai97
+ :                   ,
+I'm skipping whatever remains of this entry
+Repeated entry---line 4126 of file /Users/amal029/Dropbox/BIBLIOGRAPHY_DATABASE/main_bib.bib.bib
+ : @techreport{ewai97
+ :                   ,
+I'm skipping whatever remains of this entry
+Repeated entry---line 4138 of file /Users/amal029/Dropbox/BIBLIOGRAPHY_DATABASE/main_bib.bib.bib
+ : @techreport{ewai97
+ :                   ,
+I'm skipping whatever remains of this entry
+Repeated entry---line 4609 of file /Users/amal029/Dropbox/BIBLIOGRAPHY_DATABASE/main_bib.bib.bib
+ : @inproceedings{skum02
+ :                      ,
+I'm skipping whatever remains of this entry
+-- IEEEtran.bst version 1.12 (2007/01/11) by Michael Shell.
+-- http://www.michaelshell.org/tex/ieeetran/bibtex/
+-- See the "IEEEtran_bst_HOWTO.pdf" manual for usage information.
+
+Done.
+You've used 19 entries,
+            4024 wiz_defined-function locations,
+            952 strings with 11776 characters,
+and the built_in function-call counts, 15849 in all, are:
+= -- 1291
+> -- 371
+< -- 133
++ -- 202
+- -- 63
+* -- 793
+:= -- 2384
+add.period$ -- 41
+call.type$ -- 19
+change.case$ -- 19
+chr.to.int$ -- 315
+cite$ -- 19
+duplicate$ -- 1117
+empty$ -- 1272
+format.name$ -- 77
+if$ -- 3652
+int.to.chr$ -- 0
+int.to.str$ -- 19
+missing$ -- 199
+newline$ -- 96
+num.names$ -- 19
+pop$ -- 442
+preamble$ -- 1
+purify$ -- 0
+quote$ -- 2
+skip$ -- 1215
+stack$ -- 0
+substring$ -- 764
+swap$ -- 947
+text.length$ -- 28
+text.prefix$ -- 0
+top$ -- 5
+type$ -- 19
+warning$ -- 0
+while$ -- 73
+width$ -- 21
+write$ -- 231
+(There were 6 error messages)
