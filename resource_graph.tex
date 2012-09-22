@@ -5,3 +5,45 @@
 \subsection{Application partitioning}
 \label{sec:appl-part}
 
+In our framework to reach a map between the said task graph and resource
+graph we solve the problem in two distinct stages. Firstly, we take the
+given hetrogeneous task graph and convert it into a homogeneous task
+graph by coarsing the nodes into distinct partitions. Moreover this is
+done by constructing a dendogram consisiting of different levels and
+reducing the number of nodes at each level. The dendogram is a pseudo
+representation of the task graph and basically represents the
+hetrogeneous graph as a homogenous one at the higher levels. We use this
+dendogram as a template to map the resource graph and divide it across
+each stage and arriving at the final map at the lower level. Secondly,
+we use this to map the application graph onto specific paritions and
+breaking it down in each stage and finally arriving at the actual
+mapping of the task to the resource graph.
+
+Bullshit abt metis
+
+Metis provides the methodology for partitioning a multi constraint
+graphs. It also provides mechanism for load balancing using the metric
+'tp weight'. In constructing the dendogram for the resource graph we
+essentially get partitions which are balanced by both the constraints
+and communication volume. Using this we derive the weights for the
+constraints that represents the various partitions.
+
+Resource Graph
+
+The resource graph forms a representation of a cluster of compute
+nodes. In order to represent the hetrogeneity of the system we use
+multiple constraints. Since our objective is to map the application onto
+a hetrogeneous system, we consider 'Instructions per second' and 'Vector
+Operational Units' as basic characteristics that can be used to
+distinguish distinct CPUs and GPUs. The resource graph is constructed
+using these synthetic nodes or compute elements. These compute elements
+are connected in a two dimensional mesh which is one of the commonly
+used network topologies. The communcation bandwidth is generated such
+that it follows a specific distribution. In \ref{ fig } we show a sample
+resource graph consisting 3 x 3 mesh with the constraints and
+communication bandwidths.
+
+We use this graph to generate coarsed nodes in order to reach partitions
+which are less hetrogeneous than the given resource graph. Constructing
+this in stages prevents any partitions being imbalanced and to account
+for communication volume at the same time.
