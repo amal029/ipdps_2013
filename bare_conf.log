@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.1415926-2.4-1.40.13 (TeX Live 2012/MacPorts 2012_3) (format=pdflatex 2012.8.6)  22 SEP 2012 15:32
+This is pdfTeX, Version 3.1415926-2.4-1.40.13 (TeX Live 2012/MacPorts 2012_3) (format=pdflatex 2012.8.6)  23 SEP 2012 13:28
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -251,11 +251,17 @@ Overfull \hbox (34.11pt too wide) in paragraph at lines 22--22
 ep13,i64 3996,i32 4,i1 false)[] 
  []
 
-) (./resource_graph.tex) [3]
+) (./resource_graph.tex [3]
 Underfull \vbox (badness 10000) has occurred while \output is active []
 
 
-(./bare_conf.bbl [4 <./figures/Jacobi2d.pdf>])
+Underfull \vbox (badness 10000) has occurred while \output is active []
+
+ [4 <./figures/Jacobi2d.pdf>]
+
+LaTeX Warning: Reference ` fig ' on page 5 undefined on input line 42.
+
+) (./bare_conf.bbl [5])
 
 ** Conference Paper **
 Before submitting the final camera ready copy, remember to:
@@ -267,16 +273,18 @@ Before submitting the final camera ready copy, remember to:
  uses only Type 1 fonts and that every step in the generation
  process uses the appropriate paper size.
 
-[5] (./bare_conf.aux)
+[6
+
+] (./bare_conf.aux)
 
 LaTeX Warning: There were undefined references.
 
  ) 
 Here is how much of TeX's memory you used:
- 2257 strings out of 494763
- 36375 string characters out of 3170658
- 97626 words of memory out of 3000000
- 5469 multiletter control sequences out of 15000+200000
+ 2258 strings out of 494763
+ 36382 string characters out of 3170658
+ 98626 words of memory out of 3000000
+ 5470 multiletter control sequences out of 15000+200000
  36828 words of font info for 69 fonts, out of 3000000 for 9000
  134 hyphenation exceptions out of 8191
  37i,8n,23p,242b,293s stack positions out of 5000i,500n,10000p,200000b,50000s
@@ -293,10 +301,10 @@ rier/ucrr8a.pfb></macports-1.9.1/share/texmf-texlive-dist/fonts/type1/urw/times
 bi8a.pfb></macports-1.9.1/share/texmf-texlive-dist/fonts/type1/urw/times/utmr8a
 .pfb></macports-1.9.1/share/texmf-texlive-dist/fonts/type1/urw/times/utmri8a.pf
 b>
-Output written on bare_conf.pdf (5 pages, 166499 bytes).
+Output written on bare_conf.pdf (6 pages, 168705 bytes).
 PDF statistics:
- 75 PDF objects out of 1000 (max. 8388607)
- 53 compressed objects within 1 object stream
+ 78 PDF objects out of 1000 (max. 8388607)
+ 55 compressed objects within 1 object stream
  0 named destinations out of 1000 (max. 500000)
  6 words of extra memory for PDF output out of 10000 (max. 10000000)
 
