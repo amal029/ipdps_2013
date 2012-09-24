@@ -26,11 +26,10 @@ various resource graphs with different topologies.
 \end{itemize}
 
 Mapping the task graph on to such a hetrogeneous is NP hard. The
-problem mainly lies in the size of the resouce graph and the number of
-ways in which the task graph can be mapped on to the resource graph.
-
-In our approach we tackle the problem in several phases. The various
-stages that are performed is shown here:
+problem mainly lies in the size of the resouce graph and the sheer
+number of ways in which the task graph can be mapped on to the resource
+graph. In our approach we tackle the problem in several phases. The
+various stages that are performed is shown here:
 
 \begin{itemize}
 
@@ -74,9 +73,21 @@ We see that the PE $ R^3 $ and PE $ R^8 $ are combined together
 when moving from level 0 to level 1. Overall, we reach three levels
 and at the top most level all the nodes from a single virtual node.
 
-\subsection{Application partitioning}
+\subsection{Application Partitioning}
 \label{sec:appl-part}
 
+To partition the application we start with the top most level in the
+resource graph and divide it according to the required virtual nodes
+at that level. We then move on to the next level and partition the
+application on to the virtual nodes that the current node belongs to.
+In this way we follow the structure of the resource graph until we
+reach level, by which reach the actual mapping of the task graph on to
+the resource graph.
 
-
-
+Doing it in this top down manner carries two important advantages. Firstly,
+the complexity involved is much less compared to doing it in a single
+instance and thus preventing an explosive state space search. This makes
+our heuristic complete much faster than doing it in a brute force
+manner. Secondly, by dividing the mapping on to several levels we can
+achieve much better load balancing by considering only fewer nodes to
+map than if we were to do it directly on to the resource graph.
