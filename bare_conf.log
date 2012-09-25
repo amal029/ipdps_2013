@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.1415926-2.4-1.40.13 (TeX Live 2012/MacPorts 2012_3) (format=pdflatex 2012.8.6)  24 SEP 2012 18:21
+This is pdfTeX, Version 3.1415926-2.4-1.40.13 (TeX Live 2012/MacPorts 2012_3) (format=pdflatex 2012.8.6)  25 SEP 2012 16:32
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -266,7 +266,7 @@ Package epstopdf Info: Source file: <./figures/resource.eps>
 (epstopdf)                    size: 90475 bytes
 (epstopdf)             Command: <repstopdf --outfile=./figures/resource-eps-con
 verted-to.pdf ./figures/resource.eps>
-(epstopdf)             \includegraphics on input line 70.
+(epstopdf)             \includegraphics on input line 65.
 Package epstopdf Info: Output file is already uptodate.
 
 <./figures/resource-eps-converted-to.pdf, id=36, 567.11874pt x 716.6775pt>
@@ -274,9 +274,10 @@ File: ./figures/resource-eps-converted-to.pdf Graphic file (type pdf)
 
 <use ./figures/resource-eps-converted-to.pdf>
 Package pdftex.def Info: ./figures/resource-eps-converted-to.pdf used on input 
-line 70.
+line 65.
 (pdftex.def)             Requested size: 243.85631pt x 308.16533pt.
-) (./bare_conf.bbl [5 <./figures/resource-eps-converted-to.pdf>])
+) (./implementation.tex) [5 <./figures/resource-eps-converted-to.pdf>] (./bare_
+conf.bbl)
 
 ** Conference Paper **
 Before submitting the final camera ready copy, remember to:
@@ -294,10 +295,10 @@ LaTeX Warning: There were undefined references.
 
  ) 
 Here is how much of TeX's memory you used:
- 2275 strings out of 494763
- 36625 string characters out of 3170658
- 96634 words of memory out of 3000000
- 5474 multiletter control sequences out of 15000+200000
+ 2279 strings out of 494763
+ 36688 string characters out of 3170658
+ 97650 words of memory out of 3000000
+ 5475 multiletter control sequences out of 15000+200000
  36828 words of font info for 69 fonts, out of 3000000 for 9000
  134 hyphenation exceptions out of 8191
  37i,8n,23p,242b,293s stack positions out of 5000i,500n,10000p,200000b,50000s
@@ -315,7 +316,7 @@ times/utmb8a.pfb></macports-1.9.1/share/texmf-texlive-dist/fonts/type1/urw/time
 s/utmbi8a.pfb></macports-1.9.1/share/texmf-texlive-dist/fonts/type1/urw/times/u
 tmr8a.pfb></macports-1.9.1/share/texmf-texlive-dist/fonts/type1/urw/times/utmri
 8a.pfb>
-Output written on bare_conf.pdf (6 pages, 270806 bytes).
+Output written on bare_conf.pdf (6 pages, 272367 bytes).
 PDF statistics:
  89 PDF objects out of 1000 (max. 8388607)
  62 compressed objects within 1 object stream
