@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.1415926-2.4-1.40.13 (TeX Live 2012/MacPorts 2012_3) (format=pdflatex 2012.8.6)  25 SEP 2012 16:32
+This is pdfTeX, Version 3.1415926-2.4-1.40.13 (TeX Live 2012/MacPorts 2012_3) (format=pdflatex 2012.8.6)  25 SEP 2012 18:57
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -231,20 +231,15 @@ LaTeX Font Info:    External font `cmex10' loaded for size
 ])
 (./related_work.tex)
 
-LaTeX Warning: Reference `topo-graph' on page 2 undefined on input line 517.
+LaTeX Warning: Reference `topo-graph' on page 2 undefined on input line 516.
 
 [2] (./task_graph.tex
-<./figures/jacobi2d.pdf, id=20, 1716.4125pt x 1400.23125pt>
+<./figures/jacobi2d.pdf, id=20, 1391.1975pt x 1400.23125pt>
 File: ./figures/jacobi2d.pdf Graphic file (type pdf)
 
 <use ./figures/jacobi2d.pdf>
 Package pdftex.def Info: ./figures/jacobi2d.pdf used on input line 7.
-(pdftex.def)             Requested size: 514.92773pt x 420.07262pt.
-
-Overfull \hbox (9.03773pt too wide) in paragraph at lines 7--8
-[][] 
- []
-
+(pdftex.def)             Requested size: 486.92642pt x 490.08829pt.
 
 Overfull \hbox (34.11pt too wide) in paragraph at lines 22--22
 [] \OT1/pcr/m/n/10 call void @llvm.memcpy.p0i8.p0i8.i64(i8* %uglygep,i8* %uglyg
@@ -252,12 +247,21 @@ ep13,i64 3996,i32 4,i1 false)[]
  []
 
 ) (./resource_graph.tex [3]
-Underfull \vbox (badness 10000) has occurred while \output is active []
+
+LaTeX Warning: Text page 4 contains only floats.
 
 
-Underfull \vbox (badness 10000) has occurred while \output is active []
+Overfull \vbox (10.58206pt too high) has occurred while \output is active []
 
- [4 <./figures/jacobi2d.pdf>]
+
+
+LaTeX Warning: Text page 4 contains only floats.
+
+
+Overfull \vbox (10.58206pt too high) has occurred while \output is active []
+
+
+[4 <./figures/jacobi2d.pdf>]
 Package epstopdf Info: Source file: <./figures/resource.eps>
 (epstopdf)                    date: 2012-09-24 18:20:07
 (epstopdf)                    size: 290038 bytes
@@ -276,8 +280,12 @@ File: ./figures/resource-eps-converted-to.pdf Graphic file (type pdf)
 Package pdftex.def Info: ./figures/resource-eps-converted-to.pdf used on input 
 line 65.
 (pdftex.def)             Requested size: 243.85631pt x 308.16533pt.
-) (./implementation.tex) [5 <./figures/resource-eps-converted-to.pdf>] (./bare_
-conf.bbl)
+) (./implementation.tex [5 <./figures/resource-eps-converted-to.pdf>]
+Overfull \hbox (83.95732pt too wide) detected at line 99
+[]
+ []
+
+) (./bare_conf.bbl [6])
 
 ** Conference Paper **
 Before submitting the final camera ready copy, remember to:
@@ -289,7 +297,7 @@ Before submitting the final camera ready copy, remember to:
  uses only Type 1 fonts and that every step in the generation
  process uses the appropriate paper size.
 
-[6] (./bare_conf.aux)
+[7] (./bare_conf.aux)
 
 LaTeX Warning: There were undefined references.
 
@@ -297,7 +305,7 @@ LaTeX Warning: There were undefined references.
 Here is how much of TeX's memory you used:
  2279 strings out of 494763
  36688 string characters out of 3170658
- 97650 words of memory out of 3000000
+ 97644 words of memory out of 3000000
  5475 multiletter control sequences out of 15000+200000
  36828 words of font info for 69 fonts, out of 3000000 for 9000
  134 hyphenation exceptions out of 8191
@@ -316,10 +324,10 @@ times/utmb8a.pfb></macports-1.9.1/share/texmf-texlive-dist/fonts/type1/urw/time
 s/utmbi8a.pfb></macports-1.9.1/share/texmf-texlive-dist/fonts/type1/urw/times/u
 tmr8a.pfb></macports-1.9.1/share/texmf-texlive-dist/fonts/type1/urw/times/utmri
 8a.pfb>
-Output written on bare_conf.pdf (6 pages, 272367 bytes).
+Output written on bare_conf.pdf (7 pages, 272733 bytes).
 PDF statistics:
- 89 PDF objects out of 1000 (max. 8388607)
- 62 compressed objects within 1 object stream
+ 94 PDF objects out of 1000 (max. 8388607)
+ 66 compressed objects within 1 object stream
  0 named destinations out of 1000 (max. 500000)
  11 words of extra memory for PDF output out of 10000 (max. 10000000)
 
