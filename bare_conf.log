@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.1415926-2.4-1.40.13 (TeX Live 2012/Arch Linux) (format=pdflatex 2012.8.30)  25 SEP 2012 19:06
+This is pdfTeX, Version 3.1415926-2.4-1.40.13 (TeX Live 2012/Arch Linux) (format=pdflatex 2012.9.25)  26 SEP 2012 15:14
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -241,15 +241,21 @@ LaTeX Font Info:    External font `cmex10' loaded for size
 
 
 ]) (./related_work.tex)
+[2]
+Overfull \hbox (1.62643pt too wide) detected at line 578
+[][]
+ []
 
-LaTeX Warning: Reference `topo-graph' on page 2 undefined on input line 516.
 
-[2] (./task_graph.tex
+Underfull \vbox (badness 10000) has occurred while \output is active []
+
+
+(./task_graph.tex
 Package epstopdf Info: Source file: <./figures/jacobi2d.eps>
-(epstopdf)                    date: 2012-09-25 18:59:36
+(epstopdf)                    date: 2012-09-25 19:14:00
 (epstopdf)                    size: 53263 bytes
 (epstopdf)             Output file: <./figures/jacobi2d-eps-converted-to.pdf>
-(epstopdf)                    date: 2012-09-25 19:02:29
+(epstopdf)                    date: 2012-09-25 19:14:00
 (epstopdf)                    size: 22759 bytes
 (epstopdf)             Command: <repstopdf --outfile=./figures/jacobi2d-eps-con
 verted-to.pdf ./figures/jacobi2d.eps>
@@ -269,34 +275,45 @@ Overfull \hbox (34.11pt too wide) in paragraph at lines 22--22
 ep13,i64 3996,i32 4,i1 false)[] 
  []
 
-) (./resource_graph.tex [3]
+[3]
 Underfull \vbox (badness 10000) has occurred while \output is active []
 
- [4 <./figures/jacobi2d-eps-converted-to.pdf>]
+
+Underfull \vbox (badness 10000) has occurred while \output is active []
+
+ [4 <./figures/jacobi2d-eps-converted-to.pdf>]) (./resource_graph.tex
 Package epstopdf Info: Source file: <./figures/resource.eps>
-(epstopdf)                    date: 2012-09-22 20:39:06
+(epstopdf)                    date: 2012-09-25 17:09:18
 (epstopdf)                    size: 290038 bytes
 (epstopdf)             Output file: <./figures/resource-eps-converted-to.pdf>
-(epstopdf)                    date: 2012-09-22 20:43:08
+(epstopdf)                    date: 2012-09-25 17:09:18
 (epstopdf)                    size: 90475 bytes
 (epstopdf)             Command: <repstopdf --outfile=./figures/resource-eps-con
 verted-to.pdf ./figures/resource.eps>
 (epstopdf)             \includegraphics on input line 65.
 Package epstopdf Info: Output file is already uptodate.
 
-<./figures/resource-eps-converted-to.pdf, id=38, 567.11874pt x 716.6775pt>
+<./figures/resource-eps-converted-to.pdf, id=41, 567.11874pt x 716.6775pt>
 File: ./figures/resource-eps-converted-to.pdf Graphic file (type pdf)
 
 <use ./figures/resource-eps-converted-to.pdf>
 Package pdftex.def Info: ./figures/resource-eps-converted-to.pdf used on input 
 line 65.
 (pdftex.def)             Requested size: 243.85631pt x 308.16533pt.
-) (./implementation.tex [5 <./figures/resource-eps-converted-to.pdf>]
+ [5]) (./implementation.tex
+[6 <./figures/resource-eps-converted-to.pdf>]
 Overfull \hbox (83.95732pt too wide) detected at line 99
 []
  []
 
-) (./bare_conf.bbl [6])
+)
+
+LaTeX Warning: Citation `CIRRLET' on page 7 undefined on input line 632.
+
+
+LaTeX Warning: Citation `knapsack' on page 7 undefined on input line 640.
+
+(./bare_conf.bbl [7])
 
 ** Conference Paper **
 Before submitting the final camera ready copy, remember to:
@@ -308,7 +325,7 @@ Before submitting the final camera ready copy, remember to:
  uses only Type 1 fonts and that every step in the generation
  process uses the appropriate paper size.
 
-[7
+[8
 
 ] (./bare_conf.aux)
 
@@ -316,27 +333,29 @@ LaTeX Warning: There were undefined references.
 
  ) 
 Here is how much of TeX's memory you used:
- 2279 strings out of 493488
- 35839 string characters out of 3146892
- 98713 words of memory out of 3000000
- 5554 multiletter control sequences out of 15000+200000
+ 2282 strings out of 493488
+ 35858 string characters out of 3146892
+ 98729 words of memory out of 3000000
+ 5557 multiletter control sequences out of 15000+200000
  36828 words of font info for 69 fonts, out of 3000000 for 9000
  957 hyphenation exceptions out of 8191
  37i,8n,23p,235b,293s stack positions out of 5000i,500n,10000p,200000b,50000s
 {/usr/share/texmf-dist/fonts/enc/dvips/base/8r.enc}</usr/share/texmf-dist/fon
 ts/type1/public/amsfonts/cm/cmex10.pfb></usr/share/texmf-dist/fonts/type1/publi
 c/amsfonts/cm/cmmi10.pfb></usr/share/texmf-dist/fonts/type1/public/amsfonts/cm/
-cmmi7.pfb></usr/share/texmf-dist/fonts/type1/public/amsfonts/cm/cmr10.pfb></usr
-/share/texmf-dist/fonts/type1/public/amsfonts/cm/cmr7.pfb></usr/share/texmf-dis
-t/fonts/type1/public/amsfonts/cm/cmsy10.pfb></usr/share/texmf-dist/fonts/type1/
-public/amsfonts/cm/cmsy7.pfb></usr/share/texmf-dist/fonts/type1/urw/courier/ucr
-r8a.pfb></usr/share/texmf-dist/fonts/type1/urw/times/utmb8a.pfb></usr/share/tex
-mf-dist/fonts/type1/urw/times/utmbi8a.pfb></usr/share/texmf-dist/fonts/type1/ur
-w/times/utmr8a.pfb></usr/share/texmf-dist/fonts/type1/urw/times/utmri8a.pfb>
-Output written on bare_conf.pdf (7 pages, 273442 bytes).
+cmmi5.pfb></usr/share/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi7.pfb></usr
+/share/texmf-dist/fonts/type1/public/amsfonts/cm/cmr10.pfb></usr/share/texmf-di
+st/fonts/type1/public/amsfonts/cm/cmr7.pfb></usr/share/texmf-dist/fonts/type1/p
+ublic/amsfonts/cm/cmsy10.pfb></usr/share/texmf-dist/fonts/type1/public/amsfonts
+/cm/cmsy5.pfb></usr/share/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy7.pfb><
+/usr/share/texmf-dist/fonts/type1/urw/courier/ucrr8a.pfb></usr/share/texmf-dist
+/fonts/type1/urw/times/utmb8a.pfb></usr/share/texmf-dist/fonts/type1/urw/times/
+utmbi8a.pfb></usr/share/texmf-dist/fonts/type1/urw/times/utmr8a.pfb></usr/share
+/texmf-dist/fonts/type1/urw/times/utmri8a.pfb>
+Output written on bare_conf.pdf (8 pages, 301363 bytes).
 PDF statistics:
- 96 PDF objects out of 1000 (max. 8388607)
- 67 compressed objects within 1 object stream
+ 107 PDF objects out of 1000 (max. 8388607)
+ 75 compressed objects within 1 object stream
  0 named destinations out of 1000 (max. 500000)
  11 words of extra memory for PDF output out of 10000 (max. 10000000)
 
