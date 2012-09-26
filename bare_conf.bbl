@@ -144,6 +144,44 @@ C.~Lattner and V.~Adve, ``{LLVM: A Compilation Framework for Lifelong Program
   International Symposium on Code Generation and Optimization (CGO'04)}}, Palo
   Alto, California, Mar 2004.
 
+\bibitem{fsar11}
+\BIBentryALTinterwordspacing
+S.~M. Farhad, Y.~Ko, B.~Burgstaller, and B.~Scholz, ``{Orchestration by
+  approximation: Mapping Stream Programs onto Multicore Architectures},'' in
+  \emph{Proceedings of the sixteenth international conference on Architectural
+  support for programming languages and operating systems}, ser. ASPLOS
+  '11.\hskip 1em plus 0.5em minus 0.4em\relax New York, NY, USA: ACM, 2011, pp.
+  357--368. [Online]. Available:
+  \url{http://doi.acm.org/10.1145/1950365.1950406}
+\BIBentrySTDinterwordspacing
+
+\bibitem{sski08}
+S.~S. Skiena, \emph{{The Algorithms Design Manual}}, 2nd~ed.\hskip 1em plus
+  0.5em minus 0.4em\relax Springer-Verlag London, 2008.
+
+\bibitem{gkar98}
+G.~Karypis, V.~Kumar, and V.~Kumar, ``Multilevel k-way partitioning scheme for
+  irregular graphs,'' \emph{Journal of Parallel and Distributed Computing},
+  vol.~48, pp. 96--129, 1998.
+
+\bibitem{gkar95}
+G.~Karypis and V.~Kumar, ``Metis - unstructured graph partitioning and sparse
+  matrix ordering system, version 2.0,'' Tech. Rep., 1995.
+
+\bibitem{kdev09}
+K.~Devine, E.~Boman, L.~Riesen, U.~Catalyurek, and C.~Chevalier, ``Getting
+  started with zoltan: A short tutorial,'' in \emph{Proc. of 2009 Dagstuhl
+  Seminar on Combinatorial Scientific Computing}, 2009, also available as
+  Sandia National Labs Tech Report SAND2009-0578C.
+
+\bibitem{cche08}
+\BIBentryALTinterwordspacing
+C.~Chevalier and F.~Pellegrini, ``Pt-scotch: A tool for efficient parallel
+  graph ordering,'' \emph{Parallel Comput.}, vol.~34, no. 6-8, pp. 318--331,
+  Jul. 2008. [Online]. Available:
+  \url{http://dx.doi.org/10.1016/j.parco.2007.12.001}
+\BIBentrySTDinterwordspacing
+
 \bibitem{horsi06}
 H.~Orsila, T.~Kangas, E.~Salminen, and T.~Hamalainen, ``Parameterizing
   simulated annealing for distributing task graphs on multiprocessor socs,'' in

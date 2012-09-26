@@ -8,74 +8,75 @@ Reallocated singl_function (elt_size=4) to 100 items from 50.
 Reallocated wiz_functions (elt_size=4) to 6000 items from 3000.
 Reallocated singl_function (elt_size=4) to 100 items from 50.
 Database file #1: /Users/amal029/Dropbox/BIBLIOGRAPHY_DATABASE/main_bib.bib.bib
-Repeated entry---line 4090 of file /Users/amal029/Dropbox/BIBLIOGRAPHY_DATABASE/main_bib.bib.bib
+Repeated entry---line 4097 of file /Users/amal029/Dropbox/BIBLIOGRAPHY_DATABASE/main_bib.bib.bib
  : @techreport{ewai97
  :                   ,
 I'm skipping whatever remains of this entry
-Repeated entry---line 4102 of file /Users/amal029/Dropbox/BIBLIOGRAPHY_DATABASE/main_bib.bib.bib
+Repeated entry---line 4109 of file /Users/amal029/Dropbox/BIBLIOGRAPHY_DATABASE/main_bib.bib.bib
  : @techreport{ewai97
  :                   ,
 I'm skipping whatever remains of this entry
-Repeated entry---line 4114 of file /Users/amal029/Dropbox/BIBLIOGRAPHY_DATABASE/main_bib.bib.bib
+Repeated entry---line 4121 of file /Users/amal029/Dropbox/BIBLIOGRAPHY_DATABASE/main_bib.bib.bib
  : @techreport{ewai97
  :                   ,
 I'm skipping whatever remains of this entry
-Repeated entry---line 4126 of file /Users/amal029/Dropbox/BIBLIOGRAPHY_DATABASE/main_bib.bib.bib
+Repeated entry---line 4133 of file /Users/amal029/Dropbox/BIBLIOGRAPHY_DATABASE/main_bib.bib.bib
  : @techreport{ewai97
  :                   ,
 I'm skipping whatever remains of this entry
-Repeated entry---line 4138 of file /Users/amal029/Dropbox/BIBLIOGRAPHY_DATABASE/main_bib.bib.bib
+Repeated entry---line 4145 of file /Users/amal029/Dropbox/BIBLIOGRAPHY_DATABASE/main_bib.bib.bib
  : @techreport{ewai97
  :                   ,
 I'm skipping whatever remains of this entry
-Repeated entry---line 4609 of file /Users/amal029/Dropbox/BIBLIOGRAPHY_DATABASE/main_bib.bib.bib
+Repeated entry---line 4616 of file /Users/amal029/Dropbox/BIBLIOGRAPHY_DATABASE/main_bib.bib.bib
  : @inproceedings{skum02
  :                      ,
 I'm skipping whatever remains of this entry
 -- IEEEtran.bst version 1.12 (2007/01/11) by Michael Shell.
 -- http://www.michaelshell.org/tex/ieeetran/bibtex/
 -- See the "IEEEtran_bst_HOWTO.pdf" manual for usage information.
+Warning--empty institution in gkar95
 
 Done.
-You've used 19 entries,
+You've used 25 entries,
             4024 wiz_defined-function locations,
-            952 strings with 11776 characters,
-and the built_in function-call counts, 15849 in all, are:
-= -- 1291
-> -- 371
-< -- 133
-+ -- 202
-- -- 63
-* -- 793
-:= -- 2384
-add.period$ -- 41
-call.type$ -- 19
-change.case$ -- 19
-chr.to.int$ -- 315
-cite$ -- 19
-duplicate$ -- 1117
-empty$ -- 1272
-format.name$ -- 77
-if$ -- 3652
+            990 strings with 13000 characters,
+and the built_in function-call counts, 20075 in all, are:
+= -- 1630
+> -- 469
+< -- 164
++ -- 253
+- -- 80
+* -- 1000
+:= -- 3032
+add.period$ -- 54
+call.type$ -- 25
+change.case$ -- 26
+chr.to.int$ -- 390
+cite$ -- 26
+duplicate$ -- 1430
+empty$ -- 1630
+format.name$ -- 99
+if$ -- 4620
 int.to.chr$ -- 0
-int.to.str$ -- 19
-missing$ -- 199
-newline$ -- 96
-num.names$ -- 19
-pop$ -- 442
+int.to.str$ -- 25
+missing$ -- 257
+newline$ -- 118
+num.names$ -- 25
+pop$ -- 577
 preamble$ -- 1
 purify$ -- 0
 quote$ -- 2
-skip$ -- 1215
+skip$ -- 1540
 stack$ -- 0
-substring$ -- 764
-swap$ -- 947
-text.length$ -- 28
+substring$ -- 936
+swap$ -- 1190
+text.length$ -- 34
 text.prefix$ -- 0
 top$ -- 5
-type$ -- 19
-warning$ -- 0
-while$ -- 73
-width$ -- 21
-write$ -- 231
+type$ -- 25
+warning$ -- 1
+while$ -- 92
+width$ -- 27
+write$ -- 292
 (There were 6 error messages)

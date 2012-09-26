@@ -494,8 +494,10 @@ instructions and the vector count requirements. The communication edges
 ($(t_i, t_j) \in E_t$) between data-stores (\texttt{boxed} statements
 without the constraints in Figure~\ref{fig:1}) and the execution
 statements represent the amount of data that needs to be transfered from
-the store and its utilization at the statement level. Every communication link is weighted with the amount of data that has to be transferred denoted by $e^c, \forall c \in (V_t \times V_t)$ The task graphs
-are generated directly from the program by our compiler. More
+the store and its utilization at the statement level. Every
+communication link is weighted with the amount of data that has to be
+transferred denoted by $e^c, \forall c \in (V_t \times V_t)$ The task
+graphs are generated directly from the program by our compiler. More
 information about the generation of the task graphs is provided later in
 Section~\ref{sec:build-appl-graph}.
 
@@ -507,25 +509,29 @@ Section~\ref{sec:build-appl-graph}.
 
 Similarly we have a resource graph $G_r(V_r, E_r)$ where each vertex
 denotes a processing element. It consists of a set of vertices $V_r =
-\{r_1, r_2, ... , r_n\}$ and a set of edges $E_r$. Each processing element $r_i \in V_r$ has a set of
-constraints, that represent the computational capabilities of the
-processing elements, represented by $R^{i}_{j}$ where $j=0...n$ with
-$n$ being the number of constratins for the resource graph. For some
-resource graph as shown in Figure~\ref{topo-graph}, which has $x$ nodes
-and 2 constraints. Constraint 1 represents the frequency of the PE or
-how many scalar instructions the PE can perform in one second (the \textit{Million Instructions Per Second}(MIPS) count). Constraint 2 denotes the maximum number of parallel vector
-operations it can perform (the vector length). Each edge $e \in E_r$
-has a weight whcih represents the latency/bandwidth between two PEs $r_i$ and $r_j$ which is
-denoted by $E^c, \forall c \in (V_r \times V_r)$.
+\{r_1, r_2, ... , r_n\}$ and a set of edges $E_r$. Each processing
+element $r_i \in V_r$ has a set of constraints, that represent the
+computational capabilities of the processing elements, represented by
+$R^{i}_{j}$ where $j=0...n$ with $n$ being the number of constratins for
+the resource graph. For some resource graph as shown in
+Figure~\ref{fig:res}, which has $x$ nodes and 2 constraints. Constraint
+1 represents the frequency of the PE or how many scalar instructions the
+PE can perform in one second (the \textit{Million Instructions Per
+  Second}(MIPS) count). Constraint 2 denotes the maximum number of
+parallel vector operations it can perform (the vector length). Each edge
+$e \in E_r$ has a weight whcih represents the latency/bandwidth between
+two PEs $r_i$ and $r_j$ which is denoted by $E^c, \forall c \in (V_r
+\times V_r)$.
 
-While generating the resource graph, we might have to contract edges(becaus we
-contract nodes). Contracting an edge $e=\{i,j\}$ means to replace vertices $i$ and
-$j$ by a new vertex $k$ such that $R^k_0 = R^i_0 + R^j_0$ and $R^k_1 = R^i_1 +
-R^j_1$. All edges of the form $\{i,x\}$ and $\{j,x\}$ for $x \in V_r$ are replaced
-by $\{k,x\}$. If both edges $\{i,x\}$ and $\{j,x\}$ exist, we form the new edge weight
-as defined by $E^{\{w,x\}} = E^{\{i,x\}} + E^{\{j,x\}}$ More information about the
-generation about the generation of the resource graphs is provided later in
-Section~\ref{sec:gener-reso-graph}.
+While generating the resource graph, we might have to contract
+edges(becaus we contract nodes). Contracting an edge $e=\{i,j\}$ means
+to replace vertices $i$ and $j$ by a new vertex $k$ such that $R^k_0 =
+R^i_0 + R^j_0$ and $R^k_1 = R^i_1 + R^j_1$. All edges of the form
+$\{i,x\}$ and $\{j,x\}$ for $x \in V_r$ are replaced by $\{k,x\}$. If
+both edges $\{i,x\}$ and $\{j,x\}$ exist, we form the new edge weight as
+defined by $E^{\{w,x\}} = E^{\{i,x\}} + E^{\{j,x\}}$ More information
+about the generation about the generation of the resource graphs is
+provided later in Section~\ref{sec:gener-reso-graph}.
 
 The problem at hand is to effectively map said task graph $G_t$ onto
 given resource graph $G_r$. This problem is reminiscent of a problem of
@@ -541,20 +547,21 @@ implicates that we have to look for a heuristic solutions.
 % problem~\ref{cirrlet-generalized-bin-packing}.
 To decide if a mapping is effective enough or not, we need a heuristic
 that defines how good a mapping of tasks onto resources is. This is
-denoted by our cost function. Given some application node $i \in V_t$ mapped to some resource $j \in V_r$, the latency for
-that node is computed as: $((T^i_1/R^j_1\times T^i_0)/T^j_0)
-+ (e^d/E^c) | d = (i,k), k \neq i, \forall k \in V_t, c = (j,l), l
-\neq j, \forall l \in V_r $. In this formulation for some task $i$ being mapped
-onto some resource $j$, we first calculate the number of vectorized instructions
-that can be executed in parallel (by dividing required vector length by the
-vector capacity of $j$ represented by $R^j_1$). We then multiply this number by
-the number of iterative (non-vectorized) instructions required to get the total
-number of instructions to be performed by that task-graph node. Once we have
-this number we calculate latency of execution of this task-graph node $i$ on
-this resource $j$ by dividing it with the MIPS value of the resource denoted by
-$R^j_0$. Calculation of the communication latency is rather simple, we divide
-the number of bits required to be transferred by the bandwidth of the shortest
-path.
+denoted by our cost function. Given some application node $i \in V_t$
+mapped to some resource $j \in V_r$, the latency for that node is
+computed as: $((T^i_1/R^j_1\times T^i_0)/T^j_0) + (e^d/E^c) | d = (i,k),
+k \neq i, \forall k \in V_t, c = (j,l), l \neq j, \forall l \in V_r
+$. In this formulation for some task $i$ being mapped onto some resource
+$j$, we first calculate the number of vectorized instructions that can
+be executed in parallel (by dividing required vector length by the
+vector capacity of $j$ represented by $R^j_1$). We then multiply this
+number by the number of iterative (non-vectorized) instructions required
+to get the total number of instructions to be performed by that
+task-graph node. Once we have this number we calculate latency of
+execution of this task-graph node $i$ on this resource $j$ by dividing
+it with the MIPS value of the resource denoted by $R^j_0$. Calculation
+of the communication latency is rather simple, we divide the number of
+bits required to be transferred by the bandwidth of the shortest path.
 
 Given the task-graph and the resource-graph, let $\zeta$ be all possible
 mappings of the application on the resource-graph. For a particular

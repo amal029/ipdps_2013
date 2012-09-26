@@ -1,62 +1,160 @@
 \subsection{Generating the resource graph}
 \label{sec:gener-reso-graph}
 
-The resource graph represents the cluster of compute nodes on which
-the task graph will be executed. A sample resource graph is shown in
-fig \ref{fig:res} at level 0. The resource graph that is shown is truly
-hetrogeneous in both computations and communication. The resource
-graph is described below:
+The resource graph represents the cluster of compute nodes on which the
+task graph will be executed. There are a plethora of different
+architectures and topologies that an HPC architecture might be
+configured in. Moreover, we cannot even predict the type of
+configurations that might come up in the future. Hence, in order to
+accommodate the varying types of topologies and configurations, we use
+synthetic topologies to test our partitioning framework.
+
+A sample resource graph is shown in Figure~\ref{fig:res} at level 0. The
+resource graph that is shown is heterogeneous in both computation and
+communication. The properties of the resource graph are described below:
 
 \begin{itemize}
 
-\item The compute nodes are assumed to belong under two categories of
-processing units, mainly CPUs and GPUs. The scalar instructions of a
-Processing Element (\textbf{PE}) that represents a CPU is much higher
-that that of a GPU. At the same time parallel vector operations that a
-\textbf{PE} representing a GPU is much higher compared to that of a
-CPU. In Fig \ref{fig:res} $ R^1 $ is a 'CPU' and $ R^5 $ is a 'GPU'.
+\item \textbf{Compute nodes:} The compute nodes are assumed to belong
+  under two categories of processing units, mainly CPUs and
+  GPUs. Following the current trend, the CPUs have a larger MIPS
+  count. The MIPS capacity of a PE is denoted by the first decoration
+  $R^i_0, \forall i \in V_r$. The GPU nodes have a lower MIPS count, but
+  have a large resident vector length, denoted by the second decoration
+  $R^i_1, \forall i \in V_r$. For example, the first PE at level 0 is a
+  CPU, since it has a small vector count and a large MIPS count, the
+  fifth PE on the other hand is a GPU, since the capacities are
+  reversed.
 
-\item In the resource graph shown in Fig \ref{fig:res} at level 0, the
-interconnect between these PEs are considered to be a two dimensional
-mesh. In this topology the PEs are connected in a grid with individual
-communication links between them. The bandwidth of these links are
-considered to be non uniform. Similarly, it is possible to represent
-various resource graphs with different topologies.
+
+  % The scalar instructions of a Processing Element (\textbf{PE}) that
+  % represents a CPU is much higher that that of a GPU. At the same time
+  % parallel vector operations that a \textbf{PE} representing a GPU is
+  % much higher compared to that of a CPU. In Fig \ref{fig:res} $ R^1 $ is
+  % a 'CPU' and $ R^5 $ is a 'GPU'.
+
+\item \textbf{Communication links:} In the resource graph shown in
+  Figure~\ref{fig:res} at level 0, follows a 2D mesh topology. In this
+  topology the PEs are connected in a grid with individual communication
+  links between them. The bandwidth of these links is non
+  uniform. The different bandwidths on the communication links is
+  represented by the decoration $E^C$.
 
 \end{itemize}
 
-Mapping the task graph on to such a hetrogeneous is NP hard. The
-problem mainly lies in the size of the resouce graph and the sheer
-number of ways in which the task graph can be mapped on to the resource
-graph. In our approach we tackle the problem in several phases. The
-various stages that are performed is shown here:
+\subsubsection{Clustering the topology}
+\label{sec:clustering-topology}
+
+Mapping the task graph on a heterogeneous architecture is a known NP
+hard problem. The problem mainly lies in the size of the resouce graph
+and the sheer number of ways in which the task graph can be mapped on to
+the resource graph. In our approach we take a staged graph partitioning
+approach. The \underline{main idea} behind our partitioning approach is
+to first hierarchically cluster the nodes in the heterogeneous topology,
+provided by the designer, thereby forming fewer contracted resource
+nodes. The application is then partitioned in stages (levels) onto the
+resulting hierarchy. The \underline{intuition} behind this approach is
+two fold:
 
 \begin{itemize}
 
-\item Firstly, we form virtual representations of the resource graph by
-clustering the nodes. These virtual nodes are formed by min cutting
-communication volume and load balancing the virtual nodes capabilities.
-The formation of these virtual nodes creates homogeneous partitions
-from hetrogeneous PEs.
+\item \textit{Heterogeneous K-way partitioning:} If we ignore
+  communication then the process of partitioning an application onto a
+  given architecture is equivalent to a heterogeneous K-way partitioning
+  problem. There have been successful attempts at using K-way
+  partitioning for solving the partitioning problems using multiple
+  different ILP formulations~\cite{fsar11}, but all have concentrated on
+  a homogeneous K-way partitioning problem. Hierarchically clustering a
+  heterogeneous topology such that the resulting hierarchy consists of
+  contracted PEs with equivalent compute constraints can reduce the
+  heterogeneous K-way partitioning problem to a homogeneous one.
 
-\item Secondly, instead of doing this in a single step, we construct
-this in several level by clustering half the nodes from the previous
-level. We end up with a structure consisting of several levels, where
-the $ Number\ of\ levels = log_2 ( Number\ of\ Nodes )$.
+\item \textit{Considering communication links:} The communication can be
+  considered into the equation, while building the hierarchical cluster
+  using the min-cut technique. Thus, a min-cut load-balancing of the PEs
+  in a topology intuitively means: we are clustering together PEs, which
+  have large bandwidth together into a single contracted node, while
+  making an attempt to load balance the two constraints: MIPS and vector
+  lengths.
 
-\item The communication bandwidth between the clustered nodes is
-determined by,\\ ${ \sum ( \min for same destn ( \max bw R^i, R^j ) )
-) }$\\ The max bandiwdths between any ${R^i}$ is determined by floyd
-warshall algorithm.
+\end{itemize}
 
-\item The capabity of each of the PEs that are clustered together are
-aggregated to form the larger virtual node.
+The hierarchical cluster built for the synthetic topology at level 0 of
+Figure~\ref{fig:res}, is shown in the levels 1-3. The stages used to
+build the hierarchy are as follows:
 
-\item In each level PEs with high communication bandwidth and balanced
-capabilities are clustered together. In doing this in a bottom up
-approach i.e. clustering instead of partitioning, we allow the nodes to
-form without ignoring communication links between the nodes. This also
-avoids the formation of dangling nodes in the graph.
+\begin{itemize}
+
+\item \textit{Effective computation during contraction:} Given a
+  topology graph with $|V_r|$ resources, we cluster the PEs in levels,
+  whereby the height of the cluster is $log_2|V_r|$. For example,
+  consider the PEs at level 0 in Figure~\ref{fig:res}. Contraction from
+  level 0 to level 1 results in 4 PEs at level 1, where the two
+  capacities, $R^k_0,\ R^k_1$ for each contracted node $k = \{i, j\},
+  \exists i \in V_r \wedge \exists j \in V_r$ is computed as: $R^k_0 =
+  R^i_0 + R^j_0$, and $R^k_1 = R^k_1 + R^j_1$. Without loss of
+  generality we assume this for any $k = \{i,j,..,n\}, \forall n \in
+  V_r$. This process is continued until we reach the top-level with just
+  2 contracted nodes. The resulting 2-node top-level architecture (as
+  seen in Figure~\ref{fig:res}) is a load-balanced. The reason for a
+  level based contraction, instead of contracting all nodes into a
+  single 2 node partition, is that when partitioning the application on
+  the resulting top-down cluster, we have fine grained details within
+  each of the contracted node.
+
+  % \item Firstly, we form virtual representations of the resource graph
+  %   by clustering the nodes. These virtual nodes are formed by min
+  %   cutting communication volume and load balancing the virtual nodes
+  %   capabilities.  The formation of these virtual nodes creates
+  %   homogeneous partitions from hetrogeneous PEs.
+
+  % \item Secondly, instead of doing this in a single step, we construct
+  %   this in several level by clustering half the nodes from the
+  %   previous level. We end up with a structure consisting of several
+  %   levels, where the $ Number\ of\ levels = log_2 ( Number\ of\ Nodes
+  %   )$.
+
+\item \textit{Effective communication during contraction:} It is
+  essential that we handle communication correctly while contracting
+  nodes. There are a number of paths that communication between two
+  nodes might follow. The \underline{effective bandwidth} between any
+  two contracted nodes depends upon the route in the topology graph
+  between these contracted nodes. We use the all-pair
+  Floyd-Warshall~\cite{sski08} algorithm to calculate the shortest path,
+  in terms of latency of data-transfer, for every communication link
+  in the topology. Once the nodes are contracted we use the bottleneck
+  amongst these possible links as our effective bandwidth.
+
+  For the topology in Figure~\ref{fig:res}, we first calculate the best
+  possible paths between every pair of nodes \mbox{$(i,j) \in (V_r
+    \times V_r)$}. Now let us consider the example of the contracted
+  nodes \texttt{B1} and \texttt{C1}. Node $\mathtt{B1} = \{3, 8, 6\}$
+  and $\mathtt{C1} = \{2, 1\}$. Being an undirected graph with loss of
+  generality we can consider \texttt{B1} to be the source and
+  \texttt{C1} to be the destination. Hence, the worst path, in terms of
+  latency of data-transfer, following the all-pair Floyd-Warshall
+  algorithm, between nodes $3$ and $2$ within the contracted nodes is
+  given by the maximum latency path amongst the memoized best edges:
+  $max((3,2),\ (8,2),\ (6,2))$. Similar computation is carried out for
+  all link pairs in the contracted node with $1$ as the destination node
+  to find the minimum latency path. Finally, the addition of these two
+  latencies and its reciprocal gives us the effective bandwidth between
+  the two contracted nodes. This effective bandwidth is the overall
+  bottleneck between the two contracted nodes.
+
+  % The communication bandwidth between the clustered nodes is determined
+  % by,\\ ${ \sum ( \min for same destn ( \max bw R^i, R^j ) ) ) }$\\ The
+  % max bandiwdths between any ${R^i}$ is determined by floyd warshall
+  % algorithm.
+
+% \item The capabity of each of the PEs that are clustered together are
+% aggregated to form the larger virtual node.
+
+% \item In each level PEs with high communication bandwidth and balanced
+% capabilities are clustered together. In doing this in a bottom up
+% approach i.e. clustering instead of partitioning, we allow the nodes to
+% form without ignoring communication links between the nodes. This also
+% avoids the formation of dangling nodes in the graph.
 
 \end{itemize}
 
@@ -67,27 +165,70 @@ avoids the formation of dangling nodes in the graph.
   \label{fig:res}
 \end{figure}
 
-In fig \ref{fig:res} we show our clustering approach on a 4x2 mesh. At
-each level suitable nodes are clustered together to form a larger node.
-We see that the PE $ R^3 $ and PE $ R^8 $ are combined together
-when moving from level 0 to level 1. Overall, we reach three levels
-and at the top most level all the nodes from a single virtual node.
+% In fig \ref{fig:res} we show our clustering approach on a 4x2 mesh. At
+% each level suitable nodes are clustered together to form a larger node.
+% We see that the PE $ R^3 $ and PE $ R^8 $ are combined together
+% when moving from level 0 to level 1. Overall, we reach three levels
+% and at the top most level all the nodes from a single virtual node.
 
-\subsection{Application Partitioning}
-\label{sec:appl-part}
+\subsection{Task graph Partitioning}
+\label{sec:task-graph-part}
 
-To partition the application we start with the top most level in the
-resource graph and divide it according to the required virtual nodes
-at that level. We then move on to the next level and partition the
-application on to the virtual nodes that the current node belongs to.
-In this way we follow the structure of the resource graph until we
-reach level, by which reach the actual mapping of the task graph on to
-the resource graph.
+The task partitioning on the resulting hierarchical cluster takes a
+top-down approach. We start with the task-graph extracted from the
+application (Figure~\ref{fig:1}). We then recursively partition the
+task-graph (using K-way partitioning) on the hierarchical cluster of the
+resource-graph. For the example topology cluster in
+Figure~\ref{fig:res}, we start by partitioning the task-graph in
+Figure~\ref{fig:1}, first into two (K=2) partitions considering two
+equally weighted compute nodes at level 2. Once a partition is obtained
+for this level, we move onto the next level (level 1), whereby all the
+task-graph nodes allocated onto node \texttt{A2} are further partitioned
+onto the nodes \texttt{A1} and \texttt{C1} (again K=2), which are
+coupled into the contracted node \texttt{A2}. This process is continued
+recursively for all contracted nodes until the final level (level
+0). During each partition we make sure that the task node requirements
+are closely matched to the resource node capacities.
 
-Doing it in this top down manner carries two important advantages. Firstly,
-the complexity involved is much less compared to doing it in a single
-instance and thus preventing an explosive state space search. This makes
-our heuristic complete much faster than doing it in a brute force
-manner. Secondly, by dividing the mapping on to several levels we can
-achieve much better load balancing by considering only fewer nodes to
-map than if we were to do it directly on to the resource graph.
+% To partition the application we start with the top most level in the
+% resource graph and divide it according to the required virtual nodes at
+% that level. We then move on to the next level and partition the
+% application on to the virtual nodes that the current node belongs to.
+% In this way we follow the structure of the resource graph until we reach
+% level, by which reach the actual mapping of the task graph on to the
+% resource graph.
+
+Doing it in this top down manner carries two important consequences.
+
+\begin{itemize}
+
+\item \textit{Increase in the time complexity:} As stated previously,
+  the partitioning problem is equivalent to the K-way problem. The
+  multi-level K-way partitioning results in the worst cast time
+  complexity of $O(|E_t| \times log_2|V_r|)$~\cite{gkar98}. Our
+  algorithm gives a worst case complexity of \mbox{$O(log_2|V_r| \times
+    |E_t| \times log_2 |V_r|)$} when using the multi-level K-way
+  partitioning. But, in the average case the term $log_2|V_r|$ is
+  inconsequential, since we ask for a balanced 2-way partition at all
+  levels. Hence, the average case complexity is equal to the K-way
+  partitioning algorithm.
+
+\item \textit{Refined mapping:} By dividing the mapping on to several
+  levels we can achieve much better load balancing by considering only
+  fewer nodes to map than if we were to do it directly on to the
+  resource graph. We show this quantitatively in the Experimental
+  results section~\ref{sec:experiments-results}.
+
+\end{itemize}
+
+
+\subsection{The post}
+\label{sec:post}
+
+
+
+
+%%% Local Variables: 
+%%% mode: latex
+%%% TeX-master: "bare_conf"
+%%% End: 
