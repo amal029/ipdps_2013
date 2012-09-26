@@ -38,6 +38,33 @@ D.~an~Mey, ``{MPI Case Study, Jacobi-Solver},'' in \emph{{Parallel Programming
 V.~Sarkar, ``{Partitioning and scheduling parallel algorithms for execution on
   multiprocessors},'' Ph.D. dissertation, Stanford university, 1989.
 
+\bibitem{ssol10}
+S.~Solomon, R.~Thulasiram, and P.~Thulasiraman, ``Option pricing on the gpu,''
+  in \emph{High Performance Computing and Communications (HPCC), 2010 12th IEEE
+  International Conference on}, sept. 2010, pp. 289 --296.
+
+\bibitem{hpra10}
+H.~Prasain, G.~Jha, P.~Thulasiraman, and R.~Thulasiram, ``A parallel particle
+  swarm optimization algorithm for option pricing,'' in \emph{Parallel
+  Distributed Processing, Workshops and Phd Forum (IPDPSW), 2010 IEEE
+  International Symposium on}, april 2010, pp. 1 --7.
+
+\bibitem{jzha11}
+J.~Zhang, G.~Wu, X.~Hu, S.~Li, and S.~Hao, ``A parallel k-means clustering
+  algorithm with mpi,'' in \emph{Parallel Architectures, Algorithms and
+  Programming (PAAP), 2011 Fourth International Symposium on}, dec. 2011, pp.
+  60 --64.
+
+\bibitem{hcou09}
+\BIBentryALTinterwordspacing
+H.~Courtecuisse and J.~Allard, ``Parallel dense gauss-seidel algorithm on
+  many-core processors,'' in \emph{Proceedings of the 2009 11th IEEE
+  International Conference on High Performance Computing and Communications},
+  ser. HPCC '09.\hskip 1em plus 0.5em minus 0.4em\relax Washington, DC, USA:
+  IEEE Computer Society, 2009, pp. 139--147. [Online]. Available:
+  \url{http://dx.doi.org/10.1109/HPCC.2009.51}
+\BIBentrySTDinterwordspacing
+
 \bibitem{mgri98}
 M.~Griebl, C.~Lengauer, and S.~Wetzel, ``{Code Generation in the Polytope
   Model},'' in \emph{In IEEE PACT}.\hskip 1em plus 0.5em minus 0.4em\relax IEEE
@@ -187,5 +214,13 @@ H.~Orsila, T.~Kangas, E.~Salminen, and T.~Hamalainen, ``Parameterizing
   simulated annealing for distributing task graphs on multiprocessor socs,'' in
   \emph{System-on-Chip, 2006. International Symposium on}, nov. 2006, pp. 1
   --4.
+
+\bibitem{tcra11}
+\BIBentryALTinterwordspacing
+T.~G. Crainic, G.~Perboli, W.~Rei, and R.~Tadei, ``Efficient lower bounds and
+  heuristics for the variable cost and size bin packing problem,''
+  \emph{Comput. Oper. Res.}, vol.~38, no.~11, pp. 1474--1482, Nov. 2011.
+  [Online]. Available: \url{http://dx.doi.org/10.1016/j.cor.2011.01.001}
+\BIBentrySTDinterwordspacing
 
 \end{thebibliography}

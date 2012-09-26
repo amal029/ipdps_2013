@@ -6,9 +6,11 @@
 \citation{jacobi2}
 \@writefile{toc}{\contentsline {section}{\numberline {I}Introduction and motivating example}{1}}
 \newlabel{sec:intr-motiv-example}{{I}{1}}
-\@writefile{lof}{\contentsline {figure}{\numberline {1}{\ignorespaces Example 2-dimensional Jacobi application}}{1}}
-\newlabel{fig:2}{{1}{1}}
 \citation{vsar89}
+\citation{ssol10}
+\citation{hpra10}
+\citation{jzha11}
+\citation{hcou09}
 \citation{mgri98}
 \citation{jdon06}
 \citation{mgor06}
@@ -26,6 +28,8 @@
 \citation{tbra01}
 \citation{ssan05}
 \citation{skum02}
+\@writefile{lof}{\contentsline {figure}{\numberline {1}{\ignorespaces Example 2-dimensional Jacobi application}}{2}}
+\newlabel{fig:2}{{1}{2}}
 \@writefile{toc}{\contentsline {section}{\numberline {II}Related work}{2}}
 \newlabel{sec:related-work}{{II}{2}}
 \@writefile{toc}{\contentsline {section}{\numberline {III}Preliminaries}{2}}
@@ -33,79 +37,85 @@
 \@writefile{toc}{\contentsline {subsection}{\numberline {\unhbox \voidb@x \hbox {III-B}}Problem Definition}{2}}
 \citation{vsar89}
 \citation{clat04}
-\citation{mgri98}
 \newlabel{eq:1}{{1}{3}}
 \newlabel{eq:2}{{2}{3}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {\unhbox \voidb@x \hbox {III-C}}Key Contributions}{3}}
 \@writefile{toc}{\contentsline {section}{\numberline {IV}Our framework}{3}}
 \newlabel{sec:our-framework}{{IV}{3}}
 \@writefile{toc}{\contentsline {subsection}{\numberline {\unhbox \voidb@x \hbox {IV-A}}Generating the task graph}{3}}
 \newlabel{sec:build-appl-graph}{{\unhbox \voidb@x \hbox {IV-A}}{3}}
-\citation{tbra01}
-\citation{tbra01}
 \@writefile{lof}{\contentsline {figure}{\numberline {2}{\ignorespaces The task graph for the Jacobi example}}{4}}
 \newlabel{fig:1}{{2}{4}}
-\@writefile{lof}{\contentsline {figure}{\numberline {3}{\ignorespaces LLVM code for assignment statement \texttt  {4} from Figure\nobreakspace  {}1\hbox {}}}{4}}
-\newlabel{fig:3}{{3}{4}}
-\newlabel{sec:tiling-vector-counts}{{\unhbox \voidb@x \hbox {IV-A}1}{4}}
-\@writefile{toc}{\contentsline {subsubsection}{\numberline {\unhbox \voidb@x \hbox {IV-A}1}Tiling vectors}{4}}
-\citation{fsar11}
-\citation{sski08}
+\citation{mgri98}
+\citation{tbra01}
+\citation{tbra01}
+\@writefile{lof}{\contentsline {figure}{\numberline {3}{\ignorespaces LLVM code for assignment statement \texttt  {4} from Figure\nobreakspace  {}1\hbox {}}}{5}}
+\newlabel{fig:3}{{3}{5}}
+\newlabel{sec:tiling-vector-counts}{{\unhbox \voidb@x \hbox {IV-A}1}{5}}
+\@writefile{toc}{\contentsline {subsubsection}{\numberline {\unhbox \voidb@x \hbox {IV-A}1}Tiling vectors}{5}}
 \@writefile{toc}{\contentsline {subsection}{\numberline {\unhbox \voidb@x \hbox {IV-B}}Generating the resource graph}{5}}
 \newlabel{sec:gener-reso-graph}{{\unhbox \voidb@x \hbox {IV-B}}{5}}
-\newlabel{sec:clustering-topology}{{\unhbox \voidb@x \hbox {IV-B}1}{5}}
-\@writefile{toc}{\contentsline {subsubsection}{\numberline {\unhbox \voidb@x \hbox {IV-B}1}Clustering the topology}{5}}
+\citation{fsar11}
+\citation{sski08}
+\newlabel{sec:clustering-topology}{{\unhbox \voidb@x \hbox {IV-B}1}{6}}
+\@writefile{toc}{\contentsline {subsubsection}{\numberline {\unhbox \voidb@x \hbox {IV-B}1}Clustering the topology}{6}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {\unhbox \voidb@x \hbox {IV-C}}Task graph Partitioning}{6}}
+\newlabel{sec:task-graph-part}{{\unhbox \voidb@x \hbox {IV-C}}{6}}
 \citation{gkar98}
 \citation{gkar95}
 \citation{kdev09}
 \citation{cche08}
 \citation{gkar95}
-\@writefile{toc}{\contentsline {subsection}{\numberline {\unhbox \voidb@x \hbox {IV-C}}Task graph Partitioning}{6}}
-\newlabel{sec:task-graph-part}{{\unhbox \voidb@x \hbox {IV-C}}{6}}
-\@writefile{lof}{\contentsline {figure}{\numberline {4}{\ignorespaces Clustering of a resource graph}}{6}}
-\newlabel{fig:res}{{4}{6}}
-\@writefile{toc}{\contentsline {subsection}{\numberline {\unhbox \voidb@x \hbox {IV-D}}The post}{6}}
-\newlabel{sec:post}{{\unhbox \voidb@x \hbox {IV-D}}{6}}
-\@writefile{toc}{\contentsline {section}{\numberline {V}Implementation}{6}}
-\newlabel{sec:imple}{{V}{6}}
-\citation{ssan05}
-\citation{horsi06}
-\citation{ssan05}
+\@writefile{lof}{\contentsline {figure}{\numberline {4}{\ignorespaces Clustering of a resource graph}}{7}}
+\newlabel{fig:res}{{4}{7}}
+\@writefile{toc}{\contentsline {section}{\numberline {V}Implementation}{7}}
+\newlabel{sec:imple}{{V}{7}}
 \@writefile{toc}{\contentsline {subsection}{\numberline {\unhbox \voidb@x \hbox {V-A}}Clustering the resource-graph}{7}}
 \newlabel{sec:clust-reso-graph}{{\unhbox \voidb@x \hbox {V-A}}{7}}
 \@writefile{toc}{\contentsline {subsection}{\numberline {\unhbox \voidb@x \hbox {V-B}}Partitoning the task-graph}{7}}
 \newlabel{sec:part-task-graph}{{\unhbox \voidb@x \hbox {V-B}}{7}}
-\@writefile{toc}{\contentsline {subsection}{\numberline {\unhbox \voidb@x \hbox {V-C}}Load Balancing Multiple Constraints}{7}}
-\@writefile{toc}{\contentsline {subsection}{\numberline {\unhbox \voidb@x \hbox {V-D}}The post pass}{7}}
-\newlabel{sec:post-pass}{{\unhbox \voidb@x \hbox {V-D}}{7}}
-\@writefile{toc}{\contentsline {section}{\numberline {VI}Experiments and results}{7}}
-\newlabel{sec:experiments-results}{{VI}{7}}
+\citation{ssan05}
+\citation{horsi06}
+\citation{ssan05}
+\citation{tcra11}
+\citation{sski08}
 \bibstyle{IEEEtran}
 \bibdata{/Users/amal029/Dropbox/BIBLIOGRAPHY_DATABASE/main_bib.bib}
 \bibcite{jacobi1}{1}
 \bibcite{jacobi2}{2}
 \bibcite{vsar89}{3}
-\bibcite{mgri98}{4}
-\bibcite{jdon06}{5}
-\bibcite{mgor06}{6}
-\bibcite{gsih93}{7}
-\bibcite{pcar09}{8}
-\bibcite{wthi02}{9}
-\bibcite{ewai97}{10}
-\bibcite{Kohler1975}{11}
-\bibcite{atho74}{12}
-\bibcite{mmah99}{13}
-\bibcite{adou04}{14}
-\bibcite{tbra01}{15}
-\bibcite{ssan05}{16}
-\bibcite{skum02}{17}
-\bibcite{clat04}{18}
-\bibcite{fsar11}{19}
-\bibcite{sski08}{20}
-\bibcite{gkar98}{21}
-\bibcite{gkar95}{22}
-\bibcite{kdev09}{23}
+\bibcite{ssol10}{4}
+\@writefile{toc}{\contentsline {subsection}{\numberline {\unhbox \voidb@x \hbox {V-C}}The post pass}{8}}
+\newlabel{sec:post-pass}{{\unhbox \voidb@x \hbox {V-C}}{8}}
+\@writefile{toc}{\contentsline {section}{\numberline {VI}Experiments and results}{8}}
+\newlabel{sec:experiments-results}{{VI}{8}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {\unhbox \voidb@x \hbox {VI-A}}Heterogeneous Bin Packing}{8}}
 \@writefile{toc}{\contentsline {section}{\numberline {VII}Conclusion}{8}}
 \newlabel{sec:conclusion}{{VII}{8}}
 \@writefile{toc}{\contentsline {section}{References}{8}}
-\bibcite{cche08}{24}
-\bibcite{horsi06}{25}
+\bibcite{hpra10}{5}
+\bibcite{jzha11}{6}
+\bibcite{hcou09}{7}
+\bibcite{mgri98}{8}
+\bibcite{jdon06}{9}
+\bibcite{mgor06}{10}
+\bibcite{gsih93}{11}
+\bibcite{pcar09}{12}
+\bibcite{wthi02}{13}
+\bibcite{ewai97}{14}
+\bibcite{Kohler1975}{15}
+\bibcite{atho74}{16}
+\bibcite{mmah99}{17}
+\bibcite{adou04}{18}
+\bibcite{tbra01}{19}
+\bibcite{ssan05}{20}
+\bibcite{skum02}{21}
+\bibcite{clat04}{22}
+\bibcite{fsar11}{23}
+\bibcite{sski08}{24}
+\bibcite{gkar98}{25}
+\bibcite{gkar95}{26}
+\bibcite{kdev09}{27}
+\bibcite{cche08}{28}
+\bibcite{horsi06}{29}
+\bibcite{tcra11}{30}

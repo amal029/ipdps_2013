@@ -3,10 +3,51 @@
 
 Today's HPC clusters consists of a large number of heterogeneous
 processing elements such as CPUs, GPUs, DSPs, FPGAs, etc. Given an
-application exhibiting potential for parallelism the question remains:
-how does one determine the type of architecture best suited to extract
-this parallelism? Or given an architecture, how does one determine how
-to exploit the potential parallelism in the applications.
+application, how does one determine if there are portions of the
+application that should be mapped to a GPU, others to a CPU, and still
+others to an FPGA, and so on? Further, given a heterogenous collection
+of GPUs (i.e., different GPUs may have different vector lengths) and a
+heteorogeneous collection of CPUs (i.e., different CPUs may have
+different number of cores), how do you further decide which portions of
+the GPU should be allocated to a given GPU and not to another GPU? Now
+let us add the final complexity: how do you do the above allocation
+automatically? How do you automatically map the parallelism available in
+an application to the right computation engine from among a
+heterogeneous suite of engines?  This paper offers one such
+approach. What if you do not have the architecture figured out yet but
+you have the application? In this case, one can use our approach to
+determine the type of architecture best suited to map the parallelism
+available in a given application.  Our proposed framework can be used by
+topology designers to quickly carry out a design space exploration to
+determine the type of underlying topology best suited for a given
+application.  Moreover, compiler writers can also use our framework when
+vectorizing and partitioning large vector units onto parallel GPU/CPU
+units.
+% \textbf{AVINASH - PLS CHECK 
+% THE LAST CLAIM. DO YOU DO THAT IN THIS PAPER?}
+
+Consider the code snippet in Figure~\ref{fig:2} that carries out the
+main stencil computation using the Jacobi algorithm. Jacobi is an
+important stencil computation, which is used for solving large systems
+of linear equations, especially for heat transfer problems and numerical
+fluid mechanics. We have chosen this as our motivating example because
+there have been attempts to parallelize Jacobi using MPI~\cite{jacobi1}
+and CUDA~\cite{jacobi2} with success, making it an important problem to
+solve on a heterogeneous compute cluster mixing MPI and CUDA programming
+techniques and with the potential of making it faster still. The CUDA
+programming techniques exploit the \textit{Single Instruction Multiple
+  Data} (SIMD) potential in the Jacobi algorithm~\cite{jacobi2} by
+modeling parallelism as vector computations suitable for a GPU. The MPI
+approach on the other hand exploits \textit{Multiple Instruction
+  Multiple Data} (MIMD) potential by modeling the parallelism across
+different CPU nodes. Both techniques result in 3-4 times speedup
+compared to single CPU implementations. The challenge when
+\textit{re-designing} and \textit{tuning} such parallel applications to
+exploit vector units \textit{or} MPI alone is well
+documented~\cite{jacobi1,jacobi2}. The complexity of re-designing for a
+mixture of two grows exponentially. The growth in complexity of design
+space is due to a number of factors, some of which we enumerate below:
+
 
 \begin{scriptsize}
   \begin{figure}[h!]
@@ -15,8 +56,8 @@ to exploit the potential parallelism in the applications.
  //Task and data-parallel
  for (int i=0;i<M; ++i){
   for (int j=0;j<N; ++j){
-   1: A[i][j] = ((((i)*((j)+2.0))+2.0)/(N))
-   2: B[i][j] = ((((i)*((j)+3.0))+3.0)/(N))
+   1: A[i][j] = (i*j+2.0+2.0/N)
+   2: B[i][j] = (i*j+3.0+3.0/N)
   }
  }
  for (int k=0;k<TSTEPS;++k){
@@ -36,27 +77,7 @@ to exploit the potential parallelism in the applications.
   \end{figure}
 \end{scriptsize}
 
-Consider the code snippet in Figure~\ref{fig:2} that carries out the
-main stencil computation using the Jacobi algorithm. Jacobi is an
-important stencil computation, which is used for solving large systems
-of linear equations, especially for heat transfer problems and numerical
-fluid mechanics. We have chosen this as our motivating example, because
-there have been attempts to parallelize Jacobi using MPI~\cite{jacobi1}
-and CUDA~\cite{jacobi2} with success, making it an important problem to
-solve on a heterogeneous compute cluster mixing MPI and CUDA programming
-techniques and with the potential of making it faster still. The CUDA
-programming techniques exploit the \textit{Single Instruction Multiple
-  Data} (SIMD) potential in the Jacobi algorithm~\cite{jacobi2} by
-modeling parallelism as vector computations suitable for a GPU. The MPI
-approach on the other hand exploits \textit{Multiple Instruction
-  Multiple Data} (MIMD) potential by modeling the parallelism across
-different CPU nodes. Both techniques result in 3-4 times speedup
-compared to single CPU implementations. The challenge when
-\textit{re-designing} and \textit{tuning} such parallel applications to
-exploit vector units \textit{or} MPI alone is well
-documented~\cite{jacobi1,jacobi2}. The complexity of re-designing for a
-mixture of two grows exponentially. The growth in complexity of design
-space is due to a number of factors, some of which we enumerate below:
+
 
 \begin{itemize}
 
@@ -104,18 +125,144 @@ space is due to a number of factors, some of which we enumerate below:
 
 \end{itemize}
 
-There are a number of other applications where parallelism plays and
-important role. For example, binomial option pricing, k-means
-calculations, Gauss-Seidel stencil computations, etc, are well suited to
-be optimized across heterogeneous HPC architectures. In general we have
-found it is much more essential to exploit data-parallelism as compared
-to task-parallelism to achieve speedups. But, exploiting both types of
-parallelism is essential in the general case.
+There are a number of other applications where parallelism plays an
+important
+role. % (\textbf{THIS STATEMENT IS TOO OBVIOUS TO BE MADE A POINT
+  % OF.  UNLESS YOU ARE SAYING THAT THESE APPS HAVE POTENTIAL FOR
+  % EXPLOITING HETEROGENOUS RESOURCES. ARE YOU SAYING THAT?})
+For example, binomial option pricing~\cite{ssol10,hpra10},
+k-means~\cite{jzha11}, Gauss-Seidel stencil computations~\cite{hcou09},
+etc, are well suited to be optimized across heterogeneous HPC
+architectures. Exploiting both data and task parallelism is essential in
+the general case.
 
-In this paper we propose a framework, which can be used by topology
-designers, and application writers to quickly carry out a design space
-exploration to determine the type of underlying topology best suited for
-a given application. Moreover, compiler writers can also use our
-framework when vectorizing to partition large vector units onto parallel
-GPU/CPU units.
+Here is how the rest of this paper is organized. \textbf{FILL THIS 
+IN AFTER ALL OTHER SECTIONS ARE FINISHED.}
 
+% \section{Introduction and motivating example}
+% \label{sec:intr-motiv-example}
+
+% Today's HPC clusters consists of a large number of heterogeneous
+% processing elements such as CPUs, GPUs, DSPs, FPGAs, etc. Given an
+% application exhibiting potential for parallelism the question remains:
+% how does one determine the type of architecture best suited to extract
+% this parallelism? Or given an architecture, how does one determine how
+% to exploit the potential parallelism in the applications.
+
+% \begin{scriptsize}
+%   \begin{figure}[h!]
+%     \centering
+% \begin{verbatim}
+%  //Task and data-parallel
+%  for (int i=0;i<M; ++i){
+%   for (int j=0;j<N; ++j){
+%    1: A[i][j] = ((((i)*((j)+2.0))+2.0)/(N))
+%    2: B[i][j] = ((((i)*((j)+3.0))+3.0)/(N))
+%   }
+%  }
+%  for (int k=0;k<TSTEPS;++k){
+%   for (int i=1; i<M; ++i)
+%    for (int j=1; j<N; ++j)
+%     3: B[i][j] = 0.2*(A[i][j]+A[i][j-1]
+%               +A[i][j+1]+A[i-1][j])
+
+%   //Data-parallel
+%   for (int i=1; i<M; ++i)
+%    for (int j=1; j<N; ++j)
+%     4: A[i][j] = B[i][j]
+%  }
+% \end{verbatim}
+%     \caption{Example 2-dimensional Jacobi application}
+%     \label{fig:2}
+%   \end{figure}
+% \end{scriptsize}
+
+% Consider the code snippet in Figure~\ref{fig:2} that carries out the
+% main stencil computation using the Jacobi algorithm. Jacobi is an
+% important stencil computation, which is used for solving large systems
+% of linear equations, especially for heat transfer problems and numerical
+% fluid mechanics. We have chosen this as our motivating example, because
+% there have been attempts to parallelize Jacobi using MPI~\cite{jacobi1}
+% and CUDA~\cite{jacobi2} with success, making it an important problem to
+% solve on a heterogeneous compute cluster mixing MPI and CUDA programming
+% techniques and with the potential of making it faster still. The CUDA
+% programming techniques exploit the \textit{Single Instruction Multiple
+%   Data} (SIMD) potential in the Jacobi algorithm~\cite{jacobi2} by
+% modeling parallelism as vector computations suitable for a GPU. The MPI
+% approach on the other hand exploits \textit{Multiple Instruction
+%   Multiple Data} (MIMD) potential by modeling the parallelism across
+% different CPU nodes. Both techniques result in 3-4 times speedup
+% compared to single CPU implementations. The challenge when
+% \textit{re-designing} and \textit{tuning} such parallel applications to
+% exploit vector units \textit{or} MPI alone is well
+% documented~\cite{jacobi1,jacobi2}. The complexity of re-designing for a
+% mixture of two grows exponentially. The growth in complexity of design
+% space is due to a number of factors, some of which we enumerate below:
+
+% \begin{itemize}
+
+% \item The vector lengths of the underlying processing elements
+%   differ. Intel processors have 256 bit vector instructions, while the
+%   GPU range varies.
+
+%   % For example, a GPU warp (the smallest vector size) varies from 16-32
+%   % scalar instructions. Moreover, these warps can be arranged in
+%   % different block sizes, which results in different effective vector
+%   % lengths. On the CPU the vector lengths differ themselves, but the
+%   % variation is much smaller. For example, the new Intel AVX units have
+%   % a
+%   % vector length of 256 bits, while the SSE units have a vector length
+%   % of
+%   % 128 bits.
+
+% \item The actual data-type results in different utilization of vector
+%   units. For example, a \texttt{double} type requires twice as many
+%   vector registers to carry out processing as compared to an
+%   \texttt{int} type.
+
+% \item The size of the vector length and the number of vector units
+%   required needs to be determined: simply dividing the data-parallel
+%   vector units onto the largest available vector processing elements
+%   does not necessarily result in good application throughput or
+%   latency. In an ideal scenario for very large vector computations, the
+%   vector units can be utilized completely and the rest of the
+%   data-parallelism can be exploited in parallel on a CPU unit
+%   iteratively in a loop.
+
+% \item The bottleneck of the communication fabric plays an important role
+%   in the partitioning problem. Note that in a heterogeneous compute
+%   cluster the communication latencies and bandwidths themselves vary.
+
+% \item Allocation of data-stores being utilized by the different
+%   processing elements needs to be handled.
+
+% \item Applications written in different ways result in different
+%   parallelism potential.
+
+% \item Finally, the scheduling problem is known to be
+%   NP-hard~\cite{vsar89}. Thus, we need a good heuristic solution, which
+%   finishes quickly and gives good results.
+
+% \end{itemize}
+
+% There are a number of other applications where parallelism plays and
+% important role. For example, binomial option pricing, k-means
+% calculations, Gauss-Seidel stencil computations, etc, are well suited to
+% be optimized across heterogeneous HPC architectures. In general we have
+% found it is much more essential to exploit data-parallelism as compared
+% to task-parallelism to achieve speedups. But, exploiting both types of
+% parallelism is essential in the general case.
+
+% In this paper we propose a framework, which can be used by topology
+% designers, and application writers to quickly carry out a design space
+% exploration to determine the type of underlying topology best suited for
+% a given application. Moreover, compiler writers can also use our
+% framework when vectorizing to partition large vector units onto parallel
+% GPU/CPU units.
+
+
+
+%%% Local Variables: 
+%%% mode: latex
+%%% TeX-master: "bare_conf"
+%%% End: 

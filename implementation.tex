@@ -69,20 +69,20 @@ follows:
 \item The capabilities of the resource graph are represented as ratios
   for each of the constraint as the `tp-weight' metric when partitioning
   the task graph using Metis. For example, consider the partitioning
-  onto the level 2 resource-graph in Figure~\ref{fig:res}. There are 4
+  onto the level 1 resource-graph in Figure~\ref{fig:res}. There are 4
   contracted nodes. We generate two sets of `tp-weights', with 2
   elements each, one for each of the node sets contracted to form the
-  parent level (level-0, Figure~\ref{fig:res}). Each element in the set
+  parent level (level-2, Figure~\ref{fig:res}). Each element in the set
   represents the MIPS count and the vector capacity of the underlying
   contracted node. Let us consider node \texttt{A2}, which is
   effectively the contraction of nodes \texttt{C1} and
   \texttt{A1}. Thus, the MIPS capacity element, of the `tp-weight' set
   for weight set for the nodes \texttt{C1} and \texttt{A1} are
-  calculated as: \mbox{$\{C1^{MIPS}_{tpw} = R^{C1}_0/R^{C1}_0 +
-    R^{A1}_0, A1^{MIPS}_{tpw} = R^{C1}_0/R^{C1}_0 + R^{A1}_\}$}. Same is
-  done to calculate the vector length capacity ratios. Since, the other
-  two nodes \texttt{B1} and \texttt{D1} are contracted to form the
-  second parent in level 2, \texttt{B2}, we end up with two sets of
+  calculated as: {$\{C1^{MIPS}_{tpw} = R^{C1}_0/R^{C1}_0 + R^{A1}_0,
+    A1^{MIPS}_{tpw} = R^{C1}_0/R^{C1}_0 + R^{A1}_0\}$}. Same is done to
+  calculate the vector length capacity ratios. Since, the other two
+  nodes \texttt{B1} and \texttt{D1} are contracted to form the second
+  parent in level 2, \texttt{B2}, we end up with two sets of
   `tp-weights'.
 
 \item As we go down on to each level we partition the task graph into
@@ -97,40 +97,40 @@ follows:
 \end{itemize}
 
 
-\subsection{Load Balancing Multiple Constraints}
+% \subsection{Load Balancing Multiple Constraints}
 
-Metis load balances constraints by minimizing the imbalance with that of
-a ideal value. It tries to acheive this by modifying the partitioning
-such that each consrtaint lies within certain imbalance from the ideal
-value. Since reaching an `optimal' solution is difficult (or in some
-cases impossible), it matches each of the constraint in order until it
-finds a solution where all the constraints are matched within a certain
-tolerance level. Unfortunately, this causes the contraint to be matched
-with more and more imbalance as we move further, thereby giving priority
-to the first node constraint and then to the second and so on and so
-forth.
+% Metis load balances constraints by minimizing the imbalance with that of
+% an ideal value. It tries to acheive this by modifying the partitioning
+% such that each consrtaint lies within certain imbalance from the ideal
+% value. Since reaching an `optimal' solution is difficult (or in some
+% cases impossible), it matches each of the constraint in
+% \underline{order} until it finds a solution where all the constraints
+% are matched within a certain tolerance level. Unfortunately, this causes
+% the contraint to be matched with more and more imbalance as we move
+% further, thereby giving priority to the first node constraint and then
+% to the second and so on and so forth.
 
-In order to handle this, we chose an addition to our heuristic that
-checks whether we achieve the least imbalance in compute power in our
-partitions. This is done by clustering the nodes at each level based
-on all the possible permutations of the resource graph. After each
-clustering for a given permutation the imbalance in compute power is
-calculated as,
+% In order to handle this, we chose an addition to our heuristic that
+% checks whether we achieve the least imbalance in compute power in our
+% partitions. This is done by clustering the nodes at each level based
+% on all the possible permutations of the resource graph. After each
+% clustering for a given permutation the imbalance in compute power is
+% calculated as,
 
-\begin{equation}
-\begin{array}{c}
-desired_compute_power = total_compute_power / no_of_nodes;\\
+% \begin{equation}
+% \begin{array}{c}
+% desired_compute_power = total_compute_power / no_of_nodes;\\
 
-for each partition, for 1->n\\
-cp_n = sum( ( compute power of node ( R * R .. Rn ) ) -
-desired_compute_power )\\
+% for each partition, for 1->n\\
+% cp_n = sum( ( compute power of node ( R * R .. Rn ) ) -
+% desired_compute_power )\\
 
-chosen partition = min( cp_n  )\\
-\end{array}
-\end{equation}
+% chosen partition = min( cp_n  )\\
+% \end{array}
+% \end{equation}
 
-We then pick the partition that was yielded with the minimum deviation
-in the compute power.
+% We then pick the partition that was yielded with the minimum deviation
+% in the compute power.
 
 \subsection{The post pass}
 \label{sec:post-pass}

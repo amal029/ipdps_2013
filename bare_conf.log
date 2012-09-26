@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.1415926-2.4-1.40.13 (TeX Live 2012/MacPorts 2012_3) (format=pdflatex 2012.8.6)  26 SEP 2012 18:54
+This is pdfTeX, Version 3.1415926-2.4-1.40.13 (TeX Live 2012/MacPorts 2012_3) (format=pdflatex 2012.8.6)  26 SEP 2012 22:53
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -119,26 +119,31 @@ Package: ltxcmds 2011/11/09 v1.22 LaTeX kernel commands for general use (HO)
 \Gin@req@height=\dimen117
 \Gin@req@width=\dimen118
 )
-(./bare_conf.aux
+(/macports-1.9.1/share/texmf-texlive-dist/tex/latex/graphics/color.sty
+Package: color 2005/11/14 v1.0j Standard LaTeX Color (DPC)
 
-LaTeX Warning: Label `sec:post' multiply defined.
-
+(/macports-1.9.1/share/texmf-texlive-dist/tex/latex/latexconfig/color.cfg
+File: color.cfg 2007/01/18 v1.5 color configuration of teTeX/TeXLive
 )
+Package color Info: Driver file: pdftex.def on input line 130.
+)
+(./bare_conf.aux)
 \openout1 = `bare_conf.aux'.
 
-LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 351.
-LaTeX Font Info:    ... okay on input line 351.
-LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 351.
-LaTeX Font Info:    ... okay on input line 351.
-LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 351.
-LaTeX Font Info:    ... okay on input line 351.
-LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 351.
-LaTeX Font Info:    ... okay on input line 351.
-LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 351.
-LaTeX Font Info:    ... okay on input line 351.
-LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 351.
-LaTeX Font Info:    ... okay on input line 351.
- (/macports-1.9.1/share/texmf-texlive-dist/tex/context/base/supp-pdf.mkii
+LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 210.
+LaTeX Font Info:    ... okay on input line 210.
+LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 210.
+LaTeX Font Info:    ... okay on input line 210.
+LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 210.
+LaTeX Font Info:    ... okay on input line 210.
+LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 210.
+LaTeX Font Info:    ... okay on input line 210.
+LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 210.
+LaTeX Font Info:    ... okay on input line 210.
+LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 210.
+LaTeX Font Info:    ... okay on input line 210.
+
+(/macports-1.9.1/share/texmf-texlive-dist/tex/context/base/supp-pdf.mkii
 [Loading MPS to PDF converter (version 2006.09.02).]
 \scratchcounter=\count92
 \scratchdimen=\dimen119
@@ -199,69 +204,56 @@ File: epstopdf-sys.cfg 2010/07/13 v1.3 Configuration of (r)epstopdf for TeX Liv
 e
 ))
 LaTeX Font Info:    Font shape `OT1/ptm/bx/n' in size <14> not available
-(Font)              Font shape `OT1/ptm/b/n' tried instead on input line 407.
+(Font)              Font shape `OT1/ptm/b/n' tried instead on input line 266.
 
-Underfull \hbox (badness 1448) in paragraph at lines 445--448
+Underfull \hbox (badness 1448) in paragraph at lines 304--307
 []\OT1/ptm/b/it/9 Keywords\OT1/ptm/b/n/9 -Graph par-ti-tion-ing, vec-tor-iza-ti
 on, data par-al-
  []
 
 (./introduction.tex
-LaTeX Font Info:    Try loading font information for OT1+pcr on input line 14.
+LaTeX Font Info:    Try loading font information for OT1+pcr on input line 55.
 
 (/macports-1.9.1/share/texmf-texlive-dist/tex/latex/psnfss/ot1pcr.fd
 File: ot1pcr.fd 2001/06/04 font definitions for OT1/pcr.
 )
-Overfull \hbox (14.08875pt too wide) in paragraph at lines 33--33
-[]   \OT1/pcr/m/n/10 1: A[i][j] = ((((i)*((j)+2.0))+2.0)/(N))[] 
- []
-
-
-Overfull \hbox (14.08875pt too wide) in paragraph at lines 33--33
-[]   \OT1/pcr/m/n/10 2: B[i][j] = ((((i)*((j)+3.0))+3.0)/(N))[] 
- []
-
 
 LaTeX Warning: `!h' float specifier changed to `!ht'.
 
 LaTeX Font Info:    External font `cmex10' loaded for size
-(Font)              <7> on input line 62.
+(Font)              <7> on input line 83.
 LaTeX Font Info:    External font `cmex10' loaded for size
-(Font)              <5> on input line 62.
-[1{/macports-1.9.1/var/db/texmf/fonts/map/pdftex/updmap/pdftex.map}
+(Font)              <5> on input line 83.
+
+Underfull \vbox (badness 4543) has occurred while \output is active []
+
+ [1{/macports-1.9.1/var/db/texmf/fonts/map/pdftex/updmap/pdftex.map}
 
 
-])
-(./related_work.tex) [2]
-Overfull \hbox (1.62643pt too wide) detected at line 585
+]) (./related_work.tex) [2]
+Overfull \hbox (1.62643pt too wide) detected at line 436
 [][]
  []
 
+(./task_graph.tex (./figures/jacobi2d.pdf_t
+<./figures/jacobi2d.pdf, id=19, 1391.1975pt x 1400.23125pt>
+File: ./figures/jacobi2d.pdf Graphic file (type pdf)
 
-Underfull \vbox (badness 10000) has occurred while \output is active []
+<use ./figures/jacobi2d.pdf>
+Package pdftex.def Info: ./figures/jacobi2d.pdf used on input line 2.
+(pdftex.def)             Requested size: 1391.1941pt x 1400.22784pt.
+LaTeX Font Info:    Calculating math sizes for size <14> on input line 19.
+LaTeX Font Info:    External font `cmex10' loaded for size
+(Font)              <14> on input line 19.
+LaTeX Font Info:    External font `cmex10' loaded for size
+(Font)              <9.79996> on input line 19.
+)
+Overfull \hbox (78.01965pt too wide) in paragraph at lines 8--9
+[][] 
+ []
 
 
-(./task_graph.tex
-Package epstopdf Info: Source file: <./figures/jacobi2d.eps>
-(epstopdf)                    date: 2012-09-25 19:20:46
-(epstopdf)                    size: 53263 bytes
-(epstopdf)             Output file: <./figures/jacobi2d-eps-converted-to.pdf>
-(epstopdf)                    date: 2012-09-25 19:20:46
-(epstopdf)                    size: 22759 bytes
-(epstopdf)             Command: <repstopdf --outfile=./figures/jacobi2d-eps-con
-verted-to.pdf ./figures/jacobi2d.eps>
-(epstopdf)             \includegraphics on input line 7.
-Package epstopdf Info: Output file is already uptodate.
-
-<./figures/jacobi2d-eps-converted-to.pdf, id=20, 1197.47375pt x 755.82375pt>
-File: ./figures/jacobi2d-eps-converted-to.pdf Graphic file (type pdf)
-
-<use ./figures/jacobi2d-eps-converted-to.pdf>
-Package pdftex.def Info: ./figures/jacobi2d-eps-converted-to.pdf used on input 
-line 7.
-(pdftex.def)             Requested size: 502.93555pt x 317.4438pt.
-
-Overfull \hbox (34.11pt too wide) in paragraph at lines 22--22
+Overfull \hbox (34.11pt too wide) in paragraph at lines 23--23
 [] \OT1/pcr/m/n/10 call void @llvm.memcpy.p0i8.p0i8.i64(i8* %uglygep,i8* %uglyg
 ep13,i64 3996,i32 4,i1 false)[] 
  []
@@ -269,7 +261,10 @@ ep13,i64 3996,i32 4,i1 false)[]
 [3]
 Underfull \vbox (badness 10000) has occurred while \output is active []
 
- [4 <./figures/jacobi2d-eps-converted-to.pdf>]) (./resource_graph.tex [5]
+
+Underfull \vbox (badness 10000) has occurred while \output is active []
+
+ [4 <./figures/jacobi2d.pdf>]) (./resource_graph.tex [5]
 Underfull \hbox (badness 1584) in paragraph at lines 128--144
 []\OT1/ptm/m/n/10 For the topol-ogy in Fig-ure 4[], we first cal-cu-late
  []
@@ -284,35 +279,20 @@ Package epstopdf Info: Source file: <./figures/resource.eps>
 verted-to.pdf ./figures/resource.eps>
 (epstopdf)             \includegraphics on input line 163.
 Package epstopdf Info: Output file is already uptodate.
-<./figures/resource-eps-converted-to.pdf, id=44, 567.11874pt x 716.6775pt>
+<./figures/resource-eps-converted-to.pdf, id=43, 567.11874pt x 716.6775pt>
 File: ./figures/resource-eps-converted-to.pdf Graphic file (type pdf)
 
 <use ./figures/resource-eps-converted-to.pdf>
 Package pdftex.def Info: ./figures/resource-eps-converted-to.pdf used on input 
 line 163.
 (pdftex.def)             Requested size: 243.85631pt x 308.16533pt.
-) (./implementation.tex [6 <./figures/resource-eps-converted-to.pdf>]
-Underfull \hbox (badness 1769) in paragraph at lines 69--87
-\OT1/ptm/m/n/10 the con-trac-tion of nodes \OT1/pcr/m/n/10 C1 \OT1/ptm/m/n/10 a
-nd \OT1/pcr/m/n/10 A1\OT1/ptm/m/n/10 . Thus, the
- []
-
-
-Overfull \hbox (33.32399pt too wide) in paragraph at lines 69--87
-[]\OT1/ptm/m/n/10 .
- []
-
-
-Overfull \hbox (83.95732pt too wide) detected at line 130
-[]
- []
-
-) [7] (./bare_conf.bbl
-Underfull \hbox (badness 1735) in paragraph at lines 172--176
+ [6]) (./implementation.tex
+[7 <./figures/resource-eps-converted-to.pdf>]) (./bare_conf.bbl [8]
+Underfull \hbox (badness 1735) in paragraph at lines 199--203
 []\OT1/ptm/m/n/9 K. Devine, E. Bo-man, L. Riesen, U. Catalyurek, and
  []
 
-[8])
+[9])
 
 ** Conference Paper **
 Before submitting the final camera ready copy, remember to:
@@ -324,42 +304,40 @@ Before submitting the final camera ready copy, remember to:
  uses only Type 1 fonts and that every step in the generation
  process uses the appropriate paper size.
 
-[9
+[10
 
-] (./bare_conf.aux)
-
-LaTeX Warning: There were multiply-defined labels.
-
- ) 
+] (./bare_conf.aux) ) 
 Here is how much of TeX's memory you used:
- 2296 strings out of 494763
- 36957 string characters out of 3170658
- 97785 words of memory out of 3000000
- 5490 multiletter control sequences out of 15000+200000
- 37332 words of font info for 72 fonts, out of 3000000 for 9000
+ 2365 strings out of 494763
+ 37953 string characters out of 3170658
+ 102617 words of memory out of 3000000
+ 5548 multiletter control sequences out of 15000+200000
+ 39830 words of font info for 77 fonts, out of 3000000 for 9000
  134 hyphenation exceptions out of 8191
- 37i,8n,23p,242b,293s stack positions out of 5000i,500n,10000p,200000b,50000s
-{/macports-1.9.1/share/texmf-texlive-dist/fonts/enc/dvips/base/8r.enc}</macpo
-rts-1.9.1/share/texmf-texlive-dist/fonts/type1/public/amsfonts/cm/cmex10.pfb></
-macports-1.9.1/share/texmf-texlive-dist/fonts/type1/public/amsfonts/cm/cmmi10.p
-fb></macports-1.9.1/share/texmf-texlive-dist/fonts/type1/public/amsfonts/cm/cmm
-i5.pfb></macports-1.9.1/share/texmf-texlive-dist/fonts/type1/public/amsfonts/cm
-/cmmi7.pfb></macports-1.9.1/share/texmf-texlive-dist/fonts/type1/public/amsfont
-s/cm/cmr10.pfb></macports-1.9.1/share/texmf-texlive-dist/fonts/type1/public/ams
-fonts/cm/cmr7.pfb></macports-1.9.1/share/texmf-texlive-dist/fonts/type1/public/
-amsfonts/cm/cmsy10.pfb></macports-1.9.1/share/texmf-texlive-dist/fonts/type1/pu
-blic/amsfonts/cm/cmsy5.pfb></macports-1.9.1/share/texmf-texlive-dist/fonts/type
-1/public/amsfonts/cm/cmsy7.pfb></macports-1.9.1/share/texmf-texlive-dist/fonts/
-type1/public/amsfonts/cm/cmtt10.pfb></macports-1.9.1/share/texmf-texlive-dist/f
-onts/type1/urw/courier/ucrr8a.pfb></macports-1.9.1/share/texmf-texlive-dist/fon
-ts/type1/urw/times/utmb8a.pfb></macports-1.9.1/share/texmf-texlive-dist/fonts/t
-ype1/urw/times/utmbi8a.pfb></macports-1.9.1/share/texmf-texlive-dist/fonts/type
-1/urw/times/utmr8a.pfb></macports-1.9.1/share/texmf-texlive-dist/fonts/type1/ur
-w/times/utmri8a.pfb>
-Output written on bare_conf.pdf (9 pages, 312585 bytes).
+ 38i,10n,23p,308b,301s stack positions out of 5000i,500n,10000p,200000b,50000s
+{/macports-1.9.1/share/texmf-texlive-dist/fonts/enc/dvips/
+base/8r.enc}</macports-1.9.1/share/texmf-texlive-dist/fonts/type1/public/amsfon
+ts/cm/cmex10.pfb></macports-1.9.1/share/texmf-texlive-dist/fonts/type1/public/a
+msfonts/cm/cmmi10.pfb></macports-1.9.1/share/texmf-texlive-dist/fonts/type1/pub
+lic/amsfonts/cm/cmmi12.pfb></macports-1.9.1/share/texmf-texlive-dist/fonts/type
+1/public/amsfonts/cm/cmmi5.pfb></macports-1.9.1/share/texmf-texlive-dist/fonts/
+type1/public/amsfonts/cm/cmmi7.pfb></macports-1.9.1/share/texmf-texlive-dist/fo
+nts/type1/public/amsfonts/cm/cmr10.pfb></macports-1.9.1/share/texmf-texlive-dis
+t/fonts/type1/public/amsfonts/cm/cmr12.pfb></macports-1.9.1/share/texmf-texlive
+-dist/fonts/type1/public/amsfonts/cm/cmr7.pfb></macports-1.9.1/share/texmf-texl
+ive-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb></macports-1.9.1/share/texmf
+-texlive-dist/fonts/type1/public/amsfonts/cm/cmsy5.pfb></macports-1.9.1/share/t
+exmf-texlive-dist/fonts/type1/public/amsfonts/cm/cmsy7.pfb></macports-1.9.1/sha
+re/texmf-texlive-dist/fonts/type1/public/amsfonts/cm/cmtt10.pfb></macports-1.9.
+1/share/texmf-texlive-dist/fonts/type1/urw/courier/ucrr8a.pfb></macports-1.9.1/
+share/texmf-texlive-dist/fonts/type1/urw/times/utmb8a.pfb></macports-1.9.1/shar
+e/texmf-texlive-dist/fonts/type1/urw/times/utmbi8a.pfb></macports-1.9.1/share/t
+exmf-texlive-dist/fonts/type1/urw/times/utmr8a.pfb></macports-1.9.1/share/texmf
+-texlive-dist/fonts/type1/urw/times/utmri8a.pfb>
+Output written on bare_conf.pdf (10 pages, 329509 bytes).
 PDF statistics:
- 114 PDF objects out of 1000 (max. 8388607)
- 80 compressed objects within 1 object stream
+ 122 PDF objects out of 1000 (max. 8388607)
+ 86 compressed objects within 1 object stream
  0 named destinations out of 1000 (max. 500000)
  11 words of extra memory for PDF output out of 10000 (max. 10000000)
 
