@@ -13,12 +13,12 @@
 \begin{figure*}[t!]
   \centering
 \begin{verbatim}
- % scevgep = getelementptr [1000 x <1000 x float>]* %A, i64 0, i64 %3
- % scevgep10 = bitcast <1000 x float>* %scevgep to i8*
- % uglygep = getelementptr i8* %scevgep10, i64 4
- % scevgep11 = getelementptr [1000 x <1000 x float>]* %B, i64 0, i64 %3
- % scevgep1112 = bitcast <1000 x float>* %scevgep11 to i8*
- % ugep13 = getelementptr i8* %scevgep1112, i64 4
+ %scevgep = getelementptr [1000 x <1000 x float>]* %A, i64 0, i64 %3
+ %scevgep10 = bitcast <1000 x float>* %scevgep to i8*
+ %ugep = getelementptr i8* %scevgep10, i64 4
+ %scevgep11 = getelementptr [1000 x <1000 x float>]* %B, i64 0, i64 %3
+ %scevgep1112 = bitcast <1000 x float>* %scevgep11 to i8*
+ %ugep13 = getelementptr i8* %scevgep1112, i64 4
  call void @llvm.memcpy.p0i8.p0i8.i64(i8* %ugep,i8* %ugep13,i64 3996,i32 4,i1 false)
 \end{verbatim}
   \caption{LLVM code for assignment statement \texttt{4} from

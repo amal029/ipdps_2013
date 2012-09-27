@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.1415926-2.4-1.40.13 (TeX Live 2012/MacPorts 2012_3) (format=pdflatex 2012.8.6)  27 SEP 2012 11:43
+This is pdfTeX, Version 3.1415926-2.4-1.40.13 (TeX Live 2012/MacPorts 2012_3) (format=pdflatex 2012.8.6)  27 SEP 2012 13:40
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -178,7 +178,11 @@ G,.JBIG2,.JB2,.eps]
 g
 File: epstopdf-sys.cfg 2010/07/13 v1.3 Configuration of (r)epstopdf for TeX Liv
 e
-))) (./bare_conf.aux)
+))) (./bare_conf.aux
+
+LaTeX Warning: Label `fig:7' multiply defined.
+
+)
 \openout1 = `bare_conf.aux'.
 
 LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 213.
@@ -193,8 +197,7 @@ LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 213.
 LaTeX Font Info:    ... okay on input line 213.
 LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 213.
 LaTeX Font Info:    ... okay on input line 213.
-
-(/macports-1.9.1/share/texmf-texlive-dist/tex/context/base/supp-pdf.mkii
+ (/macports-1.9.1/share/texmf-texlive-dist/tex/context/base/supp-pdf.mkii
 [Loading MPS to PDF converter (version 2006.09.02).]
 \scratchcounter=\count92
 \scratchdimen=\dimen119
@@ -242,10 +245,10 @@ Overfull \hbox (1.62643pt too wide) detected at line 439
 
 (./task_graph.tex (./figures/jacobi2d.pstex_t
 Package epstopdf Info: Source file: <./figures/jacobi2d.eps>
-(epstopdf)                    date: 2012-09-27 11:42:11
+(epstopdf)                    date: 2012-09-27 13:32:36
 (epstopdf)                    size: 32483 bytes
 (epstopdf)             Output file: <./figures/jacobi2d-eps-converted-to.pdf>
-(epstopdf)                    date: 2012-09-27 11:42:43
+(epstopdf)                    date: 2012-09-27 13:36:46
 (epstopdf)                    size: 20648 bytes
 (epstopdf)             Command: <repstopdf --outfile=./figures/jacobi2d-eps-con
 verted-to.pdf ./figures/jacobi2d.eps>
@@ -267,10 +270,34 @@ LaTeX Font Info:    External font `cmex10' loaded for size
 ) [3]
 Underfull \vbox (badness 10000) has occurred while \output is active []
 
- [4 <./figures/jacobi2d-eps-converted-to.pdf>]) (./resource_graph.tex [5]
-Underfull \hbox (badness 1584) in paragraph at lines 128--144
-[]\OT1/ptm/m/n/10 For the topol-ogy in Fig-ure 4[], we first cal-cu-late
+ [4 <./figures/jacobi2d-eps-converted-to.pdf>]) (./resource_graph.tex
+(./figures/dendrogram.pstex_t
+Package epstopdf Info: Source file: <./figures/dendrogram.eps>
+(epstopdf)                    date: 2012-09-27 13:39:02
+(epstopdf)                    size: 7745 bytes
+(epstopdf)             Output file: <./figures/dendrogram-eps-converted-to.pdf>
+
+(epstopdf)                    date: 2012-09-27 13:39:18
+(epstopdf)                    size: 6717 bytes
+(epstopdf)             Command: <repstopdf --outfile=./figures/dendrogram-eps-c
+onverted-to.pdf ./figures/dendrogram.eps>
+(epstopdf)             \includegraphics on input line 2.
+Package epstopdf Info: Output file is already uptodate.
+
+<./figures/dendrogram-eps-converted-to.pdf, id=40, 1117.17375pt x 386.44376pt>
+File: ./figures/dendrogram-eps-converted-to.pdf Graphic file (type pdf)
+
+<use ./figures/dendrogram-eps-converted-to.pdf>
+Package pdftex.def Info: ./figures/dendrogram-eps-converted-to.pdf used on inpu
+t line 2.
+(pdftex.def)             Requested size: 1117.17104pt x 386.44281pt.
+) [5]
+Underfull \hbox (badness 1584) in paragraph at lines 136--152
+[]\OT1/ptm/m/n/10 For the topol-ogy in Fig-ure 5[], we first cal-cu-late
  []
+
+
+Underfull \vbox (badness 6188) has occurred while \output is active []
 
 Package epstopdf Info: Source file: <./figures/resource.eps>
 (epstopdf)                    date: 2012-09-24 18:20:07
@@ -280,20 +307,36 @@ Package epstopdf Info: Source file: <./figures/resource.eps>
 (epstopdf)                    size: 90475 bytes
 (epstopdf)             Command: <repstopdf --outfile=./figures/resource-eps-con
 verted-to.pdf ./figures/resource.eps>
-(epstopdf)             \includegraphics on input line 163.
+(epstopdf)             \includegraphics on input line 171.
 Package epstopdf Info: Output file is already uptodate.
-<./figures/resource-eps-converted-to.pdf, id=43, 567.11874pt x 716.6775pt>
+
+<./figures/resource-eps-converted-to.pdf, id=44, 567.11874pt x 716.6775pt>
 File: ./figures/resource-eps-converted-to.pdf Graphic file (type pdf)
 
 <use ./figures/resource-eps-converted-to.pdf>
 Package pdftex.def Info: ./figures/resource-eps-converted-to.pdf used on input 
-line 163.
+line 171.
 (pdftex.def)             Requested size: 243.85631pt x 308.16533pt.
+ [6 <./figures/dendrogram-eps-converted-to.pdf>]) (./implementation.tex (./figu
+res/dendrogram.pstex_t
+Package epstopdf Info: Source file: <./figures/dendrogram.eps>
+(epstopdf)                    date: 2012-09-27 13:39:02
+(epstopdf)                    size: 7745 bytes
+(epstopdf)             Output file: <./figures/dendrogram-eps-converted-to.pdf>
 
-Underfull \vbox (badness 10000) has occurred while \output is active []
+(epstopdf)                    date: 2012-09-27 13:39:18
+(epstopdf)                    size: 6717 bytes
+(epstopdf)             Command: <repstopdf --outfile=./figures/dendrogram-eps-c
+onverted-to.pdf ./figures/dendrogram.eps>
+(epstopdf)             \includegraphics on input line 2.
+Package epstopdf Info: Output file is already uptodate.
+File: ./figures/dendrogram-eps-converted-to.pdf Graphic file (type pdf)
 
- [6 <./figures/resource-eps-converted-to.pdf>]) (./implementation.tex) [7]
-(./bare_conf.bbl [8]
+<use ./figures/dendrogram-eps-converted-to.pdf>
+Package pdftex.def Info: ./figures/dendrogram-eps-converted-to.pdf used on inpu
+t line 2.
+(pdftex.def)             Requested size: 1117.17104pt x 386.44281pt.
+) [7 <./figures/resource-eps-converted-to.pdf>]) (./bare_conf.bbl [8] [9]
 Underfull \hbox (badness 1735) in paragraph at lines 199--203
 []\OT1/ptm/m/n/9 K. Devine, E. Bo-man, L. Riesen, U. Catalyurek, and
  []
@@ -310,38 +353,44 @@ Before submitting the final camera ready copy, remember to:
  uses only Type 1 fonts and that every step in the generation
  process uses the appropriate paper size.
 
-[9] (./bare_conf.aux) ) 
+[10
+
+] (./bare_conf.aux)
+
+LaTeX Warning: There were multiply-defined labels.
+
+ ) 
 Here is how much of TeX's memory you used:
- 2371 strings out of 494763
- 38234 string characters out of 3170658
- 102571 words of memory out of 3000000
- 5552 multiletter control sequences out of 15000+200000
- 39830 words of font info for 77 fonts, out of 3000000 for 9000
+ 2385 strings out of 494763
+ 38608 string characters out of 3170658
+ 102618 words of memory out of 3000000
+ 5560 multiletter control sequences out of 15000+200000
+ 39999 words of font info for 78 fonts, out of 3000000 for 9000
  134 hyphenation exceptions out of 8191
- 42i,10n,23p,315b,301s stack positions out of 5000i,500n,10000p,200000b,50000s
-{/macports-1.9.1/share/texmf-texlive-dist/fonts/enc/dvip
-s/base/8r.enc}</macports-1.9.1/share/texmf-texlive-dist/fonts/type1/public/amsf
-onts/cm/cmex10.pfb></macports-1.9.1/share/texmf-texlive-dist/fonts/type1/public
-/amsfonts/cm/cmmi10.pfb></macports-1.9.1/share/texmf-texlive-dist/fonts/type1/p
-ublic/amsfonts/cm/cmmi12.pfb></macports-1.9.1/share/texmf-texlive-dist/fonts/ty
-pe1/public/amsfonts/cm/cmmi5.pfb></macports-1.9.1/share/texmf-texlive-dist/font
-s/type1/public/amsfonts/cm/cmmi7.pfb></macports-1.9.1/share/texmf-texlive-dist/
-fonts/type1/public/amsfonts/cm/cmr10.pfb></macports-1.9.1/share/texmf-texlive-d
-ist/fonts/type1/public/amsfonts/cm/cmr12.pfb></macports-1.9.1/share/texmf-texli
-ve-dist/fonts/type1/public/amsfonts/cm/cmr7.pfb></macports-1.9.1/share/texmf-te
-xlive-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb></macports-1.9.1/share/tex
-mf-texlive-dist/fonts/type1/public/amsfonts/cm/cmsy5.pfb></macports-1.9.1/share
-/texmf-texlive-dist/fonts/type1/public/amsfonts/cm/cmsy7.pfb></macports-1.9.1/s
-hare/texmf-texlive-dist/fonts/type1/public/amsfonts/cm/cmtt10.pfb></macports-1.
-9.1/share/texmf-texlive-dist/fonts/type1/urw/courier/ucrr8a.pfb></macports-1.9.
-1/share/texmf-texlive-dist/fonts/type1/urw/times/utmb8a.pfb></macports-1.9.1/sh
-are/texmf-texlive-dist/fonts/type1/urw/times/utmbi8a.pfb></macports-1.9.1/share
-/texmf-texlive-dist/fonts/type1/urw/times/utmr8a.pfb></macports-1.9.1/share/tex
-mf-texlive-dist/fonts/type1/urw/times/utmri8a.pfb>
-Output written on bare_conf.pdf (9 pages, 329421 bytes).
+ 42i,11n,23p,315b,301s stack positions out of 5000i,500n,10000p,200000b,50000s
+{/macports-1.9.1/share/texmf-texlive-dist/fonts/enc/dvips/base/8r.enc}</macpo
+rts-1.9.1/share/texmf-texlive-dist/fonts/type1/public/amsfonts/cm/cmex10.pfb></
+macports-1.9.1/share/texmf-texlive-dist/fonts/type1/public/amsfonts/cm/cmmi10.p
+fb></macports-1.9.1/share/texmf-texlive-dist/fonts/type1/public/amsfonts/cm/cmm
+i12.pfb></macports-1.9.1/share/texmf-texlive-dist/fonts/type1/public/amsfonts/c
+m/cmmi5.pfb></macports-1.9.1/share/texmf-texlive-dist/fonts/type1/public/amsfon
+ts/cm/cmmi7.pfb></macports-1.9.1/share/texmf-texlive-dist/fonts/type1/public/am
+sfonts/cm/cmr10.pfb></macports-1.9.1/share/texmf-texlive-dist/fonts/type1/publi
+c/amsfonts/cm/cmr12.pfb></macports-1.9.1/share/texmf-texlive-dist/fonts/type1/p
+ublic/amsfonts/cm/cmr7.pfb></macports-1.9.1/share/texmf-texlive-dist/fonts/type
+1/public/amsfonts/cm/cmsy10.pfb></macports-1.9.1/share/texmf-texlive-dist/fonts
+/type1/public/amsfonts/cm/cmsy5.pfb></macports-1.9.1/share/texmf-texlive-dist/f
+onts/type1/public/amsfonts/cm/cmsy7.pfb></macports-1.9.1/share/texmf-texlive-di
+st/fonts/type1/public/amsfonts/cm/cmtt10.pfb></macports-1.9.1/share/texmf-texli
+ve-dist/fonts/type1/urw/courier/ucrr8a.pfb></macports-1.9.1/share/texmf-texlive
+-dist/fonts/type1/urw/times/utmb8a.pfb></macports-1.9.1/share/texmf-texlive-dis
+t/fonts/type1/urw/times/utmbi8a.pfb></macports-1.9.1/share/texmf-texlive-dist/f
+onts/type1/urw/times/utmr8a.pfb></macports-1.9.1/share/texmf-texlive-dist/fonts
+/type1/urw/times/utmri8a.pfb>
+Output written on bare_conf.pdf (10 pages, 336874 bytes).
 PDF statistics:
- 119 PDF objects out of 1000 (max. 8388607)
- 84 compressed objects within 1 object stream
+ 128 PDF objects out of 1000 (max. 8388607)
+ 90 compressed objects within 1 object stream
  0 named destinations out of 1000 (max. 500000)
- 11 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 16 words of extra memory for PDF output out of 10000 (max. 10000000)
 

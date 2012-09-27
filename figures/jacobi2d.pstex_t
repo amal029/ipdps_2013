@@ -21,7 +21,7 @@
 }}}}
 \put(12241,-13451){\makebox(0,0)[b]{\smash{{\SetFigFont{14}{16.8}{\rmdefault}{\mddefault}{\updefault}{\color[rgb]{0,0,0}(A[i,j] ) = (Float32)i x (Float32)j + Float32 2.0 + Float32 2.0 x Float32 0.001}%
 }}}}
-\put(6151,-20086){\makebox(0,0)[b]{\smash{{\SetFigFont{14}{16.8}{\rmdefault}{\bfdefault}{\updefault}{\color[rgb]{0,0,0}$R^4_0: 1$}%
+\put(6151,-20086){\makebox(0,0)[b]{\smash{{\SetFigFont{14}{16.8}{\rmdefault}{\bfdefault}{\updefault}{\color[rgb]{0,0,0}$R^4_0: 1000$}%
 }}}}
 \put(6161,-19811){\makebox(0,0)[b]{\smash{{\SetFigFont{14}{16.8}{\rmdefault}{\mddefault}{\updefault}{\color[rgb]{0,0,0}(A[i,j] ) = B[i,j]}%
 }}}}

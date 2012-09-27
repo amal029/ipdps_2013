@@ -1,6 +1,15 @@
 \section{Implementation}
 \label{sec:imple}
 
+
+\begin{figure*}[t!]
+  \centering
+  % \includegraphics[scale=0.42]{./figures/jacobi2d}
+  \scalebox{0.4}{\input{./figures/dendrogram.pstex_t}}
+  \caption{The dendrogram for Figure~\ref{fig:res}}
+  \label{fig:7}
+\end{figure*}
+
 We use the Metis~\cite{gkar95} graph partitioning library to implement
 our partitioning algorithm. We are not tied to Metis and any other graph
 partitioner such as Zoltan~\cite{kdev09} or Scotch~\cite{cche08} can be
