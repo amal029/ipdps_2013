@@ -5,7 +5,7 @@
 \begin{figure*}[t!]
   % \centering
   % \includegraphics[scale=0.42]{./figures/jacobi2d}
-  \scalebox{0.42}{\input{./figures/jacobi2d.pstex_t}}
+  \scalebox{0.4}{\input{./figures/jacobi2d.pstex_t}}
   \caption{The task graph for the Jacobi example}
   \label{fig:1}
 \end{figure*}
@@ -18,8 +18,8 @@
  % uglygep = getelementptr i8* %scevgep10, i64 4
  % scevgep11 = getelementptr [1000 x <1000 x float>]* %B, i64 0, i64 %3
  % scevgep1112 = bitcast <1000 x float>* %scevgep11 to i8*
- % uglygep13 = getelementptr i8* %scevgep1112, i64 4
- call void @llvm.memcpy.p0i8.p0i8.i64(i8* %uglygep,i8* %uglygep13,i64 3996,i32 4,i1 false)
+ % ugep13 = getelementptr i8* %scevgep1112, i64 4
+ call void @llvm.memcpy.p0i8.p0i8.i64(i8* %ugep,i8* %ugep13,i64 3996,i32 4,i1 false)
 \end{verbatim}
   \caption{LLVM code for assignment statement \texttt{4} from
     Figure~\ref{fig:2}}
