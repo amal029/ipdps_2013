@@ -1,9 +1,15 @@
-This is pdfTeX, Version 3.1415926-2.4-1.40.13 (TeX Live 2012/MacPorts 2012_3) (format=pdflatex 2012.8.6)  26 SEP 2012 22:53
+This is pdfTeX, Version 3.1415926-2.4-1.40.13 (TeX Live 2012/MacPorts 2012_3) (format=pdflatex 2012.8.6)  27 SEP 2012 08:38
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
-**\input bare_conf.tex
-(./bare_conf.tex (./IEEEtran.cls
+**bare_conf.tex
+(./bare_conf.tex
+LaTeX2e <2011/06/27>
+Babel <v3.8m> and hyphenation patterns for english, dumylang, nohyphenation, cz
+ech, slovak, dutch, ukenglish, usenglishmax, basque, french, german-x-2012-05-3
+0, ngerman-x-2012-05-30, german, ngerman, swissgerman, italian, polish, portugu
+ese, spanish, catalan, galician, loaded.
+(./IEEEtran.cls
 Document Class: IEEEtran 2007/03/05 V1.7a by Michael Shell
 -- See the "IEEEtran_HOWTO" manual for usage information.
 -- http://www.michaelshell.org/tex/ieeetran/
@@ -127,51 +133,9 @@ File: color.cfg 2007/01/18 v1.5 color configuration of teTeX/TeXLive
 )
 Package color Info: Driver file: pdftex.def on input line 130.
 )
-(./bare_conf.aux)
-\openout1 = `bare_conf.aux'.
+(/macports-1.9.1/share/texmf-texlive-dist/tex/latex/oberdiek/epstopdf.sty
+Package: epstopdf 2010/02/09 v2.5 Conversion with epstopdf on the fly (HO)
 
-LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 210.
-LaTeX Font Info:    ... okay on input line 210.
-LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 210.
-LaTeX Font Info:    ... okay on input line 210.
-LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 210.
-LaTeX Font Info:    ... okay on input line 210.
-LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 210.
-LaTeX Font Info:    ... okay on input line 210.
-LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 210.
-LaTeX Font Info:    ... okay on input line 210.
-LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 210.
-LaTeX Font Info:    ... okay on input line 210.
-
-(/macports-1.9.1/share/texmf-texlive-dist/tex/context/base/supp-pdf.mkii
-[Loading MPS to PDF converter (version 2006.09.02).]
-\scratchcounter=\count92
-\scratchdimen=\dimen119
-\scratchbox=\box27
-\nofMPsegments=\count93
-\nofMParguments=\count94
-\everyMPshowfont=\toks16
-\MPscratchCnt=\count95
-\MPscratchDim=\dimen120
-\MPnumerator=\count96
-\makeMPintoPDFobject=\count97
-\everyMPtoPDFconversion=\toks17
-) (/macports-1.9.1/share/texmf-texlive-dist/tex/generic/oberdiek/pdftexcmds.sty
-Package: pdftexcmds 2011/11/29 v0.20 Utility functions of pdfTeX for LuaTeX (HO
-)
-(/macports-1.9.1/share/texmf-texlive-dist/tex/generic/oberdiek/ifluatex.sty
-Package: ifluatex 2010/03/01 v1.3 Provides the ifluatex switch (HO)
-Package ifluatex Info: LuaTeX not detected.
-)
-(/macports-1.9.1/share/texmf-texlive-dist/tex/generic/oberdiek/ifpdf.sty
-Package: ifpdf 2011/01/30 v2.3 Provides the ifpdf switch (HO)
-Package ifpdf Info: pdfTeX in PDF mode is detected.
-)
-Package pdftexcmds Info: LuaTeX not detected.
-Package pdftexcmds Info: \pdf@primitive is available.
-Package pdftexcmds Info: \pdf@ifprimitive is available.
-Package pdftexcmds Info: \pdfdraftmode found.
-)
 (/macports-1.9.1/share/texmf-texlive-dist/tex/latex/oberdiek/epstopdf-base.sty
 Package: epstopdf-base 2010/02/09 v2.5 Base part for package epstopdf
 
@@ -188,11 +152,29 @@ Package: kvsetkeys 2012/04/25 v1.16 Key value parser (HO)
 
 (/macports-1.9.1/share/texmf-texlive-dist/tex/generic/oberdiek/etexcmds.sty
 Package: etexcmds 2011/02/16 v1.5 Avoid name clashes with e-TeX commands (HO)
+
+(/macports-1.9.1/share/texmf-texlive-dist/tex/generic/oberdiek/ifluatex.sty
+Package: ifluatex 2010/03/01 v1.3 Provides the ifluatex switch (HO)
+Package ifluatex Info: LuaTeX not detected.
+)
 Package etexcmds Info: Could not find \expanded.
 (etexcmds)             That can mean that you are not using pdfTeX 1.50 or
 (etexcmds)             that some package has redefined \expanded.
 (etexcmds)             In the latter case, load this package earlier.
-)))
+))) (/macports-1.9.1/share/texmf-texlive-dist/tex/generic/oberdiek/pdftexcmds.s
+ty
+Package: pdftexcmds 2011/11/29 v0.20 Utility functions of pdfTeX for LuaTeX (HO
+)
+
+(/macports-1.9.1/share/texmf-texlive-dist/tex/generic/oberdiek/ifpdf.sty
+Package: ifpdf 2011/01/30 v2.3 Provides the ifpdf switch (HO)
+Package ifpdf Info: pdfTeX in PDF mode is detected.
+)
+Package pdftexcmds Info: LuaTeX not detected.
+Package pdftexcmds Info: \pdf@primitive is available.
+Package pdftexcmds Info: \pdf@ifprimitive is available.
+Package pdftexcmds Info: \pdfdraftmode found.
+)
 Package grfext Info: Graphics extension search list:
 (grfext)             [.png,.pdf,.jpg,.mps,.jpeg,.jbig2,.jb2,.PNG,.PDF,.JPG,.JPE
 G,.JBIG2,.JB2,.eps]
@@ -202,11 +184,40 @@ G,.JBIG2,.JB2,.eps]
 g
 File: epstopdf-sys.cfg 2010/07/13 v1.3 Configuration of (r)epstopdf for TeX Liv
 e
-))
-LaTeX Font Info:    Font shape `OT1/ptm/bx/n' in size <14> not available
-(Font)              Font shape `OT1/ptm/b/n' tried instead on input line 266.
+))) (./bare_conf.aux)
+\openout1 = `bare_conf.aux'.
 
-Underfull \hbox (badness 1448) in paragraph at lines 304--307
+LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 213.
+LaTeX Font Info:    ... okay on input line 213.
+LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 213.
+LaTeX Font Info:    ... okay on input line 213.
+LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 213.
+LaTeX Font Info:    ... okay on input line 213.
+LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 213.
+LaTeX Font Info:    ... okay on input line 213.
+LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 213.
+LaTeX Font Info:    ... okay on input line 213.
+LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 213.
+LaTeX Font Info:    ... okay on input line 213.
+
+(/macports-1.9.1/share/texmf-texlive-dist/tex/context/base/supp-pdf.mkii
+[Loading MPS to PDF converter (version 2006.09.02).]
+\scratchcounter=\count92
+\scratchdimen=\dimen119
+\scratchbox=\box27
+\nofMPsegments=\count93
+\nofMParguments=\count94
+\everyMPshowfont=\toks16
+\MPscratchCnt=\count95
+\MPscratchDim=\dimen120
+\MPnumerator=\count96
+\makeMPintoPDFobject=\count97
+\everyMPtoPDFconversion=\toks17
+)
+LaTeX Font Info:    Font shape `OT1/ptm/bx/n' in size <14> not available
+(Font)              Font shape `OT1/ptm/b/n' tried instead on input line 269.
+
+Underfull \hbox (badness 1448) in paragraph at lines 307--310
 []\OT1/ptm/b/it/9 Keywords\OT1/ptm/b/n/9 -Graph par-ti-tion-ing, vec-tor-iza-ti
 on, data par-al-
  []
@@ -231,16 +242,28 @@ Underfull \vbox (badness 4543) has occurred while \output is active []
 
 
 ]) (./related_work.tex) [2]
-Overfull \hbox (1.62643pt too wide) detected at line 436
+Overfull \hbox (1.62643pt too wide) detected at line 439
 [][]
  []
 
-(./task_graph.tex (./figures/jacobi2d.pdf_t
-<./figures/jacobi2d.pdf, id=19, 1391.1975pt x 1400.23125pt>
-File: ./figures/jacobi2d.pdf Graphic file (type pdf)
+(./task_graph.tex (./figures/jacobi2d.pstex_t
+Package epstopdf Info: Source file: <./figures/jacobi2d.eps>
+(epstopdf)                    date: 2012-09-27 08:25:28
+(epstopdf)                    size: 32566 bytes
+(epstopdf)             Output file: <./figures/jacobi2d-eps-converted-to.pdf>
+(epstopdf)                    date: 2012-09-27 08:38:13
+(epstopdf)                    size: 20707 bytes
+(epstopdf)             Command: <repstopdf --outfile=./figures/jacobi2d-eps-con
+verted-to.pdf ./figures/jacobi2d.eps>
+(epstopdf)             \includegraphics on input line 2.
+Package epstopdf Info: Output file is already uptodate.
 
-<use ./figures/jacobi2d.pdf>
-Package pdftex.def Info: ./figures/jacobi2d.pdf used on input line 2.
+<./figures/jacobi2d-eps-converted-to.pdf, id=19, 1391.1975pt x 1400.23125pt>
+File: ./figures/jacobi2d-eps-converted-to.pdf Graphic file (type pdf)
+
+<use ./figures/jacobi2d-eps-converted-to.pdf>
+Package pdftex.def Info: ./figures/jacobi2d-eps-converted-to.pdf used on input 
+line 2.
 (pdftex.def)             Requested size: 1391.1941pt x 1400.22784pt.
 LaTeX Font Info:    Calculating math sizes for size <14> on input line 19.
 LaTeX Font Info:    External font `cmex10' loaded for size
@@ -264,7 +287,7 @@ Underfull \vbox (badness 10000) has occurred while \output is active []
 
 Underfull \vbox (badness 10000) has occurred while \output is active []
 
- [4 <./figures/jacobi2d.pdf>]) (./resource_graph.tex [5]
+ [4 <./figures/jacobi2d-eps-converted-to.pdf>]) (./resource_graph.tex [5]
 Underfull \hbox (badness 1584) in paragraph at lines 128--144
 []\OT1/ptm/m/n/10 For the topol-ogy in Fig-ure 4[], we first cal-cu-late
  []
@@ -308,13 +331,13 @@ Before submitting the final camera ready copy, remember to:
 
 ] (./bare_conf.aux) ) 
 Here is how much of TeX's memory you used:
- 2365 strings out of 494763
- 37953 string characters out of 3170658
- 102617 words of memory out of 3000000
- 5548 multiletter control sequences out of 15000+200000
+ 2371 strings out of 494763
+ 38234 string characters out of 3170658
+ 103571 words of memory out of 3000000
+ 5552 multiletter control sequences out of 15000+200000
  39830 words of font info for 77 fonts, out of 3000000 for 9000
  134 hyphenation exceptions out of 8191
- 38i,10n,23p,308b,301s stack positions out of 5000i,500n,10000p,200000b,50000s
+ 42i,10n,23p,308b,301s stack positions out of 5000i,500n,10000p,200000b,50000s
 {/macports-1.9.1/share/texmf-texlive-dist/fonts/enc/dvips/
 base/8r.enc}</macports-1.9.1/share/texmf-texlive-dist/fonts/type1/public/amsfon
 ts/cm/cmex10.pfb></macports-1.9.1/share/texmf-texlive-dist/fonts/type1/public/a
@@ -334,7 +357,7 @@ share/texmf-texlive-dist/fonts/type1/urw/times/utmb8a.pfb></macports-1.9.1/shar
 e/texmf-texlive-dist/fonts/type1/urw/times/utmbi8a.pfb></macports-1.9.1/share/t
 exmf-texlive-dist/fonts/type1/urw/times/utmr8a.pfb></macports-1.9.1/share/texmf
 -texlive-dist/fonts/type1/urw/times/utmri8a.pfb>
-Output written on bare_conf.pdf (10 pages, 329509 bytes).
+Output written on bare_conf.pdf (10 pages, 329521 bytes).
 PDF statistics:
  122 PDF objects out of 1000 (max. 8388607)
  86 compressed objects within 1 object stream
