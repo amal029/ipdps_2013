@@ -38,45 +38,45 @@ I'm skipping whatever remains of this entry
 Warning--empty institution in gkar95
 
 Done.
-You've used 30 entries,
+You've used 29 entries,
             4024 wiz_defined-function locations,
-            1023 strings with 14226 characters,
-and the built_in function-call counts, 24809 in all, are:
-= -- 2002
-> -- 582
-< -- 207
-+ -- 315
-- -- 98
-* -- 1235
-:= -- 3691
-add.period$ -- 65
-call.type$ -- 30
-change.case$ -- 31
-chr.to.int$ -- 498
-cite$ -- 31
-duplicate$ -- 1760
-empty$ -- 2030
-format.name$ -- 122
-if$ -- 5741
+            1014 strings with 13867 characters,
+and the built_in function-call counts, 23465 in all, are:
+= -- 1901
+> -- 553
+< -- 193
++ -- 299
+- -- 94
+* -- 1164
+:= -- 3517
+add.period$ -- 62
+call.type$ -- 29
+change.case$ -- 30
+chr.to.int$ -- 462
+cite$ -- 30
+duplicate$ -- 1671
+empty$ -- 1903
+format.name$ -- 117
+if$ -- 5412
 int.to.chr$ -- 0
-int.to.str$ -- 30
-missing$ -- 315
-newline$ -- 137
-num.names$ -- 30
-pop$ -- 717
+int.to.str$ -- 29
+missing$ -- 302
+newline$ -- 132
+num.names$ -- 29
+pop$ -- 682
 preamble$ -- 1
 purify$ -- 0
 quote$ -- 2
-skip$ -- 1903
+skip$ -- 1799
 stack$ -- 0
-substring$ -- 1196
-swap$ -- 1471
-text.length$ -- 41
+substring$ -- 1110
+swap$ -- 1398
+text.length$ -- 39
 text.prefix$ -- 0
 top$ -- 5
-type$ -- 30
+type$ -- 29
 warning$ -- 1
-while$ -- 114
-width$ -- 32
-write$ -- 346
+while$ -- 106
+width$ -- 31
+write$ -- 333
 (There were 6 error messages)

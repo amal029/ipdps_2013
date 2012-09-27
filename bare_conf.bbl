@@ -171,17 +171,6 @@ C.~Lattner and V.~Adve, ``{LLVM: A Compilation Framework for Lifelong Program
   International Symposium on Code Generation and Optimization (CGO'04)}}, Palo
   Alto, California, Mar 2004.
 
-\bibitem{fsar11}
-\BIBentryALTinterwordspacing
-S.~M. Farhad, Y.~Ko, B.~Burgstaller, and B.~Scholz, ``{Orchestration by
-  approximation: Mapping Stream Programs onto Multicore Architectures},'' in
-  \emph{Proceedings of the sixteenth international conference on Architectural
-  support for programming languages and operating systems}, ser. ASPLOS
-  '11.\hskip 1em plus 0.5em minus 0.4em\relax New York, NY, USA: ACM, 2011, pp.
-  357--368. [Online]. Available:
-  \url{http://doi.acm.org/10.1145/1950365.1950406}
-\BIBentrySTDinterwordspacing
-
 \bibitem{sski08}
 S.~S. Skiena, \emph{{The Algorithms Design Manual}}, 2nd~ed.\hskip 1em plus
   0.5em minus 0.4em\relax Springer-Verlag London, 2008.
@@ -209,11 +198,10 @@ C.~Chevalier and F.~Pellegrini, ``Pt-scotch: A tool for efficient parallel
   \url{http://dx.doi.org/10.1016/j.parco.2007.12.001}
 \BIBentrySTDinterwordspacing
 
-\bibitem{horsi06}
-H.~Orsila, T.~Kangas, E.~Salminen, and T.~Hamalainen, ``Parameterizing
-  simulated annealing for distributing task graphs on multiprocessor socs,'' in
-  \emph{System-on-Chip, 2006. International Symposium on}, nov. 2006, pp. 1
-  --4.
+\bibitem{mmar11}
+M.~M. Baldi, T.~G. Crainic, G.~Perboli, and R.~Tadei, ``{The Generalized Bin
+  Packing Problem},'' Interuniversity Research Centre on Enterprise Networks,
+  Logistics and Transportation, Tech. Rep., July 2011.
 
 \bibitem{tcra11}
 \BIBentryALTinterwordspacing

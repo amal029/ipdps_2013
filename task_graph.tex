@@ -5,7 +5,7 @@
 \begin{figure*}[t!]
   % \centering
   % \includegraphics[scale=0.42]{./figures/jacobi2d}
-  \scalebox{0.4}{\input{./figures/jacobi2d.pstex_t}}
+  \scalebox{0.45}{\input{./figures/jacobi2d.pstex_t}}
   \caption{The task graph for the Jacobi example}
   \label{fig:1}
 \end{figure*}
@@ -46,14 +46,15 @@ following manner:
 \item Every loop is fissed thereby forming multiple statements. The
   intuition behind fissing the loops is two fold: (a) task parallelism
   can be exploited by running independent loop statements separately on
-  different machines (see Figure~\ref{fig:1}) and (b) the graph
+  different machines (see Figure~\ref{fig:1}, where statements
+  \texttt{1} and \texttt{2} are split statements) and (b) the graph
   partitioner would give us feedback on the vector size of the loop,
   which can then be fused back if allocated to the same resource.
 
 \item The vector counts for each statement is determined using
   dependence analysis and using the polyhedral model~\cite{mgri98}. The
-  largest vector size requirement is given as the second constraint in
-  the task graph.
+  largest vector size requirement is given as the second requirement
+  ($T^i_1$) in the task graph.
 
 \item Finally, the polyhedral model is also used to find the iteration
   count of the statements and to determine the total amount of data (in

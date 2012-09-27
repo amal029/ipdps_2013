@@ -1,7 +1,6 @@
 \section{Implementation}
 \label{sec:imple}
 
-
 \begin{figure*}[t!]
   \centering
   % \includegraphics[scale=0.42]{./figures/jacobi2d}
@@ -28,32 +27,33 @@ or recursive graph partitioning. These are the only features of Metis
 that we required when implementing our algorithm. Metis provides a
 number of other features, which the readers can lookup in~\cite{gkar95}.
 
-\subsection{Clustering the resource-graph}
+\subsection{Clustering the resource-graph : building the dendrogram}
 \label{sec:clust-reso-graph}
 
 First we describe the formation of the resource cluster graph shown in
-Figure~\ref{fig:res}, given a resource-graph.
+Figure~\ref{fig:res} and its equivalent dendrogram representation in
+Figure~\ref{fig:7}.
 
 \begin{itemize}
 
 % \item The task-graph in Figure~\ref{fig:1}, is represented as an
 %   undirected graph in the Metis file format.
 
-\item The resource-graph is represented in the Metis graph format. We
+\item The resource graph is represented in the Metis graph format. We
   represent the PEs capabilities as constraints of the nodes and the
-  link's bandiwdths as communication volume on the edges.
+  link's bandwidths as communication weight on the edges.
 
 \item We then construct our clustered structure (Figure~\ref{fig:res})
   by asking for a 2-way partition at each level of the $log_2|V_r|$
-  height hierarchy. Metis partitions the graph by load balancing the
-  constraints and performing a minimum edge cut. The number of
-  partitions that Metis provides is bounded by $|V_r|/2$. Metis might
-  provide fewer than $|V_r|/2$ partitions, if they lead to a better
-  load-balance. In such a case, we continue with asking a 2-way
-  partition at further levels of the hierarchy, but the height of the
-  resultant hierarchical cluster is less than $log_2|V_r|$. Effective
-  computation and communication costs are calculated at each stage using
-  the formulation described in Section~\ref{sec:clustering-topology}.
+  height. Metis partitions the graph by load balancing the constraints
+  and performing a minimum edge cut. The number of partitions that Metis
+  provides is bounded by $|V_r|/2$. Metis might provide fewer than
+  $|V_r|/2$ partitions, if they lead to a better load-balance. In such a
+  case, we continue with asking a 2-way partition at further levels of
+  the hierarchy, but the height of the resultant hierarchical cluster is
+  less than $log_2|V_r|$. Effective computation and communication costs
+  are calculated at each stage using the formulation described in
+  Section~\ref{sec:clustering-topology}.
 
 \end{itemize}
 
@@ -70,38 +70,46 @@ follows:
 
 \begin{itemize}
 
-\item We start at the top most level (level 3, Figure~\ref{fig:res}) in
-  the resource-graph hierarchy, and request for the number of partitions
-  equal to that of the child nodes at the next level, usually a 2-way
-  partition.
+\item We start at the top most level (level 3, Figure~\ref{fig:res} or
+  Figure~\ref{fig:7}) in the resource-graph hierarchy, and request for
+  the number of partitions equal to that of the child nodes at the next
+  level, usually a 2-way partition. For example, all the task graph
+  nodes are first allocate to \texttt{A1} in Figure~\ref{fig:7}, we then
+  perform a 2-way partition of this graph onto nodes \texttt{A2} and
+  \texttt{B2}. All the task graph vertices allocated to \texttt{A2} are
+  then again re-partitioned onto the resource nodes \texttt{A1} and
+  \texttt{C1}, same for \texttt{B2} and so on and so forth.
 
 \item The capabilities of the resource graph are represented as ratios
   for each of the constraint as the `tp-weight' metric when partitioning
   the task graph using Metis. For example, consider the partitioning
-  onto the level 1 resource-graph in Figure~\ref{fig:res}. There are 4
+  onto the level 1 resource graph in Figure~\ref{fig:7}. There are 4
   contracted nodes. We generate two sets of `tp-weights', with 2
   elements each, one for each of the node sets contracted to form the
-  parent level (level-2, Figure~\ref{fig:res}). Each element in the set
-  represents the MIPS count and the vector capacity of the underlying
-  contracted node. Let us consider node \texttt{A2}, which is
-  effectively the contraction of nodes \texttt{C1} and
-  \texttt{A1}. Thus, the MIPS capacity element, of the `tp-weight' set
-  for weight set for the nodes \texttt{C1} and \texttt{A1} are
-  calculated as: {$\{C1^{MIPS}_{tpw} = R^{C1}_0/R^{C1}_0 + R^{A1}_0,
-    A1^{MIPS}_{tpw} = R^{C1}_0/R^{C1}_0 + R^{A1}_0\}$}. Same is done to
-  calculate the vector length capacity ratios. Since, the other two
-  nodes \texttt{B1} and \texttt{D1} are contracted to form the second
-  parent in level 2, \texttt{B2}, we end up with two sets of
-  `tp-weights'.
+  parent level (level-2, Figure~\ref{fig:res} and
+  Figure~\ref{fig:7}). Each element in the set represents the MIPS count
+  and the vector capacity of the underlying contracted node. Let us
+  consider node \texttt{A2}, which is effectively the contraction of
+  nodes \texttt{C1} and \texttt{A1}. Thus, the MIPS capacity element, of
+  the `tp-weight' set for weight set for the nodes \texttt{C1} and
+  \texttt{A1} are calculated as: {$\{C1^{MIPS}_{tpw} = R^{C1}_0/R^{C1}_0
+    + R^{A1}_0, A1^{MIPS}_{tpw} = R^{C1}_0/R^{C1}_0 + R^{A1}_0\}$}. Same
+  is done to calculate the vector length capacity ratios. Since, the
+  other two nodes \texttt{B1} and \texttt{D1} are contracted to form the
+  second parent in level 2, \texttt{B2}, we end up with two sets of
+  `tp-weights'. The MIPS and vector length ratios are shown in
+  Figure~\ref{fig:7}. These ratios make sure that the task nodes are
+  allocated to the correct resource graph node. An example allocation of
+  the heaviest task node (statement \texttt{3}) from Figure~\ref{fig:1},
+  is shown in Figure~\ref{fig:7}.
 
 \item As we go down on to each level we partition the task graph into
   smaller fine grained parts until we reach the lowest level. Note that
   the `tp-weight' sets are calculated for every level in the
   resource-graph hierarchy.
 
-\item Finally, the entire task graph is partitioned into sub graphs
-  where each of them are mapped onto a specific PE in the resource
-  graph.
+\item Finally, the entire task graph ends up being partitioned onto the
+  most appropriate PE in the resource-graph.
 
 \end{itemize}
 

@@ -1,14 +1,6 @@
 \subsection{Generating the resource graph}
 \label{sec:gener-reso-graph}
 
-\begin{figure*}[t!]
-  \centering
-  % \includegraphics[scale=0.42]{./figures/jacobi2d}
-  \scalebox{0.4}{\input{./figures/dendrogram.pstex_t}}
-  \caption{The dendrogram for Figure~\ref{fig:res}}
-  \label{fig:7}
-\end{figure*}
-
 The resource graph represents the cluster of compute nodes on which the
 task graph will be executed. There are a plethora of different
 architectures and topologies that an HPC architecture might be
@@ -23,15 +15,15 @@ communication. The properties of the resource graph are described below:
 
 \begin{itemize}
 
-\item \textbf{Compute nodes:} The compute nodes are assumed to belong
-  under two categories of processing units, mainly CPUs and
+\item \textbf{Compute nodes:} The compute nodes (PEs) are assumed to
+  belong under two categories of processing units, mainly CPUs and
   GPUs. Following the current trend, the CPUs have a larger MIPS
   count. The MIPS capacity of a PE is denoted by the first decoration
   $R^i_0, \forall i \in V_r$. The GPU nodes have a lower MIPS count, but
   have a large resident vector length, denoted by the second decoration
   $R^i_1, \forall i \in V_r$. For example, the first PE at level 0 is a
   CPU, since it has a small vector count and a large MIPS count, the
-  fifth PE on the other hand is a GPU, since the capacities are
+  first PE on the other hand is a GPU, since the capacities are
   reversed.
 
 
@@ -41,12 +33,13 @@ communication. The properties of the resource graph are described below:
   % much higher compared to that of a CPU. In Fig \ref{fig:res} $ R^1 $ is
   % a 'CPU' and $ R^5 $ is a 'GPU'.
 
-\item \textbf{Communication links:} In the resource graph shown in
+\item \textbf{Communication links:} The resource graph shown in
   Figure~\ref{fig:res} at level 0, follows a 2D mesh topology. In this
   topology the PEs are connected in a grid with individual communication
-  links between them. The bandwidth of these links is non
-  uniform. The different bandwidths on the communication links is
-  represented by the decoration $E^C$.
+  links between them. The bandwidth of these links is non uniform. The
+  different bandwidths on the communication links is represented by the
+  decoration $E^C$. Our framework can handle any kind of topology, the
+  2D mesh shown in Figure~\ref{fig:res}, is just an example topology.
 
 \end{itemize}
 
@@ -66,15 +59,11 @@ two fold:
 
 \begin{itemize}
 
-\item \textit{Heterogeneous K-way partitioning:} If we ignore
-  communication then the process of partitioning an application onto a
-  given architecture is equivalent to a heterogeneous K-way partitioning
-  problem. There have been successful attempts at using K-way
-  partitioning for solving the partitioning problems using multiple
-  different ILP formulations~\cite{fsar11}, but all have concentrated on
-  a homogeneous K-way partitioning problem. Hierarchically clustering a
-  heterogeneous topology such that the resulting hierarchy consists of
-  contracted PEs with equivalent compute constraints can reduce the
+\item \textit{Heterogeneous K-way partitioning:} The process of
+  partitioning an application onto a given architecture is equivalent to
+  a heterogeneous K-way partitioning problem. Hierarchically clustering
+  a heterogeneous topology such that the resulting hierarchy consists of
+  contracted PEs with equivalent compute capabilities can reduce the
   heterogeneous K-way partitioning problem to a homogeneous one.
 
 \item \textit{Considering communication links:} The communication can be
@@ -82,8 +71,8 @@ two fold:
   using the min-cut technique. Thus, a min-cut load-balancing of the PEs
   in a topology intuitively means: we are clustering together PEs, which
   have large bandwidth together into a single contracted node, while
-  making an attempt to load balance the two constraints: MIPS and vector
-  lengths.
+  making an attempt to load balance the two capabilities: MIPS and
+  vector lengths.
 
 \end{itemize}
 
@@ -103,12 +92,12 @@ build the hierarchy are as follows:
   R^i_0 + R^j_0$, and $R^k_1 = R^k_1 + R^j_1$. Without loss of
   generality we assume this for any $k = \{i,j,..,n\}, \forall n \in
   V_r$. This process is continued until we reach the top-level with just
-  2 contracted nodes. The resulting 2-node top-level architecture (as
-  seen in Figure~\ref{fig:res}) is a load-balanced. The reason for a
-  level based contraction, instead of contracting all nodes into a
-  single 2 node partition, is that when partitioning the application on
-  the resulting top-down cluster, we have fine grained details within
-  each of the contracted node.
+  1 contracted node. We end up with a load-balanced hierarchy, with each
+  level showing a larger amount of homogeneity, and a smaller number of
+  contracted PEs. The reason for a level based contraction, instead of
+  contracting all nodes into a single 2 node partition, is that when
+  partitioning the application on the resulting top-down cluster, we
+  have fine grained details within each of the contracted node.
 
   % \item Firstly, we form virtual representations of the resource graph
   %   by clustering the nodes. These virtual nodes are formed by min
@@ -133,22 +122,23 @@ build the hierarchy are as follows:
   in the topology. Once the nodes are contracted we use the bottleneck
   amongst these possible links as our effective bandwidth.
 
-  For the topology in Figure~\ref{fig:res}, we first calculate the best
-  possible paths between every pair of nodes \mbox{$(i,j) \in (V_r
-    \times V_r)$}. Now let us consider the example of the contracted
-  nodes \texttt{B1} and \texttt{C1}. Node $\mathtt{B1} = \{3, 8, 6\}$
-  and $\mathtt{C1} = \{2, 1\}$. Being an undirected graph with loss of
-  generality we can consider \texttt{B1} to be the source and
-  \texttt{C1} to be the destination. Hence, the worst path, in terms of
-  latency of data-transfer, following the all-pair Floyd-Warshall
-  algorithm, between nodes $3$ and $2$ within the contracted nodes is
-  given by the maximum latency path amongst the memoized best edges:
-  $max((3,2),\ (8,2),\ (6,2))$. Similar computation is carried out for
-  all link pairs in the contracted node with $1$ as the destination node
-  to find the minimum latency path. Finally, the addition of these two
-  latencies and its reciprocal gives us the effective bandwidth between
-  the two contracted nodes. This effective bandwidth is the overall
-  bottleneck between the two contracted nodes.
+  For the topology, at level 0, in Figure~\ref{fig:res}, we first
+  calculate the best possible paths between every pair of nodes
+  \mbox{$(i,j) \in (V_r \times V_r)$}. Now let us consider the example
+  of the contracted nodes \texttt{B1} and \texttt{C1}. Node \texttt{B1}
+  is a contraction of the set of children nodes $\{3, 8, 6\}$ and
+  \texttt{C1} is the contraction of the node set $\{2, 1\}$. Being an
+  undirected graph with loss of generality we can consider \texttt{B1}
+  to be the source and \texttt{C1} to be the destination. Hence, the
+  worst path, in terms of latency of data-transfer, following the
+  all-pair Floyd-Warshall algorithm, between nodes $3$ and $2$ within
+  the contracted nodes is given by the maximum latency path amongst the
+  memoized best edges: $max((3,2),\ (8,2),\ (6,2))$. Similar computation
+  is carried out for all link pairs in the contracted node with $1$ as
+  the destination node to find the minimum latency path. Finally, the
+  addition of these two latencies and its reciprocal gives us the
+  effective bandwidth between the two contracted nodes. This effective
+  bandwidth is the overall bottleneck between the two contracted nodes.
 
   % The communication bandwidth between the clustered nodes is determined
   % by,\\ ${ \sum ( \min for same destn ( \max bw R^i, R^j ) ) ) }$\\ The
@@ -186,17 +176,17 @@ The task partitioning on the resulting hierarchical cluster takes a
 top-down approach. We start with the task-graph extracted from the
 application (Figure~\ref{fig:1}). We then recursively partition the
 task-graph (using K-way partitioning) on the hierarchical cluster of the
-resource-graph. For the example topology cluster in
-Figure~\ref{fig:res}, we start by partitioning the task-graph in
-Figure~\ref{fig:1}, first into two (K=2) partitions considering two
-equally weighted compute nodes at level 2. Once a partition is obtained
-for this level, we move onto the next level (level 1), whereby all the
-task-graph nodes allocated onto node \texttt{A2} are further partitioned
-onto the nodes \texttt{A1} and \texttt{C1} (again K=2), which are
-coupled into the contracted node \texttt{A2}. This process is continued
-recursively for all contracted nodes until the final level (level
-0). During each partition we make sure that the task node requirements
-are closely matched to the resource node capacities.
+resource-graph. For the example cluster in Figure~\ref{fig:res}, we
+start by partitioning the task-graph in Figure~\ref{fig:1}, first into
+two (K=2) partitions considering two equally weighted compute nodes at
+level 2. Once a partition is obtained for this level, we move onto the
+next level (level 1), whereby all the task-graph nodes allocated onto
+node \texttt{A2} are further partitioned onto the nodes \texttt{A1} and
+\texttt{C1} (again K=2), which are coupled into the contracted node
+\texttt{A2}. This process is continued recursively for all contracted
+nodes until the final level (level 0). During each partition we make
+sure that the task node requirements are closely matched to the resource
+node capacities.
 
 % To partition the application we start with the top most level in the
 % resource graph and divide it according to the required virtual nodes at
@@ -211,11 +201,11 @@ Doing it in this top down manner carries two important consequences.
 \begin{itemize}
 
 \item \textit{Increase in the time complexity:} As stated previously,
-  the partitioning problem is equivalent to the K-way problem. The
-  multi-level K-way partitioning results in the worst cast time
-  complexity of $O(|E_t| \times log_2|V_r|)$~\cite{gkar98}. Our
-  algorithm gives a worst case complexity of \mbox{$O(log_2|V_r| \times
-    |E_t| \times log_2 |V_r|)$} when using the multi-level K-way
+  the partitioning problem is equivalent to the K-way partitioning
+  problem. The multi-level K-way partitioning results in the worst cast
+  time complexity of $O(|E_t| \times log_2|V_r|)$~\cite{gkar98}. Our
+  algorithm gives a worst case complexity of \mbox{$log_2|V_r| \times
+    O(|E_t| \times log_2 |V_r|)$} when using the multi-level K-way
   partitioning. But, in the average case the term $log_2|V_r|$ is
   inconsequential, since we ask for a balanced 2-way partition at all
   levels. Hence, the average case complexity is equal to the K-way
