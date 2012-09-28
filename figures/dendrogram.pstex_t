@@ -1,0 +1,27 @@
+\begin{picture}(0,0)%
+\includegraphics{./figures/dendrogram.eps}%
+\end{picture}%
+\setlength{\unitlength}{3947sp}%
+%
+\begingroup\makeatletter\ifx\SetFigFont\undefined%
+\gdef\SetFigFont#1#2#3#4#5{%
+  \reset@font\fontsize{#1}{#2pt}%
+  \fontfamily{#3}\fontseries{#4}\fontshape{#5}%
+  \selectfont}%
+\fi\endgroup%
+\begin{picture}(18535,6407)(-4418,-18158)
+\put(7066,-15420){\makebox(0,0)[lb]{\smash{{\SetFigFont{14}{16.8}{\rmdefault}{\bfdefault}{\updefault}{\color[rgb]{0,0,0}$C1^{VEC}_{tpw} = 0.9994$}%
+}}}}
+\put(1997,-15308){\makebox(0,0)[lb]{\smash{{\SetFigFont{14}{16.8}{\rmdefault}{\bfdefault}{\updefault}{\color[rgb]{0,0,0}$A1^{VEC}_{tpw}=0.0002$}%
+}}}}
+\put(1979,-14952){\makebox(0,0)[lb]{\smash{{\SetFigFont{14}{16.8}{\rmdefault}{\bfdefault}{\updefault}{\color[rgb]{0,0,0}$A1^{MIPS}_{tpw}=0.9997$}%
+}}}}
+\put(7029,-15017){\makebox(0,0)[lb]{\smash{{\SetFigFont{14}{16.8}{\rmdefault}{\bfdefault}{\updefault}{\color[rgb]{0,0,0}$C1^{MIPS}_{tpw} = 0.0002$}%
+}}}}
+\put(204,-13013){\makebox(0,0)[b]{\smash{{\SetFigFont{14}{16.8}{\rmdefault}{\mddefault}{\updefault}{\color[rgb]{0,0,0}(B[i,j] ) = Float32 0.2 x A[i,j] + A[i,j - Int32s 1] + A[i,j + Int32s 1] + A[i - Int32s 1,j]}%
+}}}}
+\put(204,-13613){\makebox(0,0)[b]{\smash{{\SetFigFont{14}{16.8}{\rmdefault}{\bfdefault}{\updefault}{\color[rgb]{0,0,0}$T^3_1: 0$}%
+}}}}
+\put(204,-13313){\makebox(0,0)[b]{\smash{{\SetFigFont{14}{16.8}{\rmdefault}{\bfdefault}{\updefault}{\color[rgb]{0,0,0}$T^3_0: 998001000$}%
+}}}}
+\end{picture}%

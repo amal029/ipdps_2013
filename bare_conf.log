@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.1415926-2.4-1.40.13 (TeX Live 2012/MacPorts 2012_3) (format=pdflatex 2012.8.6)  27 SEP 2012 16:05
+This is pdfTeX, Version 3.1415926-2.4-1.40.13 (TeX Live 2012/MacPorts 2012_3) (format=pdflatex 2012.8.6)  27 SEP 2012 20:34
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -361,7 +361,7 @@ re/texmf-texlive-dist/fonts/type1/urw/times/utmb8a.pfb></macports-1.9.1/share/t
 exmf-texlive-dist/fonts/type1/urw/times/utmbi8a.pfb></macports-1.9.1/share/texm
 f-texlive-dist/fonts/type1/urw/times/utmr8a.pfb></macports-1.9.1/share/texmf-te
 xlive-dist/fonts/type1/urw/times/utmri8a.pfb>
-Output written on bare_conf.pdf (9 pages, 325173 bytes).
+Output written on bare_conf.pdf (9 pages, 325244 bytes).
 PDF statistics:
  121 PDF objects out of 1000 (max. 8388607)
  85 compressed objects within 1 object stream
