@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.1415926-2.4-1.40.13 (TeX Live 2012/MacPorts 2012_3) (format=pdflatex 2012.8.6)  27 SEP 2012 20:34
+This is pdfTeX, Version 3.1415926-2.4-1.40.13 (TeX Live 2012/MacPorts 2012_3) (format=pdflatex 2012.8.6)  28 SEP 2012 18:28
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -246,10 +246,10 @@ Underfull \vbox (badness 10000) has occurred while \output is active []
 
 (./task_graph.tex (./figures/jacobi2d.pstex_t
 Package epstopdf Info: Source file: <./figures/jacobi2d.eps>
-(epstopdf)                    date: 2012-09-27 15:33:23
+(epstopdf)                    date: 2012-09-28 18:27:50
 (epstopdf)                    size: 32483 bytes
 (epstopdf)             Output file: <./figures/jacobi2d-eps-converted-to.pdf>
-(epstopdf)                    date: 2012-09-27 15:33:41
+(epstopdf)                    date: 2012-09-28 18:28:30
 (epstopdf)                    size: 20648 bytes
 (epstopdf)             Command: <repstopdf --outfile=./figures/jacobi2d-eps-con
 verted-to.pdf ./figures/jacobi2d.eps>
@@ -299,12 +299,12 @@ Underfull \vbox (badness 10000) has occurred while \output is active []
  [6 <./figures/resource-eps-converted-to.pdf>]) (./implementation.tex
 (./figures/dendrogram.pstex_t
 Package epstopdf Info: Source file: <./figures/dendrogram.eps>
-(epstopdf)                    date: 2012-09-27 14:55:11
-(epstopdf)                    size: 7745 bytes
+(epstopdf)                    date: 2012-09-28 18:26:18
+(epstopdf)                    size: 7756 bytes
 (epstopdf)             Output file: <./figures/dendrogram-eps-converted-to.pdf>
 
-(epstopdf)                    date: 2012-09-27 15:30:01
-(epstopdf)                    size: 6717 bytes
+(epstopdf)                    date: 2012-09-28 18:28:31
+(epstopdf)                    size: 6710 bytes
 (epstopdf)             Command: <repstopdf --outfile=./figures/dendrogram-eps-c
 onverted-to.pdf ./figures/dendrogram.eps>
 (epstopdf)             \includegraphics on input line 2.
@@ -361,7 +361,7 @@ re/texmf-texlive-dist/fonts/type1/urw/times/utmb8a.pfb></macports-1.9.1/share/t
 exmf-texlive-dist/fonts/type1/urw/times/utmbi8a.pfb></macports-1.9.1/share/texm
 f-texlive-dist/fonts/type1/urw/times/utmr8a.pfb></macports-1.9.1/share/texmf-te
 xlive-dist/fonts/type1/urw/times/utmri8a.pfb>
-Output written on bare_conf.pdf (9 pages, 325244 bytes).
+Output written on bare_conf.pdf (9 pages, 325253 bytes).
 PDF statistics:
  121 PDF objects out of 1000 (max. 8388607)
  85 compressed objects within 1 object stream
