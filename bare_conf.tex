@@ -1,7 +1,6 @@
 % -*- mode:latex; mode:flyspell -*-
 \documentclass[10pt, conference, compsocconf]{IEEEtran}
 
-
 % *** GRAPHICS RELATED PACKAGES ***
 %
 \ifCLASSINFOpdf
@@ -28,11 +27,13 @@
 \fi
 
 
-
+\usepackage{bibspacing}
+\setlength{\bibspacing}{\baselineskip}
 
 % *** MATH PACKAGES ***
 %
-%\usepackage[cmex10]{amsmath}
+\usepackage{multirow}
+\usepackage[cmex10]{amsmath}
 % A popular package from the American Mathematical Society that provides
 % many useful and powerful commands for dealing with mathematics. If using
 % it, be sure to load this package with the cmex10 option to ensure that
@@ -209,6 +210,16 @@
 % correct bad hyphenation here
 % \hyphenation{op-tical net-works semi-conduc-tor}
 
+\usepackage{xspace}
+\usepackage{bm}
+\newcommand{\numtplgynodes}{\ensuremath{|V_r|}\xspace}
+\newcommand{\gpunum}{\ensuremath{N_G}\xspace}
+\newcommand{\veclenset}{\ensuremath{\bm{V}}\xspace}
+\newcommand{\corenumset}{\ensuremath{\bm{C}}\xspace}
+\newcommand{\expt}{\ensuremath{\bm{E}}\xspace}
+\newcommand{\ul}{\underline}
+\newcommand{\noname}{The NoNamer\xspace}
+
 
 \begin{document}
 %
@@ -278,18 +289,16 @@ line 4: Email: name@xyz.com}
   parallelism resulting in increased throughput. Our framework can also
   be used by designers at an early design stage to explore the type of
   compute units needed and the topology that would be suited for a given
-  application, thereby reducing costs and power requirements. Moreover,
-  software programmers and compiler writers can utilize our framework to
-  gauge the potential parallelism in their programs. The challenge lies
-  in the fact that heterogeneous compute clusters consist of processing
-  elements exhibiting different compute speeds, vector lengths, and
-  communication bandwidths, which all need to be considered when
-  partitioning the application and associated data. We tackle this
+  application, thereby reducing costs and power requirements. The
+  challenge lies in the fact that heterogeneous compute clusters consist
+  of processing elements exhibiting different compute speeds, vector
+  lengths, and communication bandwidths, which all need to be considered
+  when partitioning the application and associated data. We tackle this
   problem using a staged graph partitioning framework. Our experiments
-  show an order of magnitude speedup for applications. Furthermore our
+  show orders of magnitude speedup for applications. Furthermore our
   framework finishes within seconds even when simulating 100's of
   processing elements, which makes our architecture suitable for
-  exploring parallelism potential at compile time.
+  exploring parallelism potential off line or on line.
 
   % In this paper we solve the problem of partitioning applications with a
   % mixture of both: task-parallel and data-parallel parts onto
@@ -322,7 +331,6 @@ line 4: Email: name@xyz.com}
 
 \input{introduction}
 
-\input{related_work}
 
 \section{Preliminaries}
 \label{sec:preliminaries}
@@ -383,7 +391,7 @@ how many scalar instructions the PE can perform in one second (the
 \textit{Million Instructions Per Second} (MIPS) count). Capability 2
 ($R^i_1$) denotes the maximum number of parallel vector operations it
 can perform (the vector length). Each edge $e \in E_r$ has a weight
-whcih represents the latency/bandwidth between two PEs $r_i$ and $r_j$
+which represents the latency/bandwidth between two PEs $r_i$ and $r_j$
 which is denoted by $E^c, \forall E_r \in (V_r \times V_r)$.
 
 % While generating the resource graph, we might have to contract edges(becaus we
@@ -402,21 +410,23 @@ implicates that we have to look for heuristic solutions.
 
 To decide if a mapping is effective enough or not, we need an objective
 function that defines how good a mapping of tasks onto resources
-is. This is denoted by our cost function. Given some application node $i
-\in V_t$ mapped to some resource $j \in V_r$, the latency for that node
-is computed as: $((T^i_1/R^j_1\times T^i_0)/R^j_0) + (e^d/E^c) | d =
-(i,k), k \neq i, \forall k \in V_t, c = (j,l), l \neq j, \forall l \in
-V_r $. In this formulation for some task $i$ being mapped onto some
-resource $j$, we first calculate the number of vectorized instructions
-that can be executed in parallel (by dividing required vector length by
-the vector capacity of $j$ represented by $R^j_1$). We then multiply
-this number by the number of iterative (non-vectorized) instructions
-required to get the total number of instructions to be performed by that
-task-graph node. Once we have this number we calculate latency of
-execution of this task-graph node $i$ on this resource $j$ by dividing
-it with the MIPS value of the resource denoted by $R^j_0$. Calculation
-of the communication latency is rather simple, we divide the number of
-bits required to be transferred by the bandwidth of the shortest path.
+is. This is denoted by our cost function. We adapt the cost function
+used by numerous other papers~\cite{ssan05,ajai04,dajw12} for our setup.
+Given some application node $i \in V_t$ mapped to some resource $j \in
+V_r$, the latency for that node is computed as: $((T^i_1/R^j_1\times
+T^i_0)/R^j_0) + (e^d/E^c) | d = (i,k), k \neq i, \forall k \in V_t, c =
+(j,l), l \neq j, \forall l \in V_r $. In this formulation for some task
+$i$ being mapped onto some resource $j$, we first calculate the number
+of vectorized instructions that can be executed in parallel (by dividing
+required vector length by the vector capacity of $j$ represented by
+$R^j_1$). We then multiply this number by the number of iterative
+(non-vectorized) instructions required to get the total number of
+instructions to be performed by that task-graph node. Once we have this
+number we calculate latency of execution of this task-graph node $i$ on
+this resource $j$ by dividing it with the MIPS value of the resource
+denoted by $R^j_0$. Calculation of the communication latency is rather
+simple, we divide the number of bits required to be transferred by the
+bandwidth of the shortest path.
 
 Given the task-graph and the resource-graph, let $\zeta$ be all possible
 mappings of the application on the resource-graph. For a particular
@@ -450,23 +460,23 @@ The objective of our framework is to find a mapping $\zeta_\mathcal{M}$
 that minimizes the total application latency as described in
 Equation~(\ref{eq:2}).
 
-\subsection{Key Contributions}
-Our key contributions in the article are as follows:
-\begin{itemize}
-\item A novel way for compiler writers and software programmers to gauge
-  the potential performance of their programs on any given architecture.
-\item A framework that allows topology designers to efficaciously
-  explore the design space to determine the type of underlying
-  architecture that would suit a given application.
-\item A new heuristic based framework that exploits task and data
-  parallelism exhibited by applications for mapping them onto
-  heterogeneous HPC architectures.
-\item Along with mapping application-tasks onto resource nodes, the
-  framework also allocates data-stores being utilized by the different
-  application-tasks.
-\item A rigorous experimental setup to analyse the effectiveness of our
-  framework.
-\end{itemize}
+% \subsection{Key Contributions}
+% Our key contributions in the article are as follows:
+% \begin{itemize}
+% \item A novel way for compiler writers and software programmers to gauge
+%   the potential performance of their programs on any given architecture.
+% \item A framework that allows topology designers to efficaciously
+%   explore the design space to determine the type of underlying
+%   architecture that would suit a given application.
+% \item A new heuristic based framework that exploits task and data
+%   parallelism exhibited by applications for mapping them onto
+%   heterogeneous HPC architectures.
+% \item Along with mapping application-tasks onto resource nodes, the
+%   framework also allocates data-stores being utilized by the different
+%   application-tasks.
+% \item A rigorous experimental setup to analyse the effectiveness of our
+%   framework.
+% \end{itemize}
 
 \section{Our framework}
 \label{sec:our-framework}
@@ -486,10 +496,32 @@ topology. Finally, we describe how the mapping is performed.
 
 \input{experiments}
 
+\input{related_work}
+
 \section{Conclusion}
 \label{sec:conclusion}
 
-The conclusion goes here. this is more of the conclusion
+In this paper we have described a novel staged graph based partitioning
+technique to partition and schedule applications onto heterogeneous
+execution architectures. Our framework can be utilized by designers to
+quickly gauge the type of underlying architecture that is best suited to
+run a given application. Moreover, our framework considers both task and
+data parallelism, which allows the application writers to design and
+tune their applications to extract parallelism. We also consider
+communication along application and underlying architecture edges, which
+when combined with the task and data parallelism gives a better estimate
+of the application latency than the currently described research
+literature targeting similar problems.
+
+We have tested our framework on a subset of the many high performance
+computing applications currently in use in the industry with great
+success. Our framework clearly shows that utilizing all the available
+processing elements in the underlying architecture is not a good
+solution when heterogeneity is in play. We have found that for most
+applications, given a extremely heterogeneous topology, vector strip
+size and correct placement of data plays and important role. Imbalanced
+partitioning not only gives good application latencies, but also reduced
+power consumption.
 
 % use section* for acknowledgment
 % \section*{Acknowledgment}

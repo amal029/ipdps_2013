@@ -1,52 +1,154 @@
-\section{Introduction and motivating example}
-\label{sec:intr-motiv-example}
+\section{Introduction}
+\label{sec:introduction}
 
-Today's HPC clusters consists of a large number of heterogeneous
-processing elements such as CPUs, GPUs, DSPs, FPGAs, etc. Given an
-application, how does one determine if there are portions of the
-application that should be mapped to a GPU, others to a CPU, and still
-others to an FPGA, and so on? Further, given a heterogenous collection
-of GPUs (i.e., different GPUs may have different vector lengths) and a
-heteorogeneous collection of CPUs (i.e., different CPUs may have
-different number of cores), how do you further decide which portions of
-the GPU should be allocated to a given GPU and not to another GPU? Now
-let us add the final complexity: how do you do the above allocation
-automatically? How do you automatically map the parallelism available in
-an application to the right computation engine from among a
-heterogeneous suite of engines?  This paper offers one such
-approach. What if you do not have the architecture figured out yet but
-you have the application? In this case, one can use our approach to
-determine the type of architecture best suited to map the parallelism
-available in a given application.  Our proposed framework can be used by
-topology designers to quickly carry out a design space exploration to
-determine the type of underlying topology best suited for a given
-application.  Moreover, compiler writers can also use our framework when
-vectorizing and partitioning large vector units onto parallel GPU/CPU
-units.
-% \textbf{AVINASH - PLS CHECK 
-% THE LAST CLAIM. DO YOU DO THAT IN THIS PAPER?}
+HPC clusters increasingly consist of large numbers of heterogeneous
+processing elements such as CPUs, graphics processing units (GPUs),
+field programmable gate arrays (FPGAs), low-power processors intended
+for digital signal processing (DSP), etc. By combining heterogeneous
+processing units it may be possible to divide the work so that different
+types of computation in the application are run on different types of
+units. This can result in significant speedups, lower hardware costs
+and/or reduced power consumption by the HPC system.  For example, if a
+computation contains the right patterns of data parallelism it may run
+dozens or even hundreds of times faster on a GPU than on a CPU that has
+similar cost and power consumption. On the other hand, computations with
+less data parallelism and more complex control flow may run faster on
+CPUs. Matching the type of computation to the processor can yields
+significant benefits.
 
+Although the potential of heterogeneous computing is great, exploiting
+that potential is more difficult. Given a parallel application it is
+difficult to map the available parallelism onto the hardware. For
+example, how does one decide which parallel tasks should run on which
+type of execution unit? Given a system with with dozens or hundreds of
+CPUs, GPUs and other units, how does one divide the work between them?
+There are several conflicting factors. For example, one wants to
+allocate tasks to the type of execution unit that will execute it most
+efficiently. On the other hand, one wants to achieve a good load balance
+by dividing the work evenly across the units. At the same time, one must
+respect data dependencies between tasks. And finally, data communication
+costs between processing elements can be substantial, and are usually
+themselves heterogeneous. Communication with nearby processing elements
+is usually much faster than communication with more distant ones. We
+want to allocate the tasks to reduce communication costs while at the
+same time taking account of all the other factors.
+
+In this paper we consider the problem of mapping graphs of parallel
+tasks to heterogeneous HPC computing systems. This problem has been
+studied extensively for homogeneous architectures where all processing
+elements are the same. Although the homogeneous case is NP-hard,
+several heuristic solutions have been found that work well in
+practice. However, extending these solutions to the heterogeneous case
+is difficult for two reasons. Firstly, good solutions to the
+homogeneous case often work well by dividing the tasks evenly across
+the available processors. However, in the heterogeneous case some PEs
+are more powerful than others, so achieving a good load balance
+usually involves distributing the work unevenly. So we need algorithms
+the will divide the work between PEs according to their processing
+capacity.
+
+A second reason why it can be difficult to extend algorithms for
+homogeneous architectures to the heterogenous hardware relates to the
+strengths and weaknesses of different types of processors. When
+considering heterogenenous architectures, it is tempting to think of
+some PEs simply being more powerful than others. For example, we might
+think of a system with 64 processors capable of X performance, and 16
+processors capable of 2X performance. Such machines exist. But many
+heterogeneous HPC machines contain different \textit{types} of PEs,
+such as CPUs and GPUs. A GPU is not simply a more powerful CPU. In
+fact, some types of computation run better on CPUs and some on GPUs.
+For a mapping algorithm to work well, it needs to take account of the
+strengths and weaknesses of different types of PEs.
+
+In this paper we present an approach to mapping parallel task graphs to
+heterogeneous architectures that addresses both of these problems.  A
+common approach to solving the homogeneous case it to \textit{partition}
+the graph across the PEs% \cite{}
+. However, we have found that such heuristic partitioning approaches do
+not work well for heterogeneous architectures. Instead we propose a
+novel approach where the architecture is hierarchically partititioned
+into sub-clusters.  Each sub-cluster at the same level of the hierarchy
+has approximately the same computing capacity and has relatively local
+communication.  This allows us to use existing approaches that work well
+for the homogeneous case to partition the graph across the sub-clusters
+at each level of the hierarchy. We show that this is an effective
+approach if the sub-clusters are well balanced at each level of the
+hierarchy.
+
+Our main contributions are as follows:
+\begin{itemize}
+\item We present a novel approach to characterizing the type of PEs
+based on their level of SIMD parallelism which allows us to distinguish
+the suitability of different types of units to different tasks.
+\item We provide a novel algorithm for mapping task and data
+parallelism to heterogeneous architectures based on hierarchical graph
+partitioning.
+\item In addition to mapping tasks to PEs, our framework also
+allocates the data stores being used by the different tasks.
+\item We provide an experimental evaluation of these techniques
+and compare with other algorithms.
+\end{itemize}
+
+The rest of this paper is organized as follows. We first provide a
+motivating example in
+Section~\ref{sec:motivating-example}. Section~\ref{sec:preliminaries},
+formalizes the problem statement and defined the objective
+function. Next, in Section~\ref{sec:our-framework}, we provide a
+detailed description of our framework. In Section~\ref{sec:imple}, we
+then describe the implementation of our
+approach. Section~\ref{sec:experiments-results}, give the quantitative
+comparisons of our approach against a number of other
+approaches. Section~\ref{sec:related-work}, describes the related work
+and positions our approach in comparison to this work.  Finally, we
+conclude in Section~\ref{sec:conclusion}.
+
+\section{Motivating Example}
+\label{sec:motivating-example}
 Consider the code snippet in Figure~\ref{fig:2} that carries out the
-main stencil computation using the Jacobi algorithm. Jacobi is an
-important stencil computation, which is used for solving large systems
-of linear equations, especially for heat transfer problems and numerical
-fluid mechanics. We have chosen this as our motivating example because
-there have been attempts to parallelize Jacobi using MPI~\cite{jacobi1}
-and CUDA~\cite{jacobi2} with success, making it an important problem to
-solve on a heterogeneous compute cluster mixing MPI and CUDA programming
-techniques and with the potential of making it faster still. The CUDA
-programming techniques exploit the \textit{Single Instruction Multiple
-  Data} (SIMD) potential in the Jacobi algorithm~\cite{jacobi2} by
-modeling parallelism as vector computations suitable for a GPU. The MPI
-approach on the other hand exploits \textit{Multiple Instruction
-  Multiple Data} (MIMD) potential by modeling the parallelism across
-different CPU nodes. Both techniques result in 3-4 times speedup
-compared to single CPU implementations. The challenge when
-\textit{re-designing} and \textit{tuning} such parallel applications to
-exploit vector units \textit{or} MPI alone is well
-documented~\cite{jacobi1,jacobi2}. The complexity of re-designing for a
-mixture of two grows exponentially. The growth in complexity of design
-space is due to a number of factors, some of which we enumerate below:
+main stencil computation using the Jacobi algorithm. Jacobi is used
+for solving large systems of linear equations, especially for heat
+transfer problems and numerical fluid mechanics. We have chosen this
+as our motivating example because it has been successfully
+parallelized using MPI~\cite{jacobi1} and CUDA~\cite{jacobi2}.  There
+is a great deal of potential to use both techniques together to gain
+further speedup. The CUDA programming techniques exploit the
+\textit{Single Instruction Multiple Data} (SIMD) potential in the
+Jacobi algorithm~\cite{jacobi2} by modeling parallelism as vector
+computations suitable for a GPU. The MPI approach on the other hand
+exploits \textit{Multiple Instruction Multiple Data} (MIMD) potential
+by distributing the parallelism across different CPU nodes. To
+maximize speedup we would like to exploit both SIMD and MIMD
+parallelism in heterogeneous architectures.
+
+One way to represent program parallelism is to build a task graph.  A
+task graph is a graph where the nodes represent computation and the
+edges represent data dependencies between the computations.
+Figure~\ref{} shows a simple task graph for the Jacobi code. [NOTE: I
+  SUGGEST WE INSERT A VERY SIMPLE TASK GRAPH HERE, BECAUSE THE ONE IN
+  THE NEXT SECTION IS QUITE INTIMIDATING]. There are many ways in
+which the task graph can be built. In the current paper, the task
+graph is built using a parallelizing compiler that automatically
+detects simple data parallelism in code that operates on arrays.  Each
+node in the graph corresponds to one of the assignment statements in
+the Jacobi source code in Figure~\ref{fig:2}.
+
+Note that although each node in our version of the task graph contains
+just a single assignment statement, each of those statements is
+executed many times, and in fact there is a great deal of data
+parallelism in each node. This data parallelism can be exploited using
+either SIMD parallelism (found in CPUs with vector units and GPUs) or
+MIMD parallelism (by using multiple PEs to perform the computation) or
+a combination of both. Thus, to map the task graph to a heterogenous
+architecture we need to be aware both of the number and type of
+available PEs and the amount of available SIMD parallelism available
+within each type of PE. Therefore, we annotate the task graph with the
+amount of SIMD parallelism available in each node, as described in
+section \ref{sec:preliminaries}.
+
+By annotating the task graph nodes with the level of available SIMD
+parallelism it is possible to make better mapping decisions.  For
+example, GPUs typically offer very high levels of SIMD parallelism but
+have perform poorly on code with little data parallelism.
 
 
 \begin{scriptsize}
@@ -79,73 +181,154 @@ space is due to a number of factors, some of which we enumerate below:
 
 
 
-\begin{itemize}
+% \section{Introduction and motivating example}
+% \label{sec:intr-motiv-example}
 
-\item The vector lengths of the underlying processing elements
-  differ. Intel processors have 256 bit vector instructions, while the
-  GPU range varies.
+% Today's HPC clusters consists of a large number of heterogeneous
+% processing elements such as CPUs, GPUs, DSPs, FPGAs, etc. Given an
+% application, how does one determine if there are portions of the
+% application that should be mapped to a GPU, others to a CPU, and still
+% others to an FPGA, and so on? Further, given a heterogenous collection
+% of GPUs (i.e., different GPUs may have different vector lengths) and a
+% heteorogeneous collection of CPUs (i.e., different CPUs may have
+% different number of cores), how do you further decide which portions of
+% the GPU should be allocated to a given GPU and not to another GPU? Now
+% let us add the final complexity: how do you do the above allocation
+% automatically? How do you automatically map the parallelism available in
+% an application to the right computation engine from among a
+% heterogeneous suite of engines?  This paper offers one such
+% approach. What if you do not have the architecture figured out yet but
+% you have the application? In this case, one can use our approach to
+% determine the type of architecture best suited to map the parallelism
+% available in a given application.  Our proposed framework can be used by
+% topology designers to quickly carry out a design space exploration to
+% determine the type of underlying topology best suited for a given
+% application.  Moreover, compiler writers can also use our framework when
+% vectorizing and partitioning large vector units onto parallel GPU/CPU
+% units.
+% % \textbf{AVINASH - PLS CHECK 
+% % THE LAST CLAIM. DO YOU DO THAT IN THIS PAPER?}
 
-  % For example, a GPU warp (the smallest vector size) varies from 16-32
-  % scalar instructions. Moreover, these warps can be arranged in
-  % different block sizes, which results in different effective vector
-  % lengths. On the CPU the vector lengths differ themselves, but the
-  % variation is much smaller. For example, the new Intel AVX units have
-  % a
-  % vector length of 256 bits, while the SSE units have a vector length
-  % of
-  % 128 bits.
+% Consider the code snippet in Figure~\ref{fig:2} that carries out the
+% main stencil computation using the Jacobi algorithm. Jacobi is an
+% important stencil computation, which is used for solving large systems
+% of linear equations, especially for heat transfer problems and numerical
+% fluid mechanics. We have chosen this as our motivating example because
+% there have been attempts to parallelize Jacobi using MPI~\cite{jacobi1}
+% and CUDA~\cite{jacobi2} with success, making it an important problem to
+% solve on a heterogeneous compute cluster mixing MPI and CUDA programming
+% techniques and with the potential of making it faster still. The CUDA
+% programming techniques exploit the \textit{Single Instruction Multiple
+%   Data} (SIMD) potential in the Jacobi algorithm~\cite{jacobi2} by
+% modeling parallelism as vector computations suitable for a GPU. The MPI
+% approach on the other hand exploits \textit{Multiple Instruction
+%   Multiple Data} (MIMD) potential by modeling the parallelism across
+% different CPU nodes. Both techniques result in 3-4 times speedup
+% compared to single CPU implementations. The challenge when
+% \textit{re-designing} and \textit{tuning} such parallel applications to
+% exploit vector units \textit{or} MPI alone is well
+% documented~\cite{jacobi1,jacobi2}. The complexity of re-designing for a
+% mixture of two grows exponentially. The growth in complexity of design
+% space is due to a number of factors, some of which we enumerate below:
 
-\item The actual data-type results in different utilization of vector
-  units. For example, a \texttt{double} type requires twice as many
-  vector registers to carry out processing as compared to an
-  \texttt{int} type.
 
-\item The size of the vector length and the number of vector units
-  required needs to be determined: simply dividing the data-parallel
-  vector units onto the largest available vector processing elements
-  does not necessarily result in good application throughput or
-  latency. In an ideal scenario for very large vector computations, the
-  vector units can be utilized completely and the rest of the
-  data-parallelism can be exploited in parallel on a CPU unit
-  iteratively in a loop.
+% \begin{scriptsize}
+%   \begin{figure}[h!]
+%     \centering
+% \begin{verbatim}
+%  //Task and data-parallel
+%  for (int i=0;i<M; ++i){
+%   for (int j=0;j<N; ++j){
+%    1: A[i][j] = (i*j+2.0+2.0/N)
+%    2: B[i][j] = (i*j+3.0+3.0/N)
+%   }
+%  }
+%  for (int k=0;k<TSTEPS;++k){
+%   for (int i=1; i<M; ++i)
+%    for (int j=1; j<N; ++j)
+%     3: B[i][j] = 0.2*(A[i][j]+A[i][j-1]
+%               +A[i][j+1]+A[i-1][j])
 
-\item The bottleneck of the communication fabric plays an important role
-  in the partitioning problem. Note that in a heterogeneous compute
-  cluster the communication latencies and bandwidths themselves vary.
+%   //Data-parallel
+%   for (int i=1; i<M; ++i)
+%    for (int j=1; j<N; ++j)
+%     4: A[i][j] = B[i][j]
+%  }
+% \end{verbatim}
+%     \caption{Example 2-dimensional Jacobi application}
+%     \label{fig:2}
+%   \end{figure}
+% \end{scriptsize}
 
-\item Allocation of data-stores being utilized by the different
-  processing elements needs to be handled.
 
-\item Applications written in different ways result in different
-  parallelism potential.
 
-\item Finally, the scheduling problem is known to be
-  NP-hard~\cite{vsar89}. Thus, we need a good heuristic solution, which
-  finishes quickly and gives good results.
+% \begin{itemize}
 
-\end{itemize}
+% \item The vector lengths of the underlying processing elements
+%   differ. Intel processors have 256 bit vector instructions, while the
+%   GPU range varies.
 
-There are a number of other applications where parallelism plays an
-important
-role. % (\textbf{THIS STATEMENT IS TOO OBVIOUS TO BE MADE A POINT
-  % OF.  UNLESS YOU ARE SAYING THAT THESE APPS HAVE POTENTIAL FOR
-  % EXPLOITING HETEROGENOUS RESOURCES. ARE YOU SAYING THAT?})
-For example, binomial option pricing~\cite{ssol10,hpra10},
-k-means~\cite{jzha11}, Gauss-Seidel stencil computations~\cite{hcou09},
-etc, are well suited to be optimized across heterogeneous HPC
-architectures. Exploiting both data and task parallelism is essential in
-the general case.
+%   % For example, a GPU warp (the smallest vector size) varies from 16-32
+%   % scalar instructions. Moreover, these warps can be arranged in
+%   % different block sizes, which results in different effective vector
+%   % lengths. On the CPU the vector lengths differ themselves, but the
+%   % variation is much smaller. For example, the new Intel AVX units have
+%   % a
+%   % vector length of 256 bits, while the SSE units have a vector length
+%   % of
+%   % 128 bits.
 
-The rest of the paper is arranged as follows:
-Section~\ref{sec:related-work}, describes the related work and positions
-our approach in comparison to this
-work. Section~\ref{sec:preliminaries}, formalizes the problem
-statement and defined the objective function. Next, in
-Section~\ref{sec:our-framework}, we provide a detailed description of
-our framework. In Section~\ref{sec:imple}, we then describe the
-implementation of our approach. Section~\ref{sec:experiments-results},
-give the quantitative comparisons of our approach against a number of
-other approaches. Finally, we conclude in Section~\ref{sec:conclusion}.
+% \item The actual data-type results in different utilization of vector
+%   units. For example, a \texttt{double} type requires twice as many
+%   vector registers to carry out processing as compared to an
+%   \texttt{int} type.
+
+% \item The size of the vector length and the number of vector units
+%   required needs to be determined: simply dividing the data-parallel
+%   vector units onto the largest available vector processing elements
+%   does not necessarily result in good application throughput or
+%   latency. In an ideal scenario for very large vector computations, the
+%   vector units can be utilized completely and the rest of the
+%   data-parallelism can be exploited in parallel on a CPU unit
+%   iteratively in a loop.
+
+% \item The bottleneck of the communication fabric plays an important role
+%   in the partitioning problem. Note that in a heterogeneous compute
+%   cluster the communication latencies and bandwidths themselves vary.
+
+% \item Allocation of data-stores being utilized by the different
+%   processing elements needs to be handled.
+
+% \item Applications written in different ways result in different
+%   parallelism potential.
+
+% \item Finally, the scheduling problem is known to be
+%   NP-hard~\cite{vsar89}. Thus, we need a good heuristic solution, which
+%   finishes quickly and gives good results.
+
+% \end{itemize}
+
+% There are a number of other applications where parallelism plays an
+% important
+% role. % (\textbf{THIS STATEMENT IS TOO OBVIOUS TO BE MADE A POINT
+%   % OF.  UNLESS YOU ARE SAYING THAT THESE APPS HAVE POTENTIAL FOR
+%   % EXPLOITING HETEROGENOUS RESOURCES. ARE YOU SAYING THAT?})
+% For example, binomial option pricing~\cite{ssol10,hpra10},
+% k-means~\cite{jzha11}, Gauss-Seidel stencil computations~\cite{hcou09},
+% etc, are well suited to be optimized across heterogeneous HPC
+% architectures. Exploiting both data and task parallelism is essential in
+% the general case.
+
+% The rest of the paper is arranged as follows:
+% Section~\ref{sec:related-work}, describes the related work and positions
+% our approach in comparison to this
+% work. Section~\ref{sec:preliminaries}, formalizes the problem
+% statement and defined the objective function. Next, in
+% Section~\ref{sec:our-framework}, we provide a detailed description of
+% our framework. In Section~\ref{sec:imple}, we then describe the
+% implementation of our approach. Section~\ref{sec:experiments-results},
+% give the quantitative comparisons of our approach against a number of
+% other approaches. Finally, we conclude in Section~\ref{sec:conclusion}.
 
 % \section{Introduction and motivating example}
 % \label{sec:intr-motiv-example}

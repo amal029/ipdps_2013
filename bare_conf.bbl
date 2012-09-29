@@ -38,37 +38,86 @@ D.~an~Mey, ``{MPI Case Study, Jacobi-Solver},'' in \emph{{Parallel Programming
 V.~Sarkar, ``{Partitioning and scheduling parallel algorithms for execution on
   multiprocessors},'' Ph.D. dissertation, Stanford university, 1989.
 
-\bibitem{ssol10}
-S.~Solomon, R.~Thulasiram, and P.~Thulasiraman, ``Option pricing on the gpu,''
-  in \emph{High Performance Computing and Communications (HPCC), 2010 12th IEEE
-  International Conference on}, sept. 2010, pp. 289 --296.
+\bibitem{ssan05}
+S.~Sanyal and S.~Das, ``Match : Mapping data-parallel tasks on a heterogeneous
+  computing platform using the cross-entropy heuristic,'' in \emph{Parallel and
+  Distributed Processing Symposium, 2005. Proceedings. 19th IEEE
+  International}, april 2005, p. 64b.
 
-\bibitem{hpra10}
-H.~Prasain, G.~Jha, P.~Thulasiraman, and R.~Thulasiram, ``A parallel particle
-  swarm optimization algorithm for option pricing,'' in \emph{Parallel
-  Distributed Processing, Workshops and Phd Forum (IPDPSW), 2010 IEEE
-  International Symposium on}, april 2010, pp. 1 --7.
+\bibitem{ajai04}
+A.~Jain, S.~Sanyal, S.~K. Das, and R.~Biswas, ``Fastmap: A distributed scheme
+  for mapping large scale applications onto computational grids,''
+  \emph{Challenges of Large Applications in Distributed Environments,
+  International Workshop on}, vol.~0, p. 118, 2004.
 
-\bibitem{jzha11}
-J.~Zhang, G.~Wu, X.~Hu, S.~Li, and S.~Hao, ``A parallel k-means clustering
-  algorithm with mpi,'' in \emph{Parallel Architectures, Algorithms and
-  Programming (PAAP), 2011 Fourth International Symposium on}, dec. 2011, pp.
-  60 --64.
+\bibitem{dajw12}
+D.~Ajwani, S.~Ali, and J.~Morrison, ``Graph partitioning for reconfigurable
+  topology,'' in \emph{Parallel Distributed Processing Symposium (IPDPS), 2012
+  IEEE 26th International}, may 2012, pp. 836 --847.
 
-\bibitem{hcou09}
-\BIBentryALTinterwordspacing
-H.~Courtecuisse and J.~Allard, ``Parallel dense gauss-seidel algorithm on
-  many-core processors,'' in \emph{Proceedings of the 2009 11th IEEE
-  International Conference on High Performance Computing and Communications},
-  ser. HPCC '09.\hskip 1em plus 0.5em minus 0.4em\relax Washington, DC, USA:
-  IEEE Computer Society, 2009, pp. 139--147. [Online]. Available:
-  \url{http://dx.doi.org/10.1109/HPCC.2009.51}
-\BIBentrySTDinterwordspacing
+\bibitem{clat04}
+C.~Lattner and V.~Adve, ``{LLVM: A Compilation Framework for Lifelong Program
+  Analysis \& Transformation},'' in \emph{{Proceedings of the 2004
+  International Symposium on Code Generation and Optimization (CGO'04)}}, Palo
+  Alto, California, Mar 2004.
 
 \bibitem{mgri98}
 M.~Griebl, C.~Lengauer, and S.~Wetzel, ``{Code Generation in the Polytope
   Model},'' in \emph{In IEEE PACT}.\hskip 1em plus 0.5em minus 0.4em\relax IEEE
   Computer Society Press, 1998, pp. 106--111.
+
+\bibitem{tbra01}
+\BIBentryALTinterwordspacing
+T.~D. Braun, H.~J. Siegel, N.~Beck, L.~L. B\"{o}l\"{o}ni, M.~Maheswaran, A.~I.
+  Reuther, J.~P. Robertson, M.~D. Theys, B.~Yao, D.~Hensgen, and R.~F. Freund,
+  ``A comparison of eleven static heuristics for mapping a class of independent
+  tasks onto heterogeneous distributed computing systems,'' \emph{J. Parallel
+  Distrib. Comput.}, vol.~61, no.~6, pp. 810--837, Jun. 2001. [Online].
+  Available: \url{http://dx.doi.org/10.1006/jpdc.2000.1714}
+\BIBentrySTDinterwordspacing
+
+\bibitem{sski08}
+S.~S. Skiena, \emph{{The Algorithms Design Manual}}, 2nd~ed.\hskip 1em plus
+  0.5em minus 0.4em\relax Springer-Verlag London, 2008.
+
+\bibitem{gkar98}
+G.~Karypis, V.~Kumar, and V.~Kumar, ``Multilevel k-way partitioning scheme for
+  irregular graphs,'' \emph{Journal of Parallel and Distributed Computing},
+  vol.~48, pp. 96--129, 1998.
+
+\bibitem{gkar95}
+G.~Karypis and V.~Kumar, ``Metis - unstructured graph partitioning and sparse
+  matrix ordering system, version 2.0,'' Tech. Rep., 1995.
+
+\bibitem{kdev09}
+K.~Devine, E.~Boman, L.~Riesen, U.~Catalyurek, and C.~Chevalier, ``Getting
+  started with zoltan: A short tutorial,'' in \emph{Proc. of 2009 Dagstuhl
+  Seminar on Combinatorial Scientific Computing}, 2009, also available as
+  Sandia National Labs Tech Report SAND2009-0578C.
+
+\bibitem{cche08}
+\BIBentryALTinterwordspacing
+C.~Chevalier and F.~Pellegrini, ``Pt-scotch: A tool for efficient parallel
+  graph ordering,'' \emph{Parallel Comput.}, vol.~34, no. 6-8, pp. 318--331,
+  Jul. 2008. [Online]. Available:
+  \url{http://dx.doi.org/10.1016/j.parco.2007.12.001}
+\BIBentrySTDinterwordspacing
+
+\bibitem{tcra11}
+\BIBentryALTinterwordspacing
+T.~G. Crainic, G.~Perboli, W.~Rei, and R.~Tadei, ``Efficient lower bounds and
+  heuristics for the variable cost and size bin packing problem,''
+  \emph{Comput. Oper. Res.}, vol.~38, no.~11, pp. 1474--1482, Nov. 2011.
+  [Online]. Available: \url{http://dx.doi.org/10.1016/j.cor.2011.01.001}
+\BIBentrySTDinterwordspacing
+
+\bibitem{ecof78}
+\BIBentryALTinterwordspacing
+E.~Coffman, Jr., M.~Garey, and D.~Johnson, ``An application of bin-packing to
+  multiprocessor scheduling,'' \emph{SIAM Journal on Computing}, vol.~7, no.~1,
+  pp. 1--17, 1978. [Online]. Available:
+  \url{http://epubs.siam.org/doi/abs/10.1137/0207001}
+\BIBentrySTDinterwordspacing
 
 \bibitem{jdon06}
 J.~Donald and M.~Martonosi, ``{An Efficient, Practical Parallelization
@@ -143,72 +192,10 @@ A.~Do\u{g}an and F.~\"{o}zg\"{u}ner, ``Genetic algorithm based scheduling of
   \url{http://dx.doi.org/10.1023/B:CLUS.0000018566.13071.cb}
 \BIBentrySTDinterwordspacing
 
-\bibitem{tbra01}
-\BIBentryALTinterwordspacing
-T.~D. Braun, H.~J. Siegel, N.~Beck, L.~L. B\"{o}l\"{o}ni, M.~Maheswaran, A.~I.
-  Reuther, J.~P. Robertson, M.~D. Theys, B.~Yao, D.~Hensgen, and R.~F. Freund,
-  ``A comparison of eleven static heuristics for mapping a class of independent
-  tasks onto heterogeneous distributed computing systems,'' \emph{J. Parallel
-  Distrib. Comput.}, vol.~61, no.~6, pp. 810--837, Jun. 2001. [Online].
-  Available: \url{http://dx.doi.org/10.1006/jpdc.2000.1714}
-\BIBentrySTDinterwordspacing
-
-\bibitem{ssan05}
-S.~Sanyal and S.~Das, ``Match : Mapping data-parallel tasks on a heterogeneous
-  computing platform using the cross-entropy heuristic,'' in \emph{Parallel and
-  Distributed Processing Symposium, 2005. Proceedings. 19th IEEE
-  International}, april 2005, p. 64b.
-
 \bibitem{skum02}
 {Kumar, S. and Jantsch, A. and Soininen, J.-P. and Forsell, M. and Millberg, M.
   and Oberg, J. and Tiensyrja, K. and Hemani, A.}, ``{A network on chip
   architecture and design methodology},'' in \emph{{VLSI, 2002. Proceedings.
   IEEE Computer Society Annual Symposium on}}, 2002, pp. 105 --112.
-
-\bibitem{clat04}
-C.~Lattner and V.~Adve, ``{LLVM: A Compilation Framework for Lifelong Program
-  Analysis \& Transformation},'' in \emph{{Proceedings of the 2004
-  International Symposium on Code Generation and Optimization (CGO'04)}}, Palo
-  Alto, California, Mar 2004.
-
-\bibitem{sski08}
-S.~S. Skiena, \emph{{The Algorithms Design Manual}}, 2nd~ed.\hskip 1em plus
-  0.5em minus 0.4em\relax Springer-Verlag London, 2008.
-
-\bibitem{gkar98}
-G.~Karypis, V.~Kumar, and V.~Kumar, ``Multilevel k-way partitioning scheme for
-  irregular graphs,'' \emph{Journal of Parallel and Distributed Computing},
-  vol.~48, pp. 96--129, 1998.
-
-\bibitem{gkar95}
-G.~Karypis and V.~Kumar, ``Metis - unstructured graph partitioning and sparse
-  matrix ordering system, version 2.0,'' Tech. Rep., 1995.
-
-\bibitem{kdev09}
-K.~Devine, E.~Boman, L.~Riesen, U.~Catalyurek, and C.~Chevalier, ``Getting
-  started with zoltan: A short tutorial,'' in \emph{Proc. of 2009 Dagstuhl
-  Seminar on Combinatorial Scientific Computing}, 2009, also available as
-  Sandia National Labs Tech Report SAND2009-0578C.
-
-\bibitem{cche08}
-\BIBentryALTinterwordspacing
-C.~Chevalier and F.~Pellegrini, ``Pt-scotch: A tool for efficient parallel
-  graph ordering,'' \emph{Parallel Comput.}, vol.~34, no. 6-8, pp. 318--331,
-  Jul. 2008. [Online]. Available:
-  \url{http://dx.doi.org/10.1016/j.parco.2007.12.001}
-\BIBentrySTDinterwordspacing
-
-\bibitem{mmar11}
-M.~M. Baldi, T.~G. Crainic, G.~Perboli, and R.~Tadei, ``{The Generalized Bin
-  Packing Problem},'' Interuniversity Research Centre on Enterprise Networks,
-  Logistics and Transportation, Tech. Rep., July 2011.
-
-\bibitem{tcra11}
-\BIBentryALTinterwordspacing
-T.~G. Crainic, G.~Perboli, W.~Rei, and R.~Tadei, ``Efficient lower bounds and
-  heuristics for the variable cost and size bin packing problem,''
-  \emph{Comput. Oper. Res.}, vol.~38, no.~11, pp. 1474--1482, Nov. 2011.
-  [Online]. Available: \url{http://dx.doi.org/10.1016/j.cor.2011.01.001}
-\BIBentrySTDinterwordspacing
 
 \end{thebibliography}

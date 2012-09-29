@@ -15,17 +15,17 @@ partitioner such as Zoltan~\cite{kdev09} or Scotch~\cite{cche08} can be
 used for implementing our algorithm. Herein, we describe how we used
 Metis to implement the graph partitioning.
 
-Metis is a graph partitioner, which implements K-way and recursive
-bipartite graph partitioning. The weights on the graph nodes are
-represented as constraints. Each graph node can have multiple-node
-weights, representing different criteria. The edges between nodes can be
-weighted themselves, but opposed to nodes, edges can only be decorated
-with a single weight. Moreover, the unique point about Metis is that one
-can use a concept called ``tp-weights'', which give weightage, to
-different node constraints when performing load-balancing during K-way
-or recursive graph partitioning. These are the only features of Metis
-that we required when implementing our algorithm. Metis provides a
-number of other features, which the readers can lookup in~\cite{gkar95}.
+Metis is a graph partitioner, which implements K-way and recursive graph
+partitioning. The weights on the graph nodes are represented as
+constraints. Each graph node can have multiple-node weights,
+representing different criteria. The edges between nodes can be weighted
+themselves, but opposed to nodes, edges can only be decorated with a
+single weight. Moreover, the unique point about Metis is that one can
+use a concept called ``tp-weights'', which give weightage, to different
+node constraints when performing load-balancing during K-way or
+recursive graph partitioning. These are the only features of Metis that
+we required when implementing our algorithm. Metis provides a number of
+other features, which the readers can lookup in~\cite{gkar95}.
 
 \subsection{Clustering the resource-graph : building the dendrogram}
 \label{sec:clust-reso-graph}
@@ -149,8 +149,8 @@ follows:
 % We then pick the partition that was yielded with the minimum deviation
 % in the compute power.
 
-\subsection{The post pass}
-\label{sec:post-pass}
+% \subsection{The post pass}
+% \label{sec:post-pass}
 
 
 
