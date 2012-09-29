@@ -1,4 +1,3 @@
-
 \section{Experiments and results}
 \label{sec:experiments-results}
 NOTE: If CPU MIPS is high it is still OK to put the GPU actors on that
@@ -43,7 +42,8 @@ non-increasing order of their volume and sorts $\mathcal{K}$ according
 to non-increasing order of the ratio $c_i/V_i$. Then, it proceeds to
 allocate items from $\mathcal{I}$ into best bins $b \in \mathcal{S}$. A
 ``best" bin, i.e., the bin with maximum free space, is defined as the
-bin volume minus the sum of volumes of the items loaded into it. % In the
+bin volume minus the sum of volumes of the items loaded into
+it. % In the
 % mapping problem setting, this becomes a double edged sword as it boils
 % down to a single constraint solving problem giving higher priority to
 % the second constraint (vector requirement of the application-tasks
@@ -63,10 +63,103 @@ $N_\mathcal{K}$ is the number of bins(number of PEs $|V_r|$ in the
 resource graph $G_r$).
 
 
-\begin{figure}[t!]
+\subsection{Results}
+\label{sec:results}
+
+We ran a number of experiments to compare our framework with the
+heterogeneous bin packing heuristic described above.
+
+\subsubsection{The experimental setup}
+\label{sec:experimental-setup}
+
+We generated synthetic graphs ranging from 9 to 121 processing
+elements. First and foremost, due to the very large design space that
+one might need to consider, we decided to keep the topology of the
+system constant as a 2-dimensional mesh (as shown in
+Figure~\ref{fig:res}, level 0). We increase the number of the processing
+elements in steps of 2. Thus, our topology starts with 9 PEs connected
+in a rectangle with 3 rows and 3 columns, next we increase the size of
+the columns by 2 to make a 3 $\times$ 5 mesh. The number of columns are
+increased until 11. Then the rows are increased again by 2. Thereby, the
+final topology is a 121 square mesh.
+
+The two capabilities of the synthetic graphs: MIPS and vector element
+counts were varied between, 1 to 1Million, and 64 to 40K,
+respectively. Similarly the bandwidth of the connections for the
+resource-graph was varied between 10 Mbps to 1 Gbps. The numbers for
+MIPS and vector element lengths were chosen to represent the current
+type of processing elements available in the market. For example,
+processors can easily executed 1Million MIPS, whereas high end GPUs can
+easily accomodate 40K resident vector threads at any given time. 
+
+We chose 5 applications from the HPC arena: binomial option priving (a
+financial derivatives application), 2-dimensional convolution (for image
+processing), gram schmidtt linear algebra kernel, 2-dimensional
+Gauss-seildel stencil computations, and finally our motivating example
+itself the 2-dimensional Jacobi stencil computation. Next for these 5
+applications, we varoed the vector tile strides from 10 to 50, which
+resulted in graphs varying from 16 to 6000 nodes and with 23 to 12,000
+edges. A detailed descrption of the applications and their features is
+shown in Table~\ref{tab:1}.
+
+\begin{figure*}[t!]
   \centering
-  \includegraphics[angle=-90, scale=0.33]{./figures/binomial3d.eps}
-  % \scalebox{0.4}{\input{./figures/binomial3d.eps}}
-  \caption{Comparison of execution times of ``Our Framework" and ``Bin Packing"}
-  \label{fig:binomial3d}
-\end{figure}
+  \subfigure[Binomial Option Pricing]{
+    \includegraphics[angle=0, scale=0.33]{./figures/bin_surface}
+    \label{fig:bin1ho}
+  }
+  \subfigure[2 Dimensional Convolution]{
+    \includegraphics[angle=0, scale=0.33]{./figures/conv_surface}
+    \label{fig:conv1ho}
+  }
+  \subfigure[Gram schmidtt linear-algebra kernel]{
+    \includegraphics[angle=0, scale=0.33]{./figures/gram_surface}
+    \label{fig:gram1ho}
+  }
+  \subfigure[2 Dimensional Seildel stencil computation]{
+    \includegraphics[angle=0, scale=0.33]{./figures/sei_surface}
+    \label{fig:sei1ho}
+  }
+  \subfigure[2 Dimensional Jacobi stencil computation]{
+    \includegraphics[angle=0, scale=0.33]{./figures/jac_surface}
+    \label{fig:jacl1ho}
+  }
+  \caption{Comparison of execution times of ``Our Framework" and
+    ``Heterogeneous Bin Packing"}
+  \label{fig:ho}
+\end{figure*}
+
+\subsubsection{The results}
+\label{sec:results-1}
+
+The results for the experiments with the above experimental setup
+comparing out approach with the aforementioned bin-packing approach is
+shown in Figure~\ref{fig:ho}. Our approach performs better compared to
+heterogeneous bin-packing for all the applications. The graphs in
+Figure~\ref{fig:ho} consists of two surfaces layered on top of each
+other. In these graphs the larger the value, the worse the latency (and
+hence the performance of the application). For all graphs, the surface
+representing the heterogeneous bin-packing solution is always layered
+atop our results, which clearly show the superiority of our approach.
+
+For seidel, the results for bin-packing could not be obtained, because the  
+required
+vector element length was larger than the available capability of the
+underlying hardware. Our approach is able to deal with such a situation,
+by fitting the required vector length to the capability and then running
+the rest in an iterative manner.
+
+NOTE: The experimental results section requires a lot more
+refining. Basicaly a rewrite.
+
+\subsection{More results}
+\label{sec:more-results}
+
+More results comparing the difference when the height of the dendrogram
+is changed, etc.
+
+
+%%% Local Variables: 
+%%% mode: latex
+%%% TeX-master: "bare_conf"
+%%% End: 
