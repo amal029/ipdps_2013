@@ -348,7 +348,7 @@ are represented by a weighted undirected graph $G_r(V_r, E_r)$ where
 $V_r$ represents a set of processing elements which can have different
 processing capabilities. Each vertex in the task graph, $t_i \in V_t$ is
 referred to as tasks and each vertex in the resource graph, $r_i \in
-V_r$ is referred to as processing elements (PEs). % We use $N_T$ to denote
+V_r$ is referred to as processing element (PE). % We use $N_T$ to denote
 % the total number of tasks in the task graph and $N_R$ to denote the
 % total number of processing elements. By our definition of previous
 % notations, it follows that $N_T = |V_t|$ and $N_R = |V_r|$.
@@ -384,10 +384,10 @@ denotes a processing element. It consists of a set of vertices $V_r =
 element $r_i \in V_r$ has a set of decorations, that represent the
 computational capabilities of the processing elements, represented by
 $R^{i}_{j}$ where $j=0...n$ with $n$ being the number of constratins for
-the resource node. For some resource graph shown in
-Figure~\ref{fig:res}, which has $|V_r|$ nodes and 2 capabilities. For
-each node, capability 1 ($R^i_0$) epresents the frequency of the PE or
-how many scalar instructions the PE can perform in one second (the
+the resource node. For some resource graph shown in Figure~\ref{fig:res}
+(level 0), which has $|V_r|$ nodes and 2 capabilities. For each node,
+capability 1 ($R^i_0$) represents the frequency of the PE or how many
+scalar instructions the PE can perform in one second (the
 \textit{Million Instructions Per Second} (MIPS) count). Capability 2
 ($R^i_1$) denotes the maximum number of parallel vector operations it
 can perform (the vector length). Each edge $e \in E_r$ has a weight
@@ -404,9 +404,9 @@ which is denoted by $E^c, \forall E_r \in (V_r \times V_r)$.
 % Section~\ref{sec:gener-reso-graph}.
 
 The problem at hand is to effectively map the said task graph $G_t$ onto
-given resource graph $G_r$. This problem is reminiscent of a problem of
-bin packing which is known to be NP-Hard~\cite{vsar89}. This immediately
-implicates that we have to look for heuristic solutions.
+given resource graph $G_r$. This problem is known to be
+NP-Hard~\cite{vsar89}. % This immediately implicates that we have to look
+% for heuristic solutions.
 
 To decide if a mapping is effective enough or not, we need an objective
 function that defines how good a mapping of tasks onto resources

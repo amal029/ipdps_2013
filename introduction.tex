@@ -13,11 +13,11 @@ computation contains the right patterns of data parallelism it may run
 dozens or even hundreds of times faster on a GPU than on a CPU that has
 similar cost and power consumption. On the other hand, computations with
 less data parallelism and more complex control flow may run faster on
-CPUs. Matching the type of computation to the processor can yields
+CPUs. Matching the type of computation to the processor can yield
 significant benefits.
 
 Although the potential of heterogeneous computing is great, exploiting
-that potential is more difficult. Given a parallel application it is
+that potential is more difficult. Given a parallel application, it is
 difficult to map the available parallelism onto the hardware. For
 example, how does one decide which parallel tasks should run on which
 type of execution unit? Given a system with with dozens or hundreds of
@@ -36,70 +36,72 @@ same time taking account of all the other factors.
 In this paper we consider the problem of mapping graphs of parallel
 tasks to heterogeneous HPC computing systems. This problem has been
 studied extensively for homogeneous architectures where all processing
-elements are the same. Although the homogeneous case is NP-hard,
-several heuristic solutions have been found that work well in
-practice. However, extending these solutions to the heterogeneous case
-is difficult for two reasons. Firstly, good solutions to the
-homogeneous case often work well by dividing the tasks evenly across
-the available processors. However, in the heterogeneous case some PEs
-are more powerful than others, so achieving a good load balance
-usually involves distributing the work unevenly. So we need algorithms
-the will divide the work between PEs according to their processing
-capacity.
+elements are the same. Although the homogeneous case is NP-hard, several
+heuristic solutions have been found that work well in practice. However,
+extending these solutions to the heterogeneous case is difficult for two
+reasons. Firstly, good solutions to the homogeneous case often work well
+by dividing the tasks evenly across the available processors. However,
+in the heterogeneous case some processing elements are more powerful
+than others, so achieving a good load balance usually involves
+distributing the work unevenly. So we need algorithms the will divide
+the work between processing elements according to their processing
+capability.
 
 A second reason why it can be difficult to extend algorithms for
 homogeneous architectures to the heterogenous hardware relates to the
 strengths and weaknesses of different types of processors. When
 considering heterogenenous architectures, it is tempting to think of
-some PEs simply being more powerful than others. For example, we might
-think of a system with 64 processors capable of X performance, and 16
-processors capable of 2X performance. Such machines exist. But many
-heterogeneous HPC machines contain different \textit{types} of PEs,
-such as CPUs and GPUs. A GPU is not simply a more powerful CPU. In
-fact, some types of computation run better on CPUs and some on GPUs.
-For a mapping algorithm to work well, it needs to take account of the
-strengths and weaknesses of different types of PEs.
+some processing elements simply being more powerful than others. For
+example, we might think of a system with 64 processors capable of X
+performance, and 16 processors capable of 2X performance. Such machines
+exist. But many heterogeneous HPC machines contain different
+\textit{types} of processing elements, such as CPUs and GPUs. A GPU is
+not simply a more powerful CPU. In fact, some types of computation run
+better on CPUs and some on GPUs.  For a mapping algorithm to work well,
+it needs to take account of the strengths and weaknesses of different
+types of processing elements.
 
 In this paper we present an approach to mapping parallel task graphs to
 heterogeneous architectures that addresses both of these problems.  A
 common approach to solving the homogeneous case it to \textit{partition}
-the graph across the PEs% \cite{}
+the graph across the processing elements% \cite{}
 . However, we have found that such heuristic partitioning approaches do
 not work well for heterogeneous architectures. Instead we propose a
-novel approach where the architecture is hierarchically partititioned
-into sub-clusters.  Each sub-cluster at the same level of the hierarchy
-has approximately the same computing capacity and has relatively local
+novel approach where the architecture is hierarchically partitioned into
+sub-clusters.  Each sub-cluster at the same level of the hierarchy has
+approximately the same computing capability and has relatively local
 communication.  This allows us to use existing approaches that work well
 for the homogeneous case to partition the graph across the sub-clusters
 at each level of the hierarchy. We show that this is an effective
 approach if the sub-clusters are well balanced at each level of the
 hierarchy.
 
-Our main contributions are as follows:
+Our \textbf{main contributions} are as follows:
 \begin{itemize}
-\item We present a novel approach to characterizing the type of PEs
-based on their level of SIMD parallelism which allows us to distinguish
-the suitability of different types of units to different tasks.
-\item We provide a novel algorithm for mapping task and data
-parallelism to heterogeneous architectures based on hierarchical graph
-partitioning.
-\item In addition to mapping tasks to PEs, our framework also
-allocates the data stores being used by the different tasks.
-\item We provide an experimental evaluation of these techniques
-and compare with other algorithms.
+\item We present a novel approach to characterizing the type of
+  processing elements based on their level of SIMD parallelism which
+  allows us to distinguish the suitability of different types of units
+  to different tasks.
+\item We provide a novel algorithm for mapping task and data parallelism
+  to heterogeneous architectures based on hierarchical graph
+  partitioning.
+\item In addition to mapping tasks to processing elements, our framework
+  also allocates the data stores being used by the different tasks.
+% \item We provide an experimental evaluation of these techniques
+% and compare with other algorithms.
 \end{itemize}
 
 The rest of this paper is organized as follows. We first provide a
 motivating example in
 Section~\ref{sec:motivating-example}. Section~\ref{sec:preliminaries},
-formalizes the problem statement and defined the objective
+formalizes the problem statement and defines the objective
 function. Next, in Section~\ref{sec:our-framework}, we provide a
 detailed description of our framework. In Section~\ref{sec:imple}, we
 then describe the implementation of our
-approach. Section~\ref{sec:experiments-results}, give the quantitative
-comparisons of our approach against a number of other
+approach. Section~\ref{sec:experiments-results}, gives the quantitative
+comparisons of our approach against other
 approaches. Section~\ref{sec:related-work}, describes the related work
-and positions our approach in comparison to this work.  Finally, we
+and positions our approach in comparison to these works.  Finally, we
 conclude in Section~\ref{sec:conclusion}.
 
 \section{Motivating Example}
@@ -133,22 +135,22 @@ node in the graph corresponds to one of the assignment statements in
 the Jacobi source code in Figure~\ref{fig:2}.
 
 Note that although each node in our version of the task graph contains
-just a single assignment statement, each of those statements is
-executed many times, and in fact there is a great deal of data
-parallelism in each node. This data parallelism can be exploited using
-either SIMD parallelism (found in CPUs with vector units and GPUs) or
-MIMD parallelism (by using multiple PEs to perform the computation) or
-a combination of both. Thus, to map the task graph to a heterogenous
-architecture we need to be aware both of the number and type of
-available PEs and the amount of available SIMD parallelism available
-within each type of PE. Therefore, we annotate the task graph with the
-amount of SIMD parallelism available in each node, as described in
-section \ref{sec:preliminaries}.
+just a single assignment statement, each of those statements is executed
+many times, and in fact there is a great deal of data parallelism in
+each node. This data parallelism can be exploited using either SIMD
+parallelism (found in CPUs with vector units and GPUs) or MIMD
+parallelism (by using multiple processing elements to perform the
+computation) or a combination of both. Thus, to map the task graph to a
+heterogenous architecture we need to be aware both of the number and
+type of available processing elements and the amount of available SIMD
+parallelism available within each type of processing element. Therefore,
+we annotate the task graph with the amount of SIMD parallelism available
+in each node, as described in section \ref{sec:preliminaries}.
 
 By annotating the task graph nodes with the level of available SIMD
 parallelism it is possible to make better mapping decisions.  For
 example, GPUs typically offer very high levels of SIMD parallelism but
-have perform poorly on code with little data parallelism.
+perform poorly on code with little data parallelism.
 
 
 \begin{scriptsize}

@@ -23,8 +23,9 @@ mapping problem, $\mathcal{I}$ refers to the set of
 \mbox{application-tasks ($|V_t|$)} and $\mathcal{K}$ refers to the PEs
 ($|V_r|$). Similar to the Knapsack problem~\cite{sski08}, by which A-BFD
 is inspired, each element $i \in \mathcal{I},\ \mathcal{K}$ has two
-constraints on them represented by \mbox{$c_i$ (cost)} and $V_i$
-(volume).
+constraints on them represented by \mbox{$c_i$ (cost)}, which models
+$R^i_0$ and $V_i$ (volume), which models $R^i_1$, capabilities of the
+resource graph, respectively.
 
 \textit{A-BFD} proceeds to sort $\mathcal{I}$ according to
 non-increasing order of their volume and sorts $\mathcal{K}$ according
@@ -111,7 +112,7 @@ generator.
 \subsubsection{The task graph setup}
 \label{sec:task-graph-setup}
 
-We chose 5 applications from the HPC arena: binomial option priving (a
+We chose 5 applications from the HPC arena: binomial option pricing (a
 financial derivatives application), 2-dimensional convolution (for image
 processing), gram Schmidt linear algebra kernel, 2-dimensional
 Gauss-seildel stencil computations, and finally our motivating example
@@ -227,7 +228,7 @@ such a situation, by fitting the required vector length to the
 capability and then running the rest in an iterative manner.
 
 The major differences between the two algorithms are provided in
-Table~\ref{tab:2}. The \textbf{Max latency} and \texttt{Min latency}
+Table~\ref{tab:2}. The \textbf{Max latency} and \textbf{Min latency}
 columns give the maximum and the minimum latencies for bin packing and
 our framework, respectively. The final column gives the number of data
 points that our framework is better compared to heterogeneous bin
@@ -239,8 +240,8 @@ performs the heterogeneous bin-packing on all the applications.
   \begin{tabular}{|c|c|c|c|c|c|}
     \hline
     \textbf{Application} &
-    \multicolumn{2}{|c|}{\textbf{Max latency (s)}} &
-    \multicolumn{2}{|c|}{\textbf{Min latency (s)}} &
+    \multicolumn{2}{|c|}{\textbf{Max latency (sec)}} &
+    \multicolumn{2}{|c|}{\textbf{Min latency (sec)}} &
     \textbf{Better (\%)} \\
     \hline
     & {HBP} & {Our framework} &
@@ -283,10 +284,30 @@ affect onto the application design and parallelism potential in the next
 section we perform design space exploration with exploration of affect
 of communication as the main objective.
 
-\subsection{Architecture exploration with communication}
+\subsection{Architecture exploration: affects of communication}
 \label{sec:arch-expl-with}
 
-More results comparing the difference when communication is changed, etc.
+In the previous section we compared our results with heterogeneous bin
+packing, without any regards for the communication. This was done by
+keeping the bandwidth of the resource graph links high enough to not
+have any affect on the overall application latency. We purposely did
+this, in order to make a fair comparison with bin packing since it does
+not consider communication when partitioning the nodes in the task
+graph.
+
+In this section we vary the bandwidth (weights on the resource graph
+edges, $E^C$) to explore best vector tile sizes for the applications.
+For experimental purposes, we use a 2D tiled mesh of 16 $\times$ 16 PEs
+(total of 256 PEs). The bandwidth of the links is randomly selected from
+a normal distribution between 32-64 MB/s for each edge. In this setup, a
+GPU-CPU combination is placed at every fourth corner in the tiled
+mesh. Finally, every CPU core in this setup runs at
+\textcolor{red}{2GHz: correct?} and has a vector capacity of 64, i.e.,
+64 floating point elements can be processed in a SIMD at
+once. Similarly, all GPUs run at \textcolor{red}{700MHz: is this
+  correct??}  and can perform 4096 floating point operations in a SIMD
+fashion. The application set is varied in the exact same manner as the
+previous experimental setup.
 
 \begin{figure*}[t!]
   \centering
@@ -298,9 +319,28 @@ More results comparing the difference when communication is changed, etc.
     \includegraphics[angle=0, scale=0.65]{./figures/jac_32-64_surface}
     \label{fig:jac1comm}
   }
+  \caption{Choosing the proper tile size}
   \label{fig:comm}
 \end{figure*}
 
+Two of the most interesting results that we obtained for the above
+experimental setup is shown in
+Figure~\ref{fig:comm}. Figure~\ref{fig:bin1comm}, gives the varying
+latency of execution for the different vector strip sizes for the
+binomial option pricing application. As we can see, with increasing
+vector strip sizes the latency of execution reduces. In our experiments
+we found that a vector strip size of 50 is best suited for this example
+and gave the best performance. Moreover, we also found that from the 256
+PEs, this example only utilized 46 PEs and that too mostly GPUs.  Jacobi
+on the other hand performs best for a vector strip size of
+20. Increasing the vector strip size after that has an adverse affect on
+the resulting partitioning as the communication overheads are far
+greater than the computation potential. Finally, in both these
+applications the placement of the data stores plays an important role,
+since there is a single data store, which needs to be accessed by all
+the nodes split due to vector tiling, the communication overhead
+increases if the store is not placed on a correct PE: usually a PE with
+high bandwidth connection to the PE processing the vector statement.
 
 %%% Local Variables:
 %%% mode: latex

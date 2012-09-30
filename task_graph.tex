@@ -56,13 +56,13 @@ following manner:
   largest vector size requirement is given as the second requirement
   ($T^i_1$) in the task graph.
 
-\item Finally, the polyhedral model is also used to find the iteration
-  count of the statements and to determine the total amount of data (in
-  bits) required to process by that statement. For example, statement
+\item The polyhedral model is also used to find the iteration count of
+  the statements and to determine the total amount of data (in bits)
+  required to process by that statement. For example, statement
   \texttt{4} (the last \texttt{boxed} statement in Figure~\ref{fig:1})
-  requires \texttt{7.8085KB}, while the first two statements \texttt{1}
-  and \texttt{2} require 64-bits more due to the difference in the loop
-  iteration count (see Figure~\ref{fig:2}).
+  requires \texttt{7.8085KB} of data, while the first two statements
+  \texttt{1} and \texttt{2} require 64-bits more due to the difference
+  in the loop iteration count (see Figure~\ref{fig:2}).
 
 \item The edges in Figure~\ref{fig:1} with 0 weights are dependence
   arcs. For example, in the Jacobi example, statements \texttt{1} and
@@ -87,7 +87,7 @@ in the compiler community. There are many ways to tile a vector. For
 example, given a single processing element with a small vector size: a
 vector might be tiled to fit the underlying hardware vector size and
 then run in a loop (an approach taken by the gcc compiler). If a number
-of processing elements with differing vector sizes are available as is
+of processing elements with differing vector sizes are available as in
 the case of HPC architectures determining the optimal vector tiles is a
 challenge and can be solved with \textit{Simulated annealing}
 (SA)~\cite{tbra01} or meta \textit{Genetic algorithm} (GA)~\cite{tbra01}

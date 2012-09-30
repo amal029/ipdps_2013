@@ -10,13 +10,13 @@
   \selectfont}%
 \fi\endgroup%
 \begin{picture}(18535,6407)(-4418,-18158)
-\put(7276,-15361){\makebox(0,0)[lb]{\smash{{\SetFigFont{14}{16.8}{\rmdefault}{\bfdefault}{\updefault}{\color[rgb]{0,0,0}$C1^{VEC}_{tpw} = 0.9994$}%
+\put(7276,-15361){\makebox(0,0)[lb]{\smash{{\SetFigFont{17}{20.4}{\rmdefault}{\bfdefault}{\updefault}{\color[rgb]{0,0,0}$C1^{VEC}_{tpw} = 0.9994$}%
 }}}}
-\put(1997,-15308){\makebox(0,0)[lb]{\smash{{\SetFigFont{14}{16.8}{\rmdefault}{\bfdefault}{\updefault}{\color[rgb]{0,0,0}$A1^{VEC}_{tpw}=0.0002$}%
+\put(1997,-15308){\makebox(0,0)[lb]{\smash{{\SetFigFont{17}{20.4}{\rmdefault}{\bfdefault}{\updefault}{\color[rgb]{0,0,0}$A1^{VEC}_{tpw}=0.0002$}%
 }}}}
-\put(1979,-14952){\makebox(0,0)[lb]{\smash{{\SetFigFont{14}{16.8}{\rmdefault}{\bfdefault}{\updefault}{\color[rgb]{0,0,0}$A1^{MIPS}_{tpw}=0.9997$}%
+\put(1979,-14952){\makebox(0,0)[lb]{\smash{{\SetFigFont{17}{20.4}{\rmdefault}{\bfdefault}{\updefault}{\color[rgb]{0,0,0}$A1^{MIPS}_{tpw}=0.9997$}%
 }}}}
-\put(7276,-14986){\makebox(0,0)[lb]{\smash{{\SetFigFont{14}{16.8}{\rmdefault}{\bfdefault}{\updefault}{\color[rgb]{0,0,0}$C1^{MIPS}_{tpw} = 0.0002$}%
+\put(7276,-14986){\makebox(0,0)[lb]{\smash{{\SetFigFont{17}{20.4}{\rmdefault}{\bfdefault}{\updefault}{\color[rgb]{0,0,0}$C1^{MIPS}_{tpw} = 0.0002$}%
 }}}}
 \put(204,-13613){\makebox(0,0)[b]{\smash{{\SetFigFont{14}{16.8}{\rmdefault}{\bfdefault}{\updefault}{\color[rgb]{0,0,0}$T^3_1: 0$}%
 }}}}

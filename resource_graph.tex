@@ -21,10 +21,10 @@ communication. The properties of the resource graph are described below:
   count. The MIPS capacity of a PE is denoted by the first decoration
   $R^i_0, \forall i \in V_r$. The GPU nodes have a lower MIPS count, but
   have a large resident vector length, denoted by the second decoration
-  $R^i_1, \forall i \in V_r$. For example, the first PE at level 0 is a
-  CPU, since it has a small vector count and a large MIPS count, the
-  first PE on the other hand is a GPU, since the capacities are
-  reversed.
+  $R^i_1, \forall i \in V_r$. For example, the fifth PE (\texttt{E0}) at
+  level 0 is a CPU, since it has a small vector count and a large MIPS
+  count, the first PE (\texttt{A0}) on the other hand is a GPU, since
+  the capabilities are reversed.
 
 
   % The scalar instructions of a Processing Element (\textbf{PE}) that
@@ -87,7 +87,7 @@ build the hierarchy are as follows:
   whereby the height of the cluster is $log_2|V_r|$. For example,
   consider the PEs at level 0 in Figure~\ref{fig:res}. Contraction from
   level 0 to level 1 results in 4 PEs at level 1, where the two
-  capacities, $R^k_0,\ R^k_1$ for each contracted node $k = \{i, j\},
+  capabilities, $R^k_0,\ R^k_1$ for each contracted node $k = \{i, j\},
   \exists i \in V_r \wedge \exists j \in V_r$ is computed as: $R^k_0 =
   R^i_0 + R^j_0$, and $R^k_1 = R^k_1 + R^j_1$. Without loss of
   generality we assume this for any $k = \{i,j,..,n\}, \forall n \in
@@ -173,20 +173,20 @@ build the hierarchy are as follows:
 \label{sec:task-graph-part}
 
 The task partitioning on the resulting hierarchical cluster takes a
-top-down approach. We start with the task-graph extracted from the
-application (Figure~\ref{fig:1}). We then recursively partition the
-task-graph (using K-way partitioning) on the hierarchical cluster of the
+top-down approach. We start with the task graph extracted from the
+application (Figure~\ref{fig:1}). We then recursively partition the task
+graph (using K-way partitioning) on the hierarchical cluster of the
 resource-graph. For the example cluster in Figure~\ref{fig:res}, we
-start by partitioning the task-graph in Figure~\ref{fig:1}, first into
+start by partitioning the task graph in Figure~\ref{fig:1}, first into
 two (K=2) partitions considering two equally weighted compute nodes at
 level 2. Once a partition is obtained for this level, we move onto the
-next level (level 1), whereby all the task-graph nodes allocated onto
+next level (level 1), whereby all the task graph nodes allocated onto
 node \texttt{A2} are further partitioned onto the nodes \texttt{A1} and
 \texttt{C1} (again K=2), which are coupled into the contracted node
 \texttt{A2}. This process is continued recursively for all contracted
 nodes until the final level (level 0). During each partition we make
 sure that the task node requirements are closely matched to the resource
-node capacities.
+node capabilities.
 
 % To partition the application we start with the top most level in the
 % resource graph and divide it according to the required virtual nodes at
@@ -196,7 +196,7 @@ node capacities.
 % level, by which reach the actual mapping of the task graph on to the
 % resource graph.
 
-Doing it in this top down manner carries two important consequences.
+Doing it in this top down manner has two important consequences.
 
 \begin{itemize}
 
