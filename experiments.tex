@@ -51,9 +51,6 @@ resource graph $G_r$).
 \subsection{The experimental setup}
 \label{sec:experimental-setup}
 
-\textcolor{red}{NOTE: Give the ranges that we used in this paper for compute
-nodes...SERVESH's JOB.}
-
 The experimental setup consists of the resource graph generation and the
 task graph generation. Herein, we describe the two setups.
 
@@ -67,41 +64,53 @@ The experimental set up consists of the following.
 \item  An interconnection network with \numtplgynodes nodes. A node
 could be just a multi-core CPU or a multi-core CPU with a GPU attached to it.
 
-\item A set of \gpunum GPUs where \gpunum is at most \numtplgynodes. The GPUs
-are connected in the network at pre-determined locations.
+\item A set of \gpunum GPUs where \gpunum is at most \numtplgynodes. The
+  GPUs are connected in the network at pre-determined locations, chosen
+  randomly in the normal distribution of 25\% to 75\% of $|V_r|$.
 
-\item A set $\veclenset = \{V_1, V_2, V_3, ... V_{|\veclenset|}\}$ where $V_i$
-is a power of 2.  Every GPU in this experiment has a vector length of $V_i$
-where $V_i$ is sampled randomly from the set \veclenset.
+\item A set $\veclenset = \{V_1, V_2, V_3, ... V_{|\veclenset|}\}$ where
+  $V_i$ is a power of 2.  Every GPU in this experiment has a vector
+  length of $V_i$ where $V_i$ is sampled randomly from the set
+  \veclenset. The elements of set \veclenset are chosen from a normal
+  distribution ranging from: 1024 to 16284.
 
-\item A set $\corenumset = \{C_1, C_2, C_3, ... C_{|\veclenset|}\}$ where $C_i$
-is a power of 2.  Every CPU in this experiment has $C_i$
-cores where $C_i$ is sampled randomly from the set \corenumset.
+\item A set $\corenumset = \{C_1, C_2, C_3, ... C_{|\veclenset|}\}$
+  where $C_i$ is a power of 2.  Every CPU in this experiment has $C_i$
+  cores where $C_i$ is sampled randomly from the set \corenumset.
+
+\item A set $\mipsset = \{M_1, M_2, M_3, ... M_{|\mipsset|}\}$ where
+  $M_i$ is a power of 2.  Every $C_i \in \corenumset$ and GPU in this
+  experiment has a MIPS count of $M_i$ where $M_i$ is sampled randomly
+  from the set \mipsset. The elements of set \mipsset are chosen from a
+  normal distribution ranging from: 100 to 1000000.
 
 \end{enumerate}
 
-For given values of \numtplgynodes, \gpunum, \veclenset and \corenumset,
-and a given application, let the $k$-th \ul{trial} be defined as one
-execution of the following sequence of steps.
+For given values of \numtplgynodes, \gpunum, \veclenset, \corenumset,
+and \mipsset and a given application, let the $k$-th \ul{trial} be
+defined as one execution of the following sequence of steps.
 
 \begin{itemize}
 
-\item For each GPU $G_i$, sample \veclenset
-randomly to determine its vector length $V_i$. \label{i1}
+\item For each GPU $G_i$, sample \veclenset and \mipsset randomly to
+  determine its vector length $V_i$ and MIPS count $M_i$. \label{i1}
 
 \item For each CPU $P_i$, sample \corenumset randomly to determine the
   number of cores $C_i$ in the processor $P_i$.~\label{i2}
 
-\item Use our algorithm to extract data parallelism that is best
-  utilizable by the heterogeneity created by parameters in items 1 and 2
-  above. Determine the execution time $Latency^{\zeta_\mathcal{M}}$.
+\item For each core $C_i$ in the processor $P_i$ sample $V_i$ and $M_i$
+  randomly from set \veclenset and \mipsset.
+
+\item Use our framework to extract data and task parallelism that is
+  best utilizable by the heterogeneity created by parameters in items 1,
+  2, and 3 above. Determine the execution time
+  $Latency^{\zeta_\mathcal{M}}$.
 
 \end{itemize}
 
-
-An experiment, \expt(\numtplgynodes, \gpunum, \veclenset, \corenumset),
-consists of conducting enough the above trials so that width of the 95\%
-confidence interval on the average value of
+An experiment, \expt(\numtplgynodes, \gpunum, \veclenset, \corenumset
+\mipsset), consists of conducting enough of the above trials so that
+width of the 95\% confidence interval on the average value of
 $Latency^{\zeta_\mathcal{M}}$ is less than 10\% of the average
 value. This results in a variable number of trials with different
 experimental setups. Note that two trials differ from each other only in
@@ -301,13 +310,11 @@ For experimental purposes, we use a 2D tiled mesh of 16 $\times$ 16 PEs
 (total of 256 PEs). The bandwidth of the links is randomly selected from
 a normal distribution between 32-64 MB/s for each edge. In this setup, a
 GPU-CPU combination is placed at every fourth corner in the tiled
-mesh. Finally, every CPU core in this setup runs at
-\textcolor{red}{2GHz: correct?} and has a vector capacity of 64, i.e.,
-64 floating point elements can be processed in a SIMD at
-once. Similarly, all GPUs run at \textcolor{red}{700MHz: is this
-  correct??}  and can perform 4096 floating point operations in a SIMD
-fashion. The application set is varied in the exact same manner as the
-previous experimental setup.
+mesh. Finally, every CPU core in this setup runs at 2GHz and has a
+vector capacity of 64, i.e., 64 floating point elements can be processed
+in a SIMD at once. Similarly, all GPUs run at 700MHz and can perform
+4096 floating point operations in a SIMD fashion. The application set is
+varied in the exact same manner as the previous experimental setup.
 
 \begin{figure*}[t!]
   \centering
