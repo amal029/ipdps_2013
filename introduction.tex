@@ -125,14 +125,12 @@ parallelism in heterogeneous architectures.
 One way to represent program parallelism is to build a task graph.  A
 task graph is a graph where the nodes represent computation and the
 edges represent data dependencies between the computations.
-Figure~\ref{fig:1} shows a simple task graph for the Jacobi code. [NOTE: I
-  SUGGEST WE INSERT A VERY SIMPLE TASK GRAPH HERE, BECAUSE THE ONE IN
-  THE NEXT SECTION IS QUITE INTIMIDATING]. There are many ways in
-which the task graph can be built. In the current paper, the task
-graph is built using a parallelizing compiler that automatically
-detects simple data parallelism in code that operates on arrays.  Each
-node in the graph corresponds to one of the assignment statements in
-the Jacobi source code in Figure~\ref{fig:2}.
+Figure~\ref{fig:1} shows a simple task graph for the Jacobi code. There
+are many ways in which the task graph can be built. In the current
+paper, the task graph is built using a parallelizing compiler that
+automatically detects simple data parallelism in code that operates on
+arrays.  Each node in the graph corresponds to one of the assignment
+statements in the Jacobi source code in Figure~\ref{fig:2}.
 
 Note that although each node in our version of the task graph contains
 just a single assignment statement, each of those statements is executed
@@ -152,6 +150,18 @@ parallelism it is possible to make better mapping decisions.  For
 example, GPUs typically offer very high levels of SIMD parallelism but
 perform poorly on code with little data parallelism.
 
+In addition to allocating these tasks based on appropriate levels of SIMD
+parallelism, it is also important to divide the overall work of the
+task graph across the available resources. Heuristics developed for
+homogeneous architectures that divide the work evenly among the
+resources do not work well for heterogeneous architectures. This is
+because one might execute sequential code very efficiently while
+another provides a lot of SIMD parallelism making it a challenge to
+divide the tasks. Moreover, this causes the communication volume
+between resources to be very different. In such a case any
+imbalance in communication could severely impact the performance of
+the application, making it important to account for the communication
+costs between the resources when mapping the task graph.
 
 \begin{scriptsize}
   \begin{figure}[h!]
@@ -181,6 +191,48 @@ perform poorly on code with little data parallelism.
   \end{figure}
 \end{scriptsize}
 
+Our solution to this problem is to hierarchically partition the nodes
+present in the hetrogeneous architecture into clusters as described in
+section~\ref{sec:clustering-topology}. The clusters are created such that
+the computation capacity is balanced across clusters and the
+communication volume between them are minimized. An example of such
+recursive clustering is shown in Figure \ref{fig:res}. Once the machine
+has been divided into a hierarchy of clusters, we partition the task
+graph across the clusters until we reach the lowest level where each
+task is allocated to a specific resource as described in
+section~\ref{sec:task-graph-part}.
+
+%~ David's Text
+%~ In addition to allocating tasks to PEs with appropriate levels of SIMD
+%~ parallelism, it is also important to divide the overall work of the
+%~ task graph across the available PEs. However, there are two
+%~ major problems with doing this for a heterogeneous target architecture.
+%~ First, the capabilities of the different PEs may be very different.
+%~ One might execute sequential code very efficiently while another
+%~ provides a lot of SIMD parallelism. Heuristics developed for
+%~ homogeneous architectures that divide the work evenly among the PEs do
+%~ not work well for heterogeneous architectures. Seconldly, we must take
+%~ account of communication costs between PEs.
+%~
+%~ Our solution to this problem is to hierarchically partition the
+%~ processing elements into clusters, as shown in Figure \ref{fig:res}.
+%~ We partition the available PEs so that each cluster has approximately
+%~ the same level of computing capacity, and so that there is plenty of
+%~ communication capacity within clusters. We start a cluster consisting
+%~ of all PEs in the machine, and this full machine is divided into
+%~ (usually) two clusters of approximately equal processing capacity.
+%~ The resulting clusters are divided recusively into sub-clusters with
+%~ approximately equal capacity.
+%~
+%~ Once the machine has been divided into a hierarchy of clusters,
+%~ we partition the task graph across the clusters. At each level
+%~ of the hierarchy of clusters, the capacity of each cluster has
+%~ approximately equal computational capacity. Therefore, simple
+%~ graph partitioning algorithms aimed at an even split of the
+%~ graph work well. At each level of the hierarchy of clusters
+%~ we divide the task graph among the clusters, until we reach the
+%~ lowest level where each task is allocated to a specific processing
+%~ element.
 
 
 % \section{Introduction and motivating example}
