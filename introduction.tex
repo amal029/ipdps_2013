@@ -39,7 +39,9 @@ studied extensively for homogeneous architectures where all processing
 elements are the same. Although the homogeneous case is NP-hard, several
 heuristic solutions have been found that work well in practice. However,
 extending these solutions to the heterogeneous case is difficult for two
-reasons. Firstly, good solutions to the homogeneous case often work well
+reasons.
+
+Firstly, good solutions to the homogeneous case often work well
 by dividing the tasks evenly across the available processors. However,
 in the heterogeneous case some processing elements are more powerful
 than others, so achieving a good load balance usually involves
@@ -64,7 +66,7 @@ types of processing elements.
 In this paper we present an approach to mapping parallel task graphs to
 heterogeneous architectures that addresses both of these problems.  A
 common approach to solving the homogeneous case is to \textit{partition}
-the graph across the processing elements \cite{gkar98}\cite{gkar95}.
+the graph across the processing elements~\cite{aale01,kpur99,enys98}.
 However, we have found that such heuristic partitioning approaches do
 not work well for heterogeneous architectures. Instead we propose a
 novel approach where the architecture is hierarchically partitioned into
@@ -170,6 +172,7 @@ costs between the resources when mapping the task graph.
 \begin{scriptsize}
   \begin{figure}[h!]
     \centering
+\small{
 \begin{verbatim}
  //Task and data-parallel
  for (int i=0;i<M; ++i){
@@ -179,8 +182,8 @@ costs between the resources when mapping the task graph.
   }
  }
  for (int k=0;k<TSTEPS;++k){
-  for (int i=1; i<M; ++i)
-   for (int j=1; j<N; ++j)
+  for (int i=1; i<M-1; ++i)
+   for (int j=1; j<N-1; ++j)
     3: B[i][j] = 0.2*(A[i][j]+A[i][j-1]
               +A[i][j+1]+A[i-1][j])
 
@@ -190,6 +193,7 @@ costs between the resources when mapping the task graph.
     4: A[i][j] = B[i][j]
  }
 \end{verbatim}
+}
     \caption{Example 2-dimensional Jacobi application}
     \label{fig:2}
   \end{figure}

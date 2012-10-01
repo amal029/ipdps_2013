@@ -4,14 +4,6 @@
 
 \begin{figure*}[t!]
   \centering
-  % \includegraphics[scale=0.42]{./figures/jacobi2d}
-  \scalebox{0.37}{\input{./figures/jacobi2d.pstex_t}}
-  \caption{The task graph for the Jacobi example}
-  \label{fig:1}
-\end{figure*}
-
-\begin{figure*}[t!]
-  \centering
 \begin{verbatim}
  %scevgep = getelementptr [1000 x <1000 x float>]* %A, i64 0, i64 %3
  %scevgep10 = bitcast <1000 x float>* %scevgep to i8*
@@ -67,8 +59,8 @@ following manner:
   \texttt{1} and \texttt{2} require 64-bits more due to the difference
   in the loop iteration count (see Figure~\ref{fig:2}).
 
-\item The edges in Figure~\ref{fig:1} with 0 weights are dependence
-  arcs. For example, in the Jacobi example, statements \texttt{1} and
+\item The dependence edges in Figure~\ref{fig:1} are represented by solid
+arcs. For example, in the Jacobi example, statements \texttt{1} and
   \texttt{2} can be carried out in parallel, while statements
   \texttt{3} and \texttt{4} have a dependence on these two statements
   and hence, cannot be split.

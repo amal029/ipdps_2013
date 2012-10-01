@@ -180,7 +180,7 @@
 % cuted.sty or midfloat.sty packages (also by Sigitas Tolusis) as IEEE does
 % not format its papers in such ways.
 
-
+\usepackage{fmtcount}
 
 
 
@@ -340,6 +340,21 @@ Email: avinmali@ie.ibm.com, drshoukatali@gmail.com}
 
 \input{introduction}
 
+\addtocounter{footnote}{1}
+\footnotetext[\value{footnote}]{Ellipses represent data stores. Rectangles
+  represent task nodes. Rounded rectangle represents data parallel
+  nodes. The dots represent other data parallel nodes not shown in the
+  figure. Dashed arrows represent commuication between data stores and
+  execution statements. Solid arrows represent dependence edges.}
+
+\begin{figure}[ht]
+  %~ \centering
+  \includegraphics[scale=0.44]{./figures/jacobi2d}
+  %\scalebox{0.37}{\input{./figures/jacobi2d-eps-converted-to.pdf}
+  \caption{The task graph for the Jacobi example $^{\decimal{footnote}}$}
+  \label{fig:1}
+\end{figure}
+
 
 \section{Preliminaries}
 \label{sec:preliminaries}
@@ -438,13 +453,15 @@ mapping of the application on the resource-graph. For a particular
 allocation onto some resource node $s \in V_r$, we define its
 computation a communication latency as in Equation~(\ref{eq:1}).
 
+%\vspace{-0.7cm}
+
 \begin{equation}
   \label{eq:3}
   \begin{array}{c}
     ((T^i_1/R^j_1\times T^i_0)/R^j_0)
     + (e^c/E^c) | c = (i,k), k \neq i, \\ \forall k \in V_t, c = (j,l), l
     \neq
-    j, \forall l \in V_r 
+    j, \forall l \in V_r
   \end{array}
 \end{equation}
 
@@ -453,10 +470,10 @@ computation a communication latency as in Equation~(\ref{eq:1}).
 % <<<<<<< HEAD
     L^{\mathcal{M}}_s = Lcomp^{\mathcal{M}}_s +
     Lcomm^{\mathcal{M}}_s\\
-	\\Lcomp^{\mathcal{M}}_s = 
+	\\Lcomp^{\mathcal{M}}_s =
     \sum_{\forall i \in V_t} ((T^i_1/R^s_1\times T^i_0)/R^c_0)\\
     \\Lcomm^{\mathcal{M}}_s =
-    \sum_{\forall i \in V_t} e^c / E^c\\ 
+    \sum_{\forall i \in V_t} e^c / E^c\\
 % =======
 %     Latency^{\zeta_\mathcal{M}}_s = comp^{\zeta_\mathcal{M}}_s +
 % comm^{\zeta_\mathcal{M}}_s\\
