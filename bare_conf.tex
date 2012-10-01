@@ -233,18 +233,30 @@
 % use a multiple column layout for up to two different
 % affiliations
 
-\author{\IEEEauthorblockN{Authors Name/s per 1st Affiliation (Author)}
-\IEEEauthorblockA{line 1 (of Affiliation): dept. name of organization\\
-line 2: name of organization, acronyms acceptable\\
-line 3: City, Country\\
-line 4: Email: name@xyz.com}
-\and
-\IEEEauthorblockN{Authors Name/s per 2nd Affiliation (Author)}
-\IEEEauthorblockA{line 1 (of Affiliation): dept. name of organization\\
-line 2: name of organization, acronyms acceptable\\
-line 3: City, Country\\
-line 4: Email: name@xyz.com}
-}
+%~ \author{\IEEEauthorblockN{Servesh Muralidharan, Aravind Vasudevan, David Gregg}
+%~ \IEEEauthorblockA{School of Computer Science and\\Statistics\\
+%~ Trinity College Dublin\\
+%~ Dublin 2, Ireland\\
+%~ Email: muralis@tcd.ie}
+%~ \and
+%~ \IEEEauthorblockN{David Gregg}
+%~ \IEEEauthorblockA{School of Computer Science and\\Statistics\\
+%~ Trinity College Dublin\\
+%~ Dublin 2, Ireland\\
+%~ Email: David.Gregg@cs.tcd.ie}}
+%~
+%~ \author{\IEEEauthorblockN{Authors Name/s per 1st Affiliation (Author)}
+%~ \IEEEauthorblockA{line 1 (of Affiliation): dept. name of organization\\
+%~ line 2: name of organization, acronyms acceptable\\
+%~ line 3: City, Country\\
+%~ line 4: Email: name@xyz.com}
+%~ \and
+%~ \IEEEauthorblockN{Authors Name/s per 2nd Affiliation (Author)}
+%~ \IEEEauthorblockA{line 1 (of Affiliation): dept. name of organization\\
+%~ line 2: name of organization, acronyms acceptable\\
+%~ line 3: City, Country\\
+%~ line 4: Email: name@xyz.com}
+%~ }
 
 % conference papers do not typically use \thanks and this command
 % is locked out in conference mode. If really needed, such as for
@@ -254,19 +266,17 @@ line 4: Email: name@xyz.com}
 % for over three affiliations, or if they all won't fit within the width
 % of the page, use this alternative format:
 %
-%\author{\IEEEauthorblockN{Michael Shell\IEEEauthorrefmark{1},
-%Homer Simpson\IEEEauthorrefmark{2},
-%James Kirk\IEEEauthorrefmark{3},
-%Montgomery Scott\IEEEauthorrefmark{3} and
-%Eldon Tyrell\IEEEauthorrefmark{4}}
-%\IEEEauthorblockA{\IEEEauthorrefmark{1}School of Electrical and Computer Engineering\\
-%Georgia Institute of Technology,
-%Atlanta, Georgia 30332--0250\\ Email: see http://www.michaelshell.org/contact.html}
-%\IEEEauthorblockA{\IEEEauthorrefmark{2}Twentieth Century Fox, Springfield, USA\\
-%Email: homer@thesimpsons.com}
-%\IEEEauthorblockA{\IEEEauthorrefmark{3}Starfleet Academy, San Francisco, California 96678-2391\\
-%Telephone: (800) 555--1212, Fax: (888) 555--1212}
-%\IEEEauthorblockA{\IEEEauthorrefmark{4}Tyrell Inc., 123 Replicant Street, Los Angeles, California 90210--4321}}
+\author{\IEEEauthorblockN{Servesh Muralidharan\IEEEauthorrefmark{2},
+Aravind Vasudevan\IEEEauthorrefmark{2},
+Avinash Malik\IEEEauthorrefmark{4},
+Shoukat Ali\IEEEauthorrefmark{4} and
+David Gregg\IEEEauthorrefmark{2}}
+\IEEEauthorblockA{\IEEEauthorrefmark{2}School of Computer Science and Statistics,
+Trinity College Dublin, Dublin 2, Ireland\\
+Email: muralis@scss.tcd.ie, vasudeva@scss.tcd.ie, David.Gregg.cs.tcd.ie }
+\IEEEauthorblockA{\IEEEauthorrefmark{4}IBM Research - Ireland\\
+Email: avinmali@ie.ibm.com, drshoukatali@gmail.com}
+}
 
 
 
@@ -438,19 +448,19 @@ mapping $\mathcal{M}$ defined as $\zeta_\mathcal{M}$ on some resource $s
   \begin{array}{c}
     Latency^{\zeta_\mathcal{M}}_s = comp^{\zeta_\mathcal{M}}_s +
 comm^{\zeta_\mathcal{M}}_s\\
-	\\comp^{\zeta_\mathcal{M}}_s = 
+	\\comp^{\zeta_\mathcal{M}}_s =
     \sum_{\forall i \in V_t \wedge
       \zeta_\mathcal{M} = s} ((T^i_1/R^s_1\times T^i_0)/R^c_0)\\
     \\comm^{\zeta_\mathcal{M}}_s =
     \sum_{\forall i \in V_t \wedge
-      \zeta_\mathcal{M} = s} e^d / E^c\\ 
+      \zeta_\mathcal{M} = s} e^d / E^c\\
     \\s.t., d = (i,k), k \neq i, \forall k
     \in V_t \wedge\  c = (s,l), l \neq s, \forall l \in V_r
   \end{array}
   \label{eq:1}
 \end{equation}
 
-Finally, the complete application latency can then be defined as: 
+Finally, the complete application latency can then be defined as:
 \begin{equation}
   \label{eq:2}
   Latency^{\zeta_\mathcal{M}} = max_{s}
@@ -525,7 +535,9 @@ partitioning not only gives good application latencies, but also reduced
 power consumption.
 
 % use section* for acknowledgment
-% \section*{Acknowledgment}
+\section{Acknowledgment}
+This work is partly funded by the IRCSET Enterprise Partnership Scheme
+in collaboration with IBM Research, Ireland.
 
 
 % The authors would like to thank...
@@ -566,7 +578,7 @@ power consumption.
 
 
 
-%%% Local Variables: 
+%%% Local Variables:
 %%% mode: latex
 %%% TeX-master: t
-%%% End: 
+%%% End:

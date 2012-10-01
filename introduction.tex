@@ -63,9 +63,9 @@ types of processing elements.
 
 In this paper we present an approach to mapping parallel task graphs to
 heterogeneous architectures that addresses both of these problems.  A
-common approach to solving the homogeneous case it to \textit{partition}
-the graph across the processing elements% \cite{}
-. However, we have found that such heuristic partitioning approaches do
+common approach to solving the homogeneous case is to \textit{partition}
+the graph across the processing elements \cite{gkar98}\cite{gkar95}.
+However, we have found that such heuristic partitioning approaches do
 not work well for heterogeneous architectures. Instead we propose a
 novel approach where the architecture is hierarchically partitioned into
 sub-clusters.  Each sub-cluster at the same level of the hierarchy has
@@ -125,7 +125,7 @@ parallelism in heterogeneous architectures.
 One way to represent program parallelism is to build a task graph.  A
 task graph is a graph where the nodes represent computation and the
 edges represent data dependencies between the computations.
-Figure~\ref{} shows a simple task graph for the Jacobi code. [NOTE: I
+Figure~\ref{fig:1} shows a simple task graph for the Jacobi code. [NOTE: I
   SUGGEST WE INSERT A VERY SIMPLE TASK GRAPH HERE, BECAUSE THE ONE IN
   THE NEXT SECTION IS QUITE INTIMIDATING]. There are many ways in
 which the task graph can be built. In the current paper, the task
@@ -208,7 +208,7 @@ perform poorly on code with little data parallelism.
 % application.  Moreover, compiler writers can also use our framework when
 % vectorizing and partitioning large vector units onto parallel GPU/CPU
 % units.
-% % \textbf{AVINASH - PLS CHECK 
+% % \textbf{AVINASH - PLS CHECK
 % % THE LAST CLAIM. DO YOU DO THAT IN THIS PAPER?}
 
 % Consider the code snippet in Figure~\ref{fig:2} that carries out the
@@ -455,7 +455,7 @@ perform poorly on code with little data parallelism.
 
 
 
-%%% Local Variables: 
+%%% Local Variables:
 %%% mode: latex
 %%% TeX-master: "bare_conf"
-%%% End: 
+%%% End:
