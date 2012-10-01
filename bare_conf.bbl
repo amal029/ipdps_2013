@@ -21,6 +21,31 @@
 \providecommand{\BIBdecl}{\relax}
 \BIBdecl
 
+\bibitem{aale01}
+\BIBentryALTinterwordspacing
+A.~Alet\`{a}, J.~M. Codina, J.~S\'{a}nchez, and A.~Gonz\'{a}lez,
+  ``Graph-partitioning based instruction scheduling for clustered processors,''
+  in \emph{Proceedings of the 34th annual ACM/IEEE international symposium on
+  Microarchitecture}, ser. MICRO 34.\hskip 1em plus 0.5em minus 0.4em\relax
+  Washington, DC, USA: IEEE Computer Society, 2001, pp. 150--159. [Online].
+  Available: \url{http://dl.acm.org/citation.cfm?id=563998.564019}
+\BIBentrySTDinterwordspacing
+
+\bibitem{kpur99}
+K.~Purna and D.~Bhatia, ``Temporal partitioning and scheduling data flow graphs
+  for reconfigurable computers,'' \emph{Computers, IEEE Transactions on},
+  vol.~48, no.~6, pp. 579 --590, jun 1999.
+
+\bibitem{enys98}
+\BIBentryALTinterwordspacing
+E.~Nystrom and A.~E. Eichenberger, ``Effective cluster assignment for modulo
+  scheduling,'' in \emph{Proceedings of the 31st annual ACM/IEEE international
+  symposium on Microarchitecture}, ser. MICRO 31.\hskip 1em plus 0.5em minus
+  0.4em\relax Los Alamitos, CA, USA: IEEE Computer Society Press, 1998, pp.
+  103--114. [Online]. Available:
+  \url{http://dl.acm.org/citation.cfm?id=290940.290966}
+\BIBentrySTDinterwordspacing
+
 \bibitem{jacobi1}
 D.~an~Mey, ``{MPI Case Study, Jacobi-Solver},'' in \emph{{Parallel Programming
   in Computational Engineering and Science (PPCES)}}, 26 March 2010.
