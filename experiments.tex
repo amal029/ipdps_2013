@@ -61,20 +61,21 @@ The experimental set up consists of the following.
 
 \begin{enumerate}
 
-\item  An interconnection network with \numtplgynodes nodes. A node
-could be just a multi-core CPU or a multi-core CPU with a GPU attached to it.
+\item An interconnection network with \numtplgynodes
+  nodes. \numtplgynodes vary from 2 to 121 PEs. A node could be just a
+  multi-core CPU or a multi-core CPU with a GPU attached to it.
 
 \item A set of \gpunum GPUs where \gpunum is at most \numtplgynodes. The
   GPUs are connected in the network at pre-determined locations, chosen
   randomly in the normal distribution of 25\% to 75\% of $|V_r|$.
 
-\item A set $\veclenset = \{V_1, V_2, V_3, ... V_{|\veclenset|}\}$ where
-  $V_i$ is a power of 2.  Every GPU in this experiment has a vector
-  length of $V_i$ where $V_i$ is sampled randomly from the set
+\item A set $\veclenset = \{G_1, G_2, G_3, ... G_{|\veclenset|}\}$ where
+  $G_i$ is a power of 2.  Every GPU in this experiment has a vector
+  length of $G_i$ where $G_i$ is sampled randomly from the set
   \veclenset. The elements of set \veclenset are chosen from a normal
   distribution ranging from: 1024 to 16284.
 
-\item A set $\corenumset = \{C_1, C_2, C_3, ... C_{|\veclenset|}\}$
+\item A set $\corenumset = \{C_1, C_2, C_3, ... C_{|\corenumset|}\}$
   where $C_i$ is a power of 2.  Every CPU in this experiment has $C_i$
   cores where $C_i$ is sampled randomly from the set \corenumset.
 
@@ -104,7 +105,7 @@ defined as one execution of the following sequence of steps.
 \item Use our framework to extract data and task parallelism that is
   best utilizable by the heterogeneity created by parameters in items 1,
   2, and 3 above. Determine the execution time
-  $Latency^{\zeta_\mathcal{M}}$.
+  $L^{\mathcal{M}}$.
 
 \end{itemize}
 

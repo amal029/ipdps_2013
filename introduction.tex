@@ -20,10 +20,10 @@ Although the potential of heterogeneous computing is great, exploiting
 that potential is more difficult. Given a parallel application, it is
 difficult to map the available parallelism onto the hardware. For
 example, how does one decide which parallel tasks should run on which
-type of execution unit? Given a system with with dozens or hundreds of
-CPUs, GPUs and other units, how does one divide the work between them?
-There are several conflicting factors. For example, one wants to
-allocate tasks to the type of execution unit that will execute it most
+type of execution unit? Given a system with dozens or hundreds of CPUs,
+GPUs and other units, how does one divide the work between them?  There
+are several conflicting factors. For example, one wants to allocate
+tasks to the type of execution unit that will execute it most
 efficiently. On the other hand, one wants to achieve a good load balance
 by dividing the work evenly across the units. At the same time, one must
 respect data dependencies between tasks. And finally, data communication
@@ -93,14 +93,14 @@ Our \textbf{main contributions} are as follows:
 
 The rest of this paper is organized as follows. We first provide a
 motivating example in
-Section~\ref{sec:motivating-example}. Section~\ref{sec:preliminaries},
+Section~\ref{sec:motivating-example}. Section~\ref{sec:preliminaries}
 formalizes the problem statement and defines the objective
 function. Next, in Section~\ref{sec:our-framework}, we provide a
-detailed description of our framework. In Section~\ref{sec:imple}, we
+detailed description of our framework. In Section~\ref{sec:imple} we
 then describe the implementation of our
-approach. Section~\ref{sec:experiments-results}, gives the quantitative
+approach. Section~\ref{sec:experiments-results} gives the quantitative
 comparisons of our approach against other
-approaches. Section~\ref{sec:related-work}, describes the related work
+approaches. Section~\ref{sec:related-work} describes the related work
 and positions our approach in comparison to these works.  Finally, we
 conclude in Section~\ref{sec:conclusion}.
 
@@ -125,14 +125,12 @@ parallelism in heterogeneous architectures.
 One way to represent program parallelism is to build a task graph.  A
 task graph is a graph where the nodes represent computation and the
 edges represent data dependencies between the computations.
-Figure~\ref{} shows a simple task graph for the Jacobi code. [NOTE: I
-  SUGGEST WE INSERT A VERY SIMPLE TASK GRAPH HERE, BECAUSE THE ONE IN
-  THE NEXT SECTION IS QUITE INTIMIDATING]. There are many ways in
-which the task graph can be built. In the current paper, the task
-graph is built using a parallelizing compiler that automatically
-detects simple data parallelism in code that operates on arrays.  Each
-node in the graph corresponds to one of the assignment statements in
-the Jacobi source code in Figure~\ref{fig:2}.
+Figure~\ref{fig:1} shows a simple task graph for the Jacobi code. There
+are many ways in which the task graph can be built. In the current
+paper, the task graph is built using a parallelizing compiler that
+automatically detects task parallelism in code that operates on
+arrays. Each node in the graph corresponds to one of the assignment
+statements in the Jacobi source code in Figure~\ref{fig:2}.
 
 Note that although each node in our version of the task graph contains
 just a single assignment statement, each of those statements is executed
@@ -145,7 +143,7 @@ heterogenous architecture we need to be aware both of the number and
 type of available processing elements and the amount of available SIMD
 parallelism available within each type of processing element. Therefore,
 we annotate the task graph with the amount of SIMD parallelism available
-in each node, as described in section \ref{sec:preliminaries}.
+in each node, as described in Section~\ref{sec:preliminaries}.
 
 By annotating the task graph nodes with the level of available SIMD
 parallelism it is possible to make better mapping decisions.  For
