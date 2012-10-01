@@ -124,8 +124,8 @@ generator.
 
 We chose 5 applications from the HPC arena: binomial option pricing (a
 financial derivatives application), 2-dimensional convolution (for image
-processing), gram Schmidt linear algebra kernel, 2-dimensional
-Gauss-seildel stencil computations, and finally our motivating example
+processing), Gram Schmidt linear algebra kernel, 2-dimensional
+Gauss-seidel stencil computations, and finally our motivating example
 itself the 2-dimensional Jacobi stencil computation. Next for these 5
 applications, we varied the vector strip from 10 to 50, which resulted
 in graphs varying from around 50 to 5000 nodes and with 23 to 12,000
@@ -197,7 +197,7 @@ other hand varies from 3000 bytes to almost 4.8 Mega byte.
     \includegraphics[angle=0, scale=0.72]{./figures/conv_surface}
     \label{fig:conv1ho}
   }
-  \subfigure[Gram schmidtt linear-algebra kernel]{
+  \subfigure[Gram schmidt linear-algebra kernel]{
     \includegraphics[angle=0, scale=0.72]{./figures/gram_surface}
     \label{fig:gram1ho}
   }
@@ -212,6 +212,20 @@ other hand varies from 3000 bytes to almost 4.8 Mega byte.
   \caption{Comparison of execution times of ``Our Framework" and
     ``Heterogeneous Bin Packing"}
   \label{fig:ho}
+\end{figure*}
+
+\begin{figure*}[t!]
+  \centering
+  \subfigure[Binomial Option Pricing]{
+    \includegraphics[angle=0, scale=0.65]{./figures/bin_32-64_surface}
+    \label{fig:bin1comm}
+  }
+  \subfigure[2 Dimensional Jacobi stencil computation]{
+    \includegraphics[angle=0, scale=0.65]{./figures/jac_32-64_surface}
+    \label{fig:jac1comm}
+  }
+  \caption{Choosing the proper tile size}
+  \label{fig:comm}
 \end{figure*}
 
 \subsection{Experimental Results}
@@ -294,9 +308,9 @@ Figure~\ref{fig:ho}.
 
 Since communication does not play a part in the heuristic bin-packing
 solution, we ignored the communication values when comparing with bin
-packing. But, in order to show how communication can have a significant
-affect onto the application design and parallelism potential in the next
-section we perform design space exploration with exploration of affect
+packing. However, in order to show how communication can have a significant
+effect onto the application design and parallelism potential, in the next
+section we perform design space exploration with the effect
 of communication as the main objective.
 
 \subsection{Architecture exploration: affects of communication}
@@ -322,19 +336,6 @@ in a SIMD at once. Similarly, all GPUs run at 700MHz and can perform
 4096 floating point operations in a SIMD fashion. The application set is
 varied in the exact same manner as the previous experimental setup.
 
-\begin{figure*}[t!]
-  \centering
-  \subfigure[Binomial Option Pricing]{
-    \includegraphics[angle=0, scale=0.65]{./figures/bin_32-64_surface}
-    \label{fig:bin1comm}
-  }
-  \subfigure[2 Dimensional Jacobi stencil computation]{
-    \includegraphics[angle=0, scale=0.65]{./figures/jac_32-64_surface}
-    \label{fig:jac1comm}
-  }
-  \caption{Choosing the proper tile size}
-  \label{fig:comm}
-\end{figure*}
 
 Two of the most interesting results that we obtained for the above
 experimental setup is shown in
