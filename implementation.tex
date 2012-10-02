@@ -1,14 +1,6 @@
 \section{Implementation}
 \label{sec:imple}
 
-\begin{figure*}[t!]
-  \centering
-  % \includegraphics[scale=0.42]{./figures/jacobi2d}
-  \scalebox{0.4}{\input{./figures/dendrogram.pstex_t}}
-  \caption{The dendrogram for Figure~\ref{fig:res}}
-  \label{fig:7}
-\end{figure*}
-
 We use the Metis~\cite{gkar95} graph partitioning library to implement
 our partitioning algorithm. We are not tied to Metis and any other graph
 partitioner such as Zoltan~\cite{kdev09} or Scotch~\cite{cche08} can be
@@ -58,7 +50,7 @@ Figure~\ref{fig:7}.
 
 \end{itemize}
 
-\subsection{Partitoning the task-graph}
+\subsection{Partitioning the task-graph}
 \label{sec:part-task-graph}
 
 In partitioning the task graph, we need to balance the constraints on to
@@ -94,7 +86,7 @@ follows:
   nodes \texttt{C1} and \texttt{A1}. Thus, the MIPS capacity element, of
   the `tp-weight' set for weight set for the nodes \texttt{C1} and
   \texttt{A1} is calculated as: {$\{C1^{MIPS}_{tpw} = R^{C1}_0/R^{C1}_0
-    + R^{A1}_0, A1^{MIPS}_{tpw} = R^{C1}_0/R^{C1}_0 + R^{A1}_0\}$}. Same
+    + R^{A1}_0, A1^{MIPS}_{tpw} = R^{A1}_0/R^{C1}_0 + R^{A1}_0\}$}. Same
   is done to calculate the vector length capacity ratios. Since, the
   other two nodes \texttt{B1} and \texttt{D1} are contracted to form the
   second parent in level 2, \texttt{B2}, we end up with two sets of
@@ -156,7 +148,7 @@ follows:
 
 
 
-%%% Local Variables: 
+%%% Local Variables:
 %%% mode: latex
 %%% TeX-master: "bare_conf"
-%%% End: 
+%%% End:

@@ -304,7 +304,7 @@ Email: avinmali@ie.ibm.com, drshoukatali@gmail.com}
   lengths, and communication bandwidths, which all need to be considered
   when partitioning the application and associated data. We tackle this
   problem using a staged graph partitioning framework. Our experiments
-  show orders of magnitude speedup for applications. Furthermore our
+  show orders of magnitude speed up for applications. Furthermore our
   framework finishes within seconds even for architectures with 100's of
   processing elements, which makes our architecture suitable for
   exploring parallelism potential off line or on line.
@@ -344,7 +344,7 @@ Email: avinmali@ie.ibm.com, drshoukatali@gmail.com}
 \footnotetext[\value{footnote}]{Ellipses represent data stores. Rectangles
   represent task nodes. Rounded rectangle represents data parallel
   nodes. The dots represent other data parallel nodes not shown in the
-  figure. Dashed arrows represent commuication between data stores and
+  figure. Dashed arrows represent communication between data stores and
   execution statements. Solid arrows represent dependence edges.}
 
 \begin{figure}[ht]
@@ -390,7 +390,7 @@ instructions and the vector count requirements ($T^i_0\ \mathrm{and}\
 T^i_1$), i.e., $n_t=2$ for this example. The communication edges ($(t_i,
 t_j) \in E_t$) between data-stores (statements without the constraints
 in Figure~\ref{fig:1}) and the execution statements represent the amount
-of data that needs to be transfered from the store and its utilization
+of data that needs to be transferred from the store and its utilization
 at the statement level, denoted by $e^c, \forall E_t \in (V_t \times
 V_t)$ The task graphs are generated directly from the program by our
 compiler. More information about the generation of the task graphs is
@@ -557,12 +557,26 @@ literature targeting similar problems.
 
 We have tested our framework on a subset of the many high performance
 computing applications currently in use in the industry with great
-success. Our framework clearly shows that utilizing all the available
+success. Some of our worst case speed-ups were 350 times for Jacobi stencil
+computations and 107 times for Gram Schmidt linear-algebra kernel. In
+cases where the
+resource's capabilities did not match that of the application's
+requirements such as Gauss-Seidel stencil computations, HBP was not able to
+determine any mapping of the
+application.
+Our framework was also twice as fast as HBP in the best case
+for Jacobi stencil computations. We also have speed-ups in the
+order of 100s for Binomial option pricing and Gram Schmidt which are
+important applications that are used in HPC clusters, showing that our
+framework can produce much better mapping solutions for heterogeneous
+architectures when compared to HBP.
+
+Our framework clearly shows that utilizing all the available
 processing elements in the underlying architecture is not a good
 solution when heterogeneity is in play. We have found that for most
-applications, given a extremely heterogeneous topology, vector strip
-size and correct placement of data plays and important role. Imbalanced
-partitioning not only gives good application latencies, but also reduced
+applications, given an extremely heterogeneous topology, vector strip
+size and correct placement of data plays an important role. Imbalanced
+partitioning not only gives good application latencies, but could also reduce
 power consumption.
 
 % use section* for acknowledgment

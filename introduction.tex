@@ -7,7 +7,7 @@ field programmable gate arrays (FPGAs), low-power processors intended
 for digital signal processing (DSP), etc. By combining heterogeneous
 processing units it may be possible to divide the work so that different
 types of computation in the application are run on different types of
-units. This can result in significant speedups, lower hardware costs
+units. This can result in significant speed-ups, lower hardware costs
 and/or reduced power consumption by the HPC system.  For example, if a
 computation contains the right patterns of data parallelism it may run
 dozens or even hundreds of times faster on a GPU than on a CPU that has
@@ -50,9 +50,9 @@ the work between processing elements according to their processing
 capability.
 
 A second reason why it can be difficult to extend algorithms for
-homogeneous architectures to the heterogenous hardware relates to the
+homogeneous architectures to the heterogeneous hardware relates to the
 strengths and weaknesses of different types of processors. When
-considering heterogenenous architectures, it is tempting to think of
+considering heterogeneous architectures, it is tempting to think of
 some processing elements simply being more powerful than others. For
 example, we might think of a system with 64 processors capable of X
 performance, and 16 processors capable of 2X performance. Such machines
@@ -115,13 +115,13 @@ transfer problems and numerical fluid mechanics. We have chosen this
 as our motivating example because it has been successfully
 parallelized using MPI~\cite{jacobi1} and CUDA~\cite{jacobi2}.  There
 is a great deal of potential to use both techniques together to gain
-further speedup. The CUDA programming techniques exploit the
+further speed-up. The CUDA programming techniques exploit the
 \textit{Single Instruction Multiple Data} (SIMD) potential in the
-Jacobi algorithm~\cite{jacobi2} by modeling parallelism as vector
+Jacobi algorithm~\cite{jacobi2} by modelling parallelism as vector
 computations suitable for a GPU. The MPI approach on the other hand
 exploits \textit{Multiple Instruction Multiple Data} (MIMD) potential
 by distributing the parallelism across different CPU nodes. To
-maximize speedup we would like to exploit both SIMD and MIMD
+maximize speed-up we would like to exploit both SIMD and MIMD
 parallelism in heterogeneous architectures.
 
 One way to represent program parallelism is to build a task graph.  A
@@ -145,7 +145,7 @@ each node. This data parallelism can be exploited using either SIMD
 parallelism (found in CPUs with vector units and GPUs) or MIMD
 parallelism (by using multiple processing elements to perform the
 computation) or a combination of both. Thus, to map the task graph to a
-heterogenous architecture we need to be aware both of the number and
+heterogeneous architecture we need to be aware both of the number and
 type of available processing elements and the amount of available SIMD
 parallelism available within each type of processing element. Therefore,
 we annotate the task graph with the amount of SIMD parallelism available
@@ -200,7 +200,7 @@ costs between the resources when mapping the task graph.
 \end{scriptsize}
 
 Our solution to this problem is to hierarchically partition the nodes
-present in the hetrogeneous architecture into clusters as described in
+present in the heterogeneous architecture into clusters as described in
 section~\ref{sec:clustering-topology}. The clusters are created such that
 the computation capacity is balanced across clusters and the
 communication volume between them are minimized. An example of such

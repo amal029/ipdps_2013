@@ -42,8 +42,7 @@ E.~Nystrom and A.~E. Eichenberger, ``Effective cluster assignment for modulo
   scheduling,'' in \emph{Proceedings of the 31st annual ACM/IEEE international
   symposium on Microarchitecture}, ser. MICRO 31.\hskip 1em plus 0.5em minus
   0.4em\relax Los Alamitos, CA, USA: IEEE Computer Society Press, 1998, pp.
-  103--114. [Online]. Available:
-  \url{http://dl.acm.org/citation.cfm?id=290940.290966}
+  103--114.
 \BIBentrySTDinterwordspacing
 
 \bibitem{jacobi1}
@@ -97,8 +96,7 @@ T.~D. Braun, H.~J. Siegel, N.~Beck, L.~L. B\"{o}l\"{o}ni, M.~Maheswaran, A.~I.
   Reuther, J.~P. Robertson, M.~D. Theys, B.~Yao, D.~Hensgen, and R.~F. Freund,
   ``A comparison of eleven static heuristics for mapping a class of independent
   tasks onto heterogeneous distributed computing systems,'' \emph{J. Parallel
-  Distrib. Comput.}, vol.~61, no.~6, pp. 810--837, Jun. 2001. [Online].
-  Available: \url{http://dx.doi.org/10.1006/jpdc.2000.1714}
+  Distrib. Comput.}, vol.~61, no.~6, pp. 810--837, Jun. 2001.
 \BIBentrySTDinterwordspacing
 
 \bibitem{sski08}

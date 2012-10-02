@@ -12,7 +12,7 @@ fact that the optimal solution for a partitioning problem is NP hard,
 one cannot find optimal solutions for large processing
 architectures. Heuristic bin packing solutions have given good results
 in the general case~\cite{ecof78}. Comparing with the heterogeneous bin
-packing heuristic allows us to gauge the effectiveness of our algorithm
+packing (HBP) heuristic allows us to gauge the effectiveness of our algorithm
 against a standard effective technique.
 
 \subsection{Heterogeneous Bin Packing}
@@ -48,13 +48,13 @@ complexity becomes $O(N_\mathcal{I} + N_\mathcal{K})$ where
 $N_\mathcal{K}$ is the number of bins (number of PEs $|V_r|$ in the
 resource graph $G_r$).
 
-\subsection{The experimental setup}
+\subsection{The experimental set-up}
 \label{sec:experimental-setup}
 
-The experimental setup consists of the resource graph generation and the
-task graph generation. Herein, we describe the two setups.
+The experimental set-up consists of the resource graph generation and the
+task graph generation. Herein, we describe the two set-ups.
 
-\subsubsection{The resource graph setup}
+\subsubsection{The resource graph set-up}
 \label{sec:resource-graph-setup}
 
 The experimental set up consists of the following.
@@ -114,18 +114,18 @@ An experiment, \expt(\numtplgynodes, \gpunum, \veclenset, \corenumset
 width of the 95\% confidence interval on the average value of
 $Latency^{\zeta_\mathcal{M}}$ is less than 10\% of the average
 value. This results in a variable number of trials with different
-experimental setups. Note that two trials differ from each other only in
+experimental set-ups. Note that two trials differ from each other only in
 the seed for the random number generator.  This reduces the dependence
 of our results on a lucky sequence of numbers from the random number
 generator.
 
-\subsubsection{The task graph setup}
+\subsubsection{The task graph set-up}
 \label{sec:task-graph-setup}
 
 We chose 5 applications from the HPC arena: binomial option pricing (a
 financial derivatives application), 2-dimensional convolution (for image
 processing), Gram Schmidt linear algebra kernel, 2-dimensional
-Gauss-seidel stencil computations, and finally our motivating example
+Gauss-Seidel stencil computations, and finally our motivating example
 itself the 2-dimensional Jacobi stencil computation. Next for these 5
 applications, we varied the vector strip from 10 to 50, which resulted
 in graphs varying from around 50 to 5000 nodes and with 23 to 12,000
@@ -179,7 +179,7 @@ other hand varies from 3000 bytes to almost 4.8 Mega byte.
     & 50 & 168 & 570\\
     \hline
   \end{tabular}
-  \caption{The task graph setup}
+  \caption{The task graph set-up}
   \label{tab:1}
 \end{table}
 
@@ -197,7 +197,7 @@ other hand varies from 3000 bytes to almost 4.8 Mega byte.
     \includegraphics[angle=0, scale=0.72]{./figures/conv_surface}
     \label{fig:conv1ho}
   }
-  \subfigure[Gram schmidt linear-algebra kernel]{
+  \subfigure[Gram Schmidt linear-algebra kernel]{
     \includegraphics[angle=0, scale=0.72]{./figures/gram_surface}
     \label{fig:gram1ho}
   }
@@ -231,12 +231,12 @@ other hand varies from 3000 bytes to almost 4.8 Mega byte.
 \subsection{Experimental Results}
 \label{sec:results-1}
 
-The experimental setup consists of a dual socket system consisting of
+The experimental set-up consists of a dual socket system consisting of
 Intel Xeon E5620 CPU running at 2.4Ghz with 24GB DDR3 RAM. The system
-is running linux kernel ver 3.0.40-1. Our framework was compiled
+is running Linux kernel ver 3.0.40-1. Our framework was compiled
 using gcc version 4.7.1 with '-O3' optimization flag.
 
-The results for the experiments with the above experimental setup
+The results for the experiments with the above experimental set-up
 comparing our approach with the aforementioned heterogeneous bin packing
 approach is shown in Figure~\ref{fig:ho}. Our approach performs better
 compared to heterogeneous bin packing for all the applications. The
@@ -250,7 +250,7 @@ are in logarithmic scale with a base of 10. This in turn implies that
 our results are almost an order of magnitude better than those obtained
 by the heterogeneous bin packing heuristic.
 
-For seidel, the results for bin-packing could not be obtained, because
+For Seidel, the results for bin-packing could not be obtained, because
 the required vector element length was larger than the available
 capability of the underlying hardware. Our approach is able to deal with
 such a situation, by fitting the required vector length to the
@@ -328,17 +328,17 @@ In this section we vary the bandwidth (weights on the resource graph
 edges, $E^C$) to explore best vector tile sizes for the applications.
 For experimental purposes, we use a 2D tiled mesh of 16 $\times$ 16 PEs
 (total of 256 PEs). The bandwidth of the links is randomly selected from
-a normal distribution between 32-64 MB/s for each edge. In this setup, a
+a normal distribution between 32-64 MB/s for each edge. In this set-up, a
 GPU-CPU combination is placed at every fourth corner in the tiled
-mesh. Finally, every CPU core in this setup runs at 2GHz and has a
+mesh. Finally, every CPU core in this set-up runs at 2GHz and has a
 vector capacity of 64, i.e., 64 floating point elements can be processed
 in a SIMD at once. Similarly, all GPUs run at 700MHz and can perform
 4096 floating point operations in a SIMD fashion. The application set is
-varied in the exact same manner as the previous experimental setup.
+varied in the exact same manner as the previous experimental set-up.
 
 
 Two of the most interesting results that we obtained for the above
-experimental setup is shown in
+experimental set-up is shown in
 Figure~\ref{fig:comm}. Figure~\ref{fig:bin1comm}, gives the varying
 latency of execution for the different vector strip sizes for the
 binomial option pricing application. As we can see, with increasing
