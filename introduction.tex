@@ -25,43 +25,44 @@ GPUs and other units, how does one divide the work between them?  There
 are several conflicting factors. For example, one wants to allocate
 tasks to the type of execution unit that will execute it most
 efficiently. On the other hand, one wants to achieve a good load balance
-by dividing the work evenly across the units. At the same time, one must
-respect data dependencies between tasks. And finally, data communication
-costs between processing elements can be substantial, and are usually
-themselves heterogeneous. Communication with nearby processing elements
-is usually much faster than communication with more distant ones. We
-want to allocate the tasks to reduce communication costs while at the
+by dividing the work evenly across the units. % At the same time, one must
+% respect data dependencies between tasks. And finally, data
+% communication costs between processing elements can be substantial,
+% and are usually themselves heterogeneous. Communication with nearby
+% processing elements is usually much faster than communication with
+% more distant ones.
+We want to allocate the tasks to reduce communication costs while at the
 same time taking account of all the other factors.
 
 In this paper we consider the problem of mapping graphs of parallel
 tasks to heterogeneous HPC computing systems. This problem has been
 studied extensively for homogeneous architectures where all processing
-elements are the same. Although the homogeneous case is NP-hard, several
-heuristic solutions have been found that work well in practice. However,
-extending these solutions to the heterogeneous case is difficult for two
-reasons.
+elements are the same. Although the homogeneous case is
+NP-hard~\cite{vsar89}, several heuristic solutions have been found that
+work well in practice. However, extending these solutions to the
+heterogeneous case is difficult for two reasons.
 
-Firstly, good solutions to the homogeneous case often work well
-by dividing the tasks evenly across the available processors. However,
-in the heterogeneous case some processing elements are more powerful
+% Firstly, good solutions to the homogeneous case often work well by
+% dividing the tasks evenly across the available processors. However,
+In the heterogeneous case some processing elements are more powerful
 than others, so achieving a good load balance usually involves
-distributing the work unevenly. So we need algorithms the will divide
-the work between processing elements according to their processing
-capability.
+distributing the work unevenly. % So we need algorithms the will divide
+% the work between processing elements according to their processing
+% capability.
 
 A second reason why it can be difficult to extend algorithms for
 homogeneous architectures to the heterogeneous hardware relates to the
 strengths and weaknesses of different types of processors. When
 considering heterogeneous architectures, it is tempting to think of
-some processing elements simply being more powerful than others. For
-example, we might think of a system with 64 processors capable of X
-performance, and 16 processors capable of 2X performance. Such machines
-exist. But many heterogeneous HPC machines contain different
-\textit{types} of processing elements, such as CPUs and GPUs. A GPU is
-not simply a more powerful CPU. In fact, some types of computation run
-better on CPUs and some on GPUs.  For a mapping algorithm to work well,
-it needs to take account of the strengths and weaknesses of different
-types of processing elements.
+some processing elements simply being more powerful than others. % For
+% example, we might think of a system with 64 processors capable of X
+% performance, and 16 processors capable of 2X performance. Such
+% machines exist. But many heterogeneous HPC machines contain different
+% \textit{types} of processing elements, such as CPUs and GPUs.
+A GPU is not simply a more powerful CPU. In fact, some types of
+computation run better on CPUs and some on GPUs.  For a mapping
+algorithm to work well, it needs to take account of the strengths and
+weaknesses of different types of processing elements.
 
 In this paper we present an approach to mapping parallel task graphs to
 heterogeneous architectures that addresses both of these problems.  A
@@ -95,120 +96,102 @@ Our \textbf{main contributions} are as follows:
 
 The rest of this paper is organized as follows. We first provide a
 motivating example in
-Section~\ref{sec:motivating-example}. Section~\ref{sec:preliminaries}
-formalizes the problem statement and defines the objective
-function. Next, in Section~\ref{sec:our-framework}, we provide a
-detailed description of our framework. In Section~\ref{sec:imple} we
-then describe the implementation of our
-approach. Section~\ref{sec:experiments-results} gives the quantitative
+% Section~\ref{sec:motivating-example}.
+Section~\ref{sec:preliminaries} formalizes the problem statement and
+defines the objective function. Next, in
+Section~\ref{sec:our-framework}, we provide a detailed description of
+our framework. % In Section~\ref{sec:imple} we
+% then describe the implementation of our approach.
+Section~\ref{sec:experiments-results} gives the quantitative
 comparisons of our approach against other
 approaches. Section~\ref{sec:related-work} describes the related work
 and positions our approach in comparison to these works.  Finally, we
 conclude in Section~\ref{sec:conclusion}.
 
-\section{Motivating Example}
-\label{sec:motivating-example}
-Consider the code snippet in Figure~\ref{fig:2} that carries out the
-main stencil computation using the Jacobi algorithm. Jacobi is used
-for solving large systems of linear equations, especially for heat
-transfer problems and numerical fluid mechanics. We have chosen this
-as our motivating example because it has been successfully
-parallelized using MPI~\cite{jacobi1} and CUDA~\cite{jacobi2}.  There
-is a great deal of potential to use both techniques together to gain
-further speed-up. The CUDA programming techniques exploit the
-\textit{Single Instruction Multiple Data} (SIMD) potential in the
-Jacobi algorithm~\cite{jacobi2} by modelling parallelism as vector
-computations suitable for a GPU. The MPI approach on the other hand
-exploits \textit{Multiple Instruction Multiple Data} (MIMD) potential
-by distributing the parallelism across different CPU nodes. To
-maximize speed-up we would like to exploit both SIMD and MIMD
-parallelism in heterogeneous architectures.
+% \section{Motivating Example}
+% \label{sec:motivating-example}
+% Consider the code snippet in Figure~\ref{fig:2} that carries out the
+% main stencil computation using the Jacobi algorithm. Jacobi is used
+% for solving large systems of linear equations, especially for heat
+% transfer problems and numerical fluid mechanics. We have chosen this
+% as our motivating example because it has been successfully
+% parallelized using MPI~\cite{jacobi1} and CUDA~\cite{jacobi2}.  There
+% is a great deal of potential to use both techniques together to gain
+% further speed-up. The CUDA programming techniques exploit the
+% \textit{Single Instruction Multiple Data} (SIMD) potential in the
+% Jacobi algorithm~\cite{jacobi2} by modelling parallelism as vector
+% computations suitable for a GPU. The MPI approach on the other hand
+% exploits \textit{Multiple Instruction Multiple Data} (MIMD) potential
+% by distributing the parallelism across different CPU nodes. To
+% maximize speed-up we would like to exploit both SIMD and MIMD
+% parallelism in heterogeneous architectures.
 
-One way to represent program parallelism is to build a task graph.  A
-task graph is a graph where the nodes represent computation and the
-edges represent data dependencies between the computations.
-Figure~\ref{fig:1} shows a simple task graph for the Jacobi code. There
-are many ways in which the task graph can be built. In the current
-paper, the task graph is built using a parallelizing compiler that
-% <<<<<<< HEAD
-automatically detects task parallelism in code that operates on
-arrays. Each node in the graph corresponds to one of the assignment
-% ======= automatically detects simple data parallelism in code that
-% operates on arrays.  Each node in the graph corresponds to one of the
-% assignment >>>>>>> 42ffdc746763a12ade4dfcf6d9c9091b66029af3
-statements in the Jacobi source code in Figure~\ref{fig:2}.
+% % One way to represent program parallelism is to build a task graph.  A
+% % task graph is a graph where the nodes represent computation and the
+% % edges represent data dependencies between the computations.
+% Figure~\ref{fig:1} shows a simple task graph for the Jacobi code. There
+% are many ways in which the task graph can be built. In the current
+% paper, the task graph is built using a parallelizing compiler that
+% % <<<<<<< HEAD
+% automatically detects task parallelism in code that operates on
+% arrays. Each node in the graph corresponds to one of the assignment
+% % ======= automatically detects simple data parallelism in code that
+% % operates on arrays.  Each node in the graph corresponds to one of the
+% % assignment >>>>>>> 42ffdc746763a12ade4dfcf6d9c9091b66029af3
+% statements in the Jacobi source code in Figure~\ref{fig:2}.
 
-Note that although each node in our version of the task graph contains
-just a single assignment statement, each of those statements is executed
-many times, and in fact there is a great deal of data parallelism in
-each node. This data parallelism can be exploited using either SIMD
-parallelism (found in CPUs with vector units and GPUs) or MIMD
-parallelism (by using multiple processing elements to perform the
-computation) or a combination of both. Thus, to map the task graph to a
-heterogeneous architecture we need to be aware both of the number and
-type of available processing elements and the amount of available SIMD
-parallelism available within each type of processing element. Therefore,
-we annotate the task graph with the amount of SIMD parallelism available
-in each node, as described in Section~\ref{sec:preliminaries}.
+% % Note that although each node in our version of the task graph contains
+% % just a single assignment statement,
+% Each of those statements is executed many times, and in fact there is a
+% great deal of data parallelism in each node. This data parallelism can
+% be exploited using either SIMD parallelism (found in CPUs with vector
+% units and GPUs) or MIMD parallelism (by using multiple processing
+% elements to perform the computation) or a combination of both. % Thus, to
+% % map the task graph to a heterogeneous architecture we need to be aware
+% % both of the number and type of available processing elements and the
+% % amount of available SIMD parallelism available within each type of
+% % processing element.
+% Therefore, we annotate the task graph with the amount of SIMD
+% parallelism available in each node, as described in
+% Section~\ref{sec:preliminaries}.
 
-By annotating the task graph nodes with the level of available SIMD
-parallelism it is possible to make better mapping decisions.  For
-example, GPUs typically offer very high levels of SIMD parallelism but
-perform poorly on code with little data parallelism.
+% % By annotating the task graph nodes with the level of available SIMD
+% % parallelism it is possible to make better mapping decisions.  For
+% % example, GPUs typically offer very high levels of SIMD parallelism but
+% % perform poorly on code with little data parallelism.
 
-In addition to allocating these tasks based on appropriate levels of SIMD
-parallelism, it is also important to divide the overall work of the
-task graph across the available resources. Heuristics developed for
-homogeneous architectures that divide the work evenly among the
-resources do not work well for heterogeneous architectures. This is
-because one might execute sequential code very efficiently while
-another provides a lot of SIMD parallelism making it a challenge to
-divide the tasks. Moreover, this causes the communication volume
-between resources to be very different. In such a case any
-imbalance in communication could severely impact the performance of
-the application, making it important to account for the communication
-costs between the resources when mapping the task graph.
+% % In addition to allocating these tasks based on appropriate levels of SIMD
+% % parallelism, it is also important to divide the overall work of the
+% % task graph across the available resources. 
 
-\begin{scriptsize}
-  \begin{figure}[h!]
-    \centering
-\small{
-\begin{verbatim}
- //Task and data-parallel
- for (int i=0;i<M; ++i){
-  for (int j=0;j<N; ++j){
-   1: A[i][j] = (i*j+2.0+2.0/N)
-   2: B[i][j] = (i*j+3.0+3.0/N)
-  }
- }
- for (int k=0;k<TSTEPS;++k){
-  for (int i=1; i<M-1; ++i)
-   for (int j=1; j<N-1; ++j)
-    3: B[i][j] = 0.2*(A[i][j]+A[i][j-1]
-              +A[i][j+1]+A[i-1][j])
+% Heuristics developed for homogeneous architectures that divide the work
+% evenly among the resources do not work well for heterogeneous
+% architectures. This is because one might execute sequential code very
+% efficiently while another provides a lot of SIMD parallelism making it a
+% challenge to divide the tasks. Moreover, this causes the communication
+% volume between resources to be very different. In such a case any
+% imbalance in communication could severely impact the performance of the
+% application, making it important to account for the communication costs
+% between the resources when mapping the task graph.
 
-  //Data-parallel
-  for (int i=1; i<M; ++i)
-   for (int j=1; j<N; ++j)
-    4: A[i][j] = B[i][j]
- }
-\end{verbatim}
-}
-    \caption{Example 2-dimensional Jacobi application}
-    \label{fig:2}
-  \end{figure}
-\end{scriptsize}
+% \begin{scriptsize}
+%   \begin{figure}[h!]
+%     \centering
+%     \caption{}
+%     \label{fig:2}
+%   \end{figure}
+% \end{scriptsize}
 
-Our solution to this problem is to hierarchically partition the nodes
-present in the heterogeneous architecture into clusters as described in
-section~\ref{sec:clustering-topology}. The clusters are created such that
-the computation capacity is balanced across clusters and the
-communication volume between them are minimized. An example of such
-recursive clustering is shown in Figure \ref{fig:res}. Once the machine
-has been divided into a hierarchy of clusters, we partition the task
-graph across the clusters until we reach the lowest level where each
-task is allocated to a specific resource as described in
-section~\ref{sec:task-graph-part}.
+% Our solution to this problem is to hierarchically partition the nodes
+% present in the heterogeneous architecture into clusters as described in
+% section~\ref{sec:clustering-topology}. The clusters are created such that
+% the computation capacity is balanced across clusters and the
+% communication volume between them are minimized. An example of such
+% recursive clustering is shown in Figure \ref{fig:res}. Once the machine
+% has been divided into a hierarchy of clusters, we partition the task
+% graph across the clusters until we reach the lowest level where each
+% task is allocated to a specific resource as described in
+% section~\ref{sec:task-graph-part}.
 
 %~ David's Text
 %~ In addition to allocating tasks to PEs with appropriate levels of SIMD

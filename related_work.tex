@@ -16,8 +16,10 @@ techniques, but they have only targeted homogeneous RAW~\cite{ewai97}
 architecture. There are the classical algorithms such as critical path
 scheduling~\cite{Kohler1975} and list scheduling~\cite{atho74}, which
 have been used for scheduling task parallel process onto homogeneous
-architectures. Declustering~\cite{gsih93}, is another technique, which
-misses the opportunity to mix SIMD and task-parallel optimizations
+architectures. The list scheduling techniques targeting heterogeneous
+architectures such as~\cite{htop02} do not exploit SIMD parallelism onto
+vector processors. Declustering~\cite{gsih93}, is another technique,
+which misses the opportunity to mix SIMD and task-parallel optimizations
 together.
 
 Cluster based partitioning techniques~\cite{mmah99,adou04,tbra01} only

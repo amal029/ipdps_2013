@@ -2,12 +2,11 @@
 \label{sec:gener-reso-graph}
 
 The resource graph represents the cluster of compute nodes on which the
-task graph will be executed. There is a plethora of different
-architectures and topologies that an HPC architecture might be
-configured in. Hence, in order to accommodate the varying types of
-topologies and configurations, we use synthetic topologies to test our
-partitioning framework.
-
+task graph will be executed. % There is a plethora of different
+% architectures and topologies that an HPC architecture might be
+% configured in. Hence, in order to accommodate the varying types of
+% topologies and configurations, we use synthetic topologies to test our
+% partitioning framework.
 A sample resource graph is shown in Figure~\ref{fig:res} at level 0. The
 resource graph that is shown is heterogeneous in both computation and
 communication. The properties of the resource graph are described below:
@@ -45,16 +44,16 @@ communication. The properties of the resource graph are described below:
 \subsubsection{Clustering the topology}
 \label{sec:clustering-topology}
 
-Mapping the task graph on a heterogeneous architecture is a known NP
-hard problem. The problem mainly lies in the size of the resource graph
-and the sheer number of ways in which the task graph can be mapped on to
-the resource graph. In our approach we take a staged graph partitioning
-approach. The \underline{main idea} behind our partitioning approach is
-to first hierarchically cluster the nodes in the heterogeneous topology,
-provided by the designer, thereby forming fewer contracted resource
-nodes. The application is then partitioned in stages (levels) onto the
-resulting hierarchy. The \underline{intuition} behind this approach is
-two fold:
+% Mapping the task graph on a heterogeneous architecture is a known NP
+% hard problem. The problem mainly lies in the size of the resource
+% graph and the sheer number of ways in which the task graph can be
+% mapped on to the resource graph. In our approach we take a staged
+% graph partitioning approach.
+The \underline{main idea} behind our partitioning approach is to first
+hierarchically cluster the nodes in the heterogeneous topology, provided
+by the designer, thereby forming fewer contracted resource nodes. The
+application is then partitioned in stages (levels) onto the resulting
+hierarchy. The \underline{intuition} behind this approach is two fold:
 
 \begin{itemize}
 
@@ -162,13 +161,13 @@ build the hierarchy are as follows:
   \label{fig:res}
 \end{figure}
 
-\begin{figure*}[ht!]
-  \centering
-  % \includegraphics[scale=0.42]{./figures/jacobi2d}
-  \scalebox{0.4}{\input{./figures/dendrogram.pstex_t}}
-  \caption{The dendrogram for Figure~\ref{fig:res}}
-  \label{fig:7}
-\end{figure*}
+% \begin{figure*}[ht!]
+%   \centering
+%   % \includegraphics[scale=0.42]{./figures/jacobi2d}
+%   \scalebox{0.4}{\input{./figures/dendrogram.pstex_t}}
+%   \caption{The dendrogram for Figure~\ref{fig:res}}
+%   \label{fig:7}
+% \end{figure*}
 
 % In fig \ref{fig:res} we show our clustering approach on a 4x2 mesh. At
 % each level suitable nodes are clustered together to form a larger node.

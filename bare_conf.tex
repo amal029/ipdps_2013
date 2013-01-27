@@ -28,7 +28,7 @@
 
 
 \usepackage{bibspacing}
-\setlength{\bibspacing}{\baselineskip}
+% \setlength{\bibspacing}{\baselineskip}
 
 % *** MATH PACKAGES ***
 %
@@ -116,6 +116,7 @@
 
 % *** SUBFIGURE PACKAGES ***
 \usepackage[tight,footnotesize]{subfigure}
+\usepackage{fancyvrb}
 % subfigure.sty was written by Steven Douglas Cochran. This package makes it
 % easy to put subfigures in your figures. e.g., "Figure 1a and 1b". For IEEE
 % work, it is a good idea to load it with the tight package option to reduce
@@ -224,7 +225,9 @@
 %
 % paper title
 % can use linebreaks \\ within to get better formatting as desired
-\title{A framework for design space exploration for HPC architectures}
+\title{Exploiting task and data parallelism on heterogeneous
+  architectures in a HPC setting}
+% \title{A framework for design space exploration for HPC architectures}
 
 
 % author names and affiliations
@@ -295,19 +298,21 @@ Email: avinmali@ie.ibm.com, drshoukatali@gmail.com}
   heterogeneous HPC architectures. Given an HPC cluster with varying
   compute units, communication constraints and topology, our framework
   can be utilized for partitioning applications exhibiting task and data
-  parallelism resulting in increased throughput. Our framework can also
-  be used by designers at an early design stage to explore the type of
-  compute units needed and the topology that would be suited for a given
-  application, thereby reducing costs and power requirements. The
-  challenge lies in the fact that heterogeneous compute clusters consist
-  of processing elements exhibiting different compute speeds, vector
-  lengths, and communication bandwidths, which all need to be considered
-  when partitioning the application and associated data. We tackle this
-  problem using a staged graph partitioning framework. Our experiments
-  show orders of magnitude speed up for applications. Furthermore our
-  framework finishes within seconds even for architectures with 100's of
-  processing elements, which makes our architecture suitable for
-  exploring parallelism potential off line or on line.
+  parallelism resulting in increased throughput. % Our framework can also
+  % be used by designers at an early design stage to explore the type of
+  % compute units needed and the topology that would be suited for a
+  % given
+  % application, thereby reducing costs and power requirements.
+  The challenge lies in the fact that heterogeneous compute clusters
+  consist of processing elements exhibiting different compute speeds,
+  vector lengths, and communication bandwidths, which all need to be
+  considered when partitioning the application and associated data. We
+  tackle this problem using a staged graph partitioning framework. Our
+  experiments show orders of magnitude speed up for
+  applications. Furthermore our framework finishes within seconds even
+  for architectures with 100's of processing elements, which makes our
+  architecture suitable for exploring parallelism potential off line or
+  on line.
 
   % In this paper we solve the problem of partitioning applications with a
   % mixture of both: task-parallel and data-parallel parts onto
@@ -340,6 +345,27 @@ Email: avinmali@ie.ibm.com, drshoukatali@gmail.com}
 
 \input{introduction}
 
+\begin{SaveVerbatim}[]{VerbEnv}
+ //Task and data-parallel
+ for (int i=0;i<999; ++i){
+  for (int j=0;j<999; ++j){
+   1: A[i][j] = (i*j+2.0+2.0/1000)
+   2: B[i][j] = (i*j+3.0+3.0/1000)
+  }
+ }
+ for (int k=0;k<1000;++k){
+  for (int i=1; i<998; ++i)
+   for (int j=1; j<998; ++j)
+    3: B[i][j] = 0.2*(A[i][j]+A[i][j-1]
+              +A[i][j+1]+A[i-1][j])
+
+  //Data-parallel
+  for (int i=1; i<999; ++i)
+   for (int j=1; j<999; ++j)
+    4: A[i][j] = B[i][j]
+ }
+\end{SaveVerbatim}
+
 \addtocounter{footnote}{1}
 \footnotetext[\value{footnote}]{Ellipses represent data stores. Rectangles
   represent task nodes. Rounded rectangle represents data parallel
@@ -347,13 +373,21 @@ Email: avinmali@ie.ibm.com, drshoukatali@gmail.com}
   figure. Dashed arrows represent communication between data stores and
   execution statements. Solid arrows represent dependence edges.}
 
-\begin{figure}[ht]
-  %~ \centering
-  \includegraphics[scale=0.44]{./figures/jacobi2d}
-  %\scalebox{0.37}{\input{./figures/jacobi2d-eps-converted-to.pdf}
-  \caption{The task graph for the Jacobi example $^{\decimal{footnote}}$}
+\begin{figure*}[t!]
+  \centering
+  \subfigure[Example 2-dimensional Jacobi application]{
+    \BUseVerbatim[fontshape=tr,fontsize=\small,fontfamily=courier]{VerbEnv}
+    \label{fig:1a}
+  }
+  \subfigure[The task graph for the Jacobi example
+  $^{\decimal{footnote}}$]{
+    \includegraphics[scale=0.44]{./figures/jacobi2d}
+    \label{fig:1b}
+    % \scalebox{0.37}{\input{./figures/jacobi2d-eps-converted-to.pdf}
+  }
+  \caption{Jacobi example and its task-graph}
   \label{fig:1}
-\end{figure}
+\end{figure*}
 
 
 \section{Preliminaries}
@@ -362,6 +396,50 @@ Email: avinmali@ie.ibm.com, drshoukatali@gmail.com}
 We now present a formal description of the problem along with the
 notations used.
 
+\subsection{Execution model}
+\label{sec:execution-model}
+
+In this paper we consider the streaming~\cite{jbuck94} model of
+computation. Streaming is a popular model for programs such as image and
+signal processing, financial applications, networking,
+telecommunications, etc.
+
+In the streaming model statements (also called filters/actors or
+kernels) execute iteratively processing the incoming tokens of
+data. Consider the Jacobi example and its task graph in
+Figure~\ref{fig:1}, the Jacobi kernel is used in fluid dynamics and heat
+transfer problems. We consider every statement (marked $1$ to $4$) in
+this example to be a kernel statement that can be run in a software
+pipelined~\cite{audu09} manner on a given architecture. An
+\textit{example} execution trace of the Jacobi example is shown in
+Table~\ref{tab:3} for some arbitrary value of computation and
+communication latency of statements.
+
+\begin{table}[h!]
+  \centering
+  \begin{tabular}{|c|c|c||c|c|c||c|}
+    \hline
+    P0 & $1_0$ & $2_0$ & $1_1$ & & $2_1$ & $1_2$\\
+    \hline
+    P1 & & $3_0$ & $4_0$ & $4_0$ & $3_1$ & $4_1$\\
+    \hline
+  \end{tabular}
+  \caption{Example execution trace of the Jacobi kernel}
+  \label{tab:3}
+\end{table}
+
+In a software pipelined model, the different iterations of the
+statements are run in parallel, e.g., $1_0$ is the $1^{st}$ iteration of
+statement $1$ in the Jacobi example, while $1_1$ is the second iteration
+and so on and so forth. The latency of the application (termed makespan)
+is the period, which iterates continuously (shown within the double
+lined columns in Table~\ref{tab:3}). In such a model, the resource
+allocation (rather than dependencies) determines the application
+latency, especially without back-edges in the task graph (as is the case
+with our model and compiler). In Table~\ref{tab:3}, the resource
+allocation on processing element \texttt{P1} determines the application
+latency, because that is the maximum of the two allocation latencies.
+
 \subsection{Notations}
 
 We refer to our application graph, as a \textit{Static Task Graph} (STG)
@@ -369,11 +447,12 @@ defined formally as a weighted directed graph: $G_t(V_t, E_t)$, where
 $V_t$ is the set of all tasks in the application graph and $E_t$
 represents the communication between these tasks. The system resources
 are represented by a weighted undirected graph $G_r(V_r, E_r)$ where
-$V_r$ represents a set of processing elements which can have different
-processing capabilities. Each vertex in the task graph, $t_i \in V_t$ is
-referred to as a task and each vertex in the resource graph, $r_i \in
-V_r$ is referred to as a processing element
-(PE). % We use $N_T$ to denote
+$V_r$ represents a set of processing elements (PEs) which can have
+different processing capabilities and $E_r$ represent the communication
+links between these PEs with differing latencies and bandwidths. Each
+vertex in the task graph, $t_i \in V_t$ is referred to as a task and
+each vertex in the resource graph, $r_i \in V_r$ is referred to as a
+processing element (PE). % We use $N_T$ to denote
 % the total number of tasks in the task graph and $N_R$ to denote the
 % total number of processing elements. By our definition of previous
 % notations, it follows that $N_T = |V_t|$ and $N_R = |V_r|$.
@@ -459,7 +538,7 @@ computation a communication latency as in Equation~(\ref{eq:1}).
   \label{eq:3}
   \begin{array}{c}
     ((T^i_1/R^j_1\times T^i_0)/R^j_0)
-    + (e^c/E^c) | c = (i,k), k \neq i, \\ \forall k \in V_t, c = (j,l), l
+    + (e^c/E^{c'}) | c = (i,k), k \neq i, \\ \forall k \in V_t, c' = (j,l), l
     \neq
     j, \forall l \in V_r
   \end{array}
@@ -467,26 +546,15 @@ computation a communication latency as in Equation~(\ref{eq:1}).
 
 \begin{equation}
   \begin{array}{c}
-% <<<<<<< HEAD
     L^{\mathcal{M}}_s = Lcomp^{\mathcal{M}}_s +
     Lcomm^{\mathcal{M}}_s\\
-	\\Lcomp^{\mathcal{M}}_s =
-    \sum_{\forall i \in V_t} ((T^i_1/R^s_1\times T^i_0)/R^c_0)\\
+    \\Lcomp^{\mathcal{M}}_s =
+    \sum_{\forall i \in V_t} ((T^i_1/R^s_1\times T^i_0)/R^s_0)\\
     \\Lcomm^{\mathcal{M}}_s =
-    \sum_{\forall i \in V_t} e^c / E^c\\
-% =======
-%     Latency^{\zeta_\mathcal{M}}_s = comp^{\zeta_\mathcal{M}}_s +
-% comm^{\zeta_\mathcal{M}}_s\\
-% 	\\comp^{\zeta_\mathcal{M}}_s =
-%     \sum_{\forall i \in V_t \wedge
-%       \zeta_\mathcal{M} = s} ((T^i_1/R^s_1\times T^i_0)/R^c_0)\\
-%     \\comm^{\zeta_\mathcal{M}}_s =
-%     \sum_{\forall i \in V_t \wedge
-%       \zeta_\mathcal{M} = s} e^d / E^c\\
-% >>>>>>> 42ffdc746763a12ade4dfcf6d9c9091b66029af3
+    \sum_{\forall i \in V_t} e^c / E^{c'}\\
     \\s.t., d = (i,k), k \neq i, \forall k
-    \in V_t \wedge\  c = (s,l), l \neq s, \forall l \in V_r \\
-    \wedge\ \mathrm{d\ is\ routed\ on\ c}
+    \in V_t \wedge\  c' = (s,l), l \neq s, \forall l \in V_r \\
+    \wedge\ \mathrm{d\ is\ routed\ on\ c'}
   \end{array}
   \label{eq:1}
 \end{equation}
@@ -494,8 +562,7 @@ computation a communication latency as in Equation~(\ref{eq:1}).
 Finally, the complete application latency can then be defined as:
 \begin{equation}
   \label{eq:2}
-  L^{\mathcal{M}} = max_{s}
-  ({L^{\mathcal{M}}_s}), \forall s \in V_t
+  L^{\mathcal{M}} = max ({L^{\mathcal{M}}_s}), \forall s \in V_r
 \end{equation}
 
 The objective of our framework is to find a mapping $\mathcal{M}$
@@ -534,7 +601,7 @@ topology. Finally, we describe how the mapping is performed.
 
 \input{resource_graph}
 
-\input{implementation}
+% \input{implementation}
 
 \input{experiments}
 
@@ -545,39 +612,41 @@ topology. Finally, we describe how the mapping is performed.
 
 In this paper we have described a novel staged graph based partitioning
 technique to partition and schedule applications onto heterogeneous
-execution architectures. Our framework can be utilized by designers to
-quickly gauge the type of underlying architecture that is best suited to
-run a given application. Moreover, our framework considers both task and
-data parallelism, which allows the application writers to design and
-tune their applications to extract parallelism. We also consider
-communication along application and underlying architecture edges, which
-when combined with the task and data parallelism gives a better estimate
-of the application latency than the currently described research
-literature targeting similar problems.
+execution architectures. % Our framework can be utilized by designers to
+% quickly gauge the type of underlying architecture that is best suited
+% to run a given application. Moreover,
+Our framework considers both task and data parallelism, which allows the
+application writers to design and tune their applications to extract
+parallelism. We also consider communication along application and
+underlying architecture edges, which when combined with the task and
+data parallelism gives a better estimate of the application latency than
+the currently described research literature targeting similar problems.
 
 We have tested our framework on a subset of the many high performance
-computing applications currently in use in the industry with great
-success. Some of our worst case speed-ups were 350 times for Jacobi stencil
-computations and 107 times for Gram Schmidt linear-algebra kernel. In
-cases where the
-resource's capabilities did not match that of the application's
-requirements such as Gauss-Seidel stencil computations, HBP was not able to
-determine any mapping of the
-application.
-Our framework was also twice as fast as HBP in the best case
-for Jacobi stencil computations. We also have speed-ups in the
-order of 100s for Binomial option pricing and Gram Schmidt which are
-important applications that are used in HPC clusters, showing that our
-framework can produce much better mapping solutions for heterogeneous
-architectures when compared to HBP.
+computing applications currently in use in the industry against well
+known heterogeneous bin packing (HBP). Some of our worst case speed-ups
+were 350 times for Jacobi stencil computations and 107 times for Gram
+Schmidt linear-algebra kernel. In cases where the resource's
+capabilities did not match that of the application's requirements such
+as Gauss-Seidel stencil computations, HBP was not able to determine any
+mapping of the application. Finally, the execution time of our algorithm
+is XXX seconds even for 256 PE architectures, which makes it suitable
+for both on-line and off-line scheduling.
 
-Our framework clearly shows that utilizing all the available
-processing elements in the underlying architecture is not a good
-solution when heterogeneity is in play. We have found that for most
-applications, given an extremely heterogeneous topology, vector strip
-size and correct placement of data plays an important role. Imbalanced
-partitioning not only gives good application latencies, but could also reduce
-power consumption.
+% Our framework was also twice as fast as HBP in the best case for Jacobi
+% stencil computations. We also have speed-ups in the order of 100s for
+% Binomial option pricing and Gram Schmidt which are important
+% applications that are used in HPC clusters, showing that our framework
+% can produce much better mapping solutions for heterogeneous
+% architectures when compared to HBP.
+
+% Our framework clearly shows that utilizing all the available
+% processing elements in the underlying architecture is not a good
+% solution when heterogeneity is in play. We have found that for most
+% applications, given an extremely heterogeneous topology, vector strip
+% size and correct placement of data plays an important role. Imbalanced
+% partitioning not only gives good application latencies, but could also reduce
+% power consumption.
 
 % use section* for acknowledgment
 \section{Acknowledgment}
