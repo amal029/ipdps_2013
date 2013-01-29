@@ -27,7 +27,7 @@
 \fi
 
 
-\usepackage{bibspacing}
+%\usepackage{bibspacing}
 % \setlength{\bibspacing}{\baselineskip}
 
 % *** MATH PACKAGES ***
@@ -220,13 +220,49 @@
 \newcommand{\ul}{\underline}
 \newcommand{\noname}{The NoNamer\xspace}
 
+%squeeze
+
+\renewcommand\floatpagefraction{.9}
+\renewcommand\topfraction{.9}
+\renewcommand\bottomfraction{.9}
+\renewcommand\textfraction{.1}
+\setcounter{totalnumber}{50}
+\setcounter{topnumber}{50}
+\setcounter{bottomnumber}{50}
+
+\raggedbottom
+
+\addtolength{\floatsep}{-9mm}
+\addtolength{\textfloatsep}{-7mm}
+\addtolength{\intextsep}{-3mm}
+\addtolength{\dbltextfloatsep}{-7mm}
+\addtolength{\dblfloatsep}{-2mm}
+\addtolength{\abovecaptionskip}{-2mm}
+\addtolength{\belowcaptionskip}{-2mm}
+
+\addtolength{\abovedisplayskip}{-4mm}
+\addtolength{\belowdisplayskip}{-4mm}
+\addtolength{\arraycolsep}{-2mm}
+
+\let\oldthebibliography=\thebibliography
+\let\endoldthebibliography=\endthebibliography
+\renewenvironment{thebibliography}[1]{%
+  \begin{oldthebibliography}{#1}%
+    \setlength{\parskip}{0.2ex}%
+    \setlength{\itemsep}{0.2ex}%
+}%
+{%
+  \end{oldthebibliography}%
+}
+
+%squeeze
 
 \begin{document}
 %
 % paper title
 % can use linebreaks \\ within to get better formatting as desired
 \title{Exploiting filter and data parallelism on heterogeneous
-  architectures in a HPC setting}
+  architectures in a HPC environment}
 % \title{A framework for design space exploration for HPC architectures}
 
 
@@ -698,6 +734,7 @@ in collaboration with IBM Research, Ireland.
 % <OR> manually copy in the resultant .bbl file
 % set second argument of \begin to the number of references
 % (used to reserve space for the reference number labels box)
+
 
 \scriptsize{
 \bibliographystyle{IEEEtran}

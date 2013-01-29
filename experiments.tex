@@ -167,46 +167,50 @@ elements. The LLVM instruction count varies from around 1 to 0.3
 billion. The edge weights depicting the amount of data transfer on the
 other hand varies from 3000 bytes to almost 4.8 Mega byte.
 
-\begin{table}[h!]
-  \centering
-  \begin{tabular}{|c|c|c|c|}
-    \hline
-    \textbf{Application} & \textbf{Vector strip} & $|V_t|$ & $|E_t|$ \\
-    \hline
-    \multirow{5}{*}{Binomial option pricing} & 10 & 82 & 206 \\
-    & 20 & 102 & 306 \\
-    & 30 & 122 & 406 \\
-    & 40 & 142 & 506 \\
-    & 50 & 162 & 606 \\
-    \hline
-    \multirow{5}{*}{Convolution} & 10 & 79 & 143 \\
-    & 20 & 89 & 173 \\
-    & 30 & 99 & 203 \\
-    & 40 & 109 & 233 \\
-    & 50 & 119 & 263 \\
-    \hline
-    \multirow{5}{*}{Gram Schmidt} & 10 & 228 & 443 \\
-    & 20 & 838 & 1653 \\
-    & 30 & 1848 & 3663 \\
-    & 40 & 3258 & 6473 \\
-    & 50 & 5068 & 10083\\
-    \hline
-    \multirow{5}{*}{Gauss-Seidel} & 10 & 227 & 531 \\
-    & 20 & 837 & 2041 \\
-    & 30 & 1847 & 4551 \\
-    & 40 & 3257 & 8061 \\
-    & 50 & 5067 & 12571\\
-    \hline
-    \multirow{5}{*}{Jacobi} & 10 & 48 & 130 \\
-    & 20 & 78 & 240 \\
-    & 30 & 108 & 350 \\
-    & 40 & 138 & 460 \\
-    & 50 & 168 & 570\\
-    \hline
-  \end{tabular}
-  \caption{The filter graph set-up}
-  \label{tab:1}
-\end{table}
+\begin{small}
+  \begin{table}[h!]
+    \centering
+    \resizebox{!}{38mm}{
+      \begin{tabular}{|c|c|c|c|}
+        \hline
+        \textbf{Application} & \textbf{Vector strip} & $|V_t|$ & $|E_t|$ \\
+        \hline
+        \multirow{5}{*}{Binomial option pricing} & 10 & 82 & 206 \\
+        & 20 & 102 & 306 \\
+        & 30 & 122 & 406 \\
+        & 40 & 142 & 506 \\
+        & 50 & 162 & 606 \\
+        \hline
+        \multirow{5}{*}{Convolution} & 10 & 79 & 143 \\
+        & 20 & 89 & 173 \\
+        & 30 & 99 & 203 \\
+        & 40 & 109 & 233 \\
+        & 50 & 119 & 263 \\
+        \hline
+        \multirow{5}{*}{Gram Schmidt} & 10 & 228 & 443 \\
+        & 20 & 838 & 1653 \\
+        & 30 & 1848 & 3663 \\
+        & 40 & 3258 & 6473 \\
+        & 50 & 5068 & 10083\\
+        \hline
+        \multirow{5}{*}{Gauss-Seidel} & 10 & 227 & 531 \\
+        & 20 & 837 & 2041 \\
+        & 30 & 1847 & 4551 \\
+        & 40 & 3257 & 8061 \\
+        & 50 & 5067 & 12571\\
+        \hline
+        \multirow{5}{*}{Jacobi} & 10 & 48 & 130 \\
+        & 20 & 78 & 240 \\
+        & 30 & 108 & 350 \\
+        & 40 & 138 & 460 \\
+        & 50 & 168 & 570\\
+        \hline
+      \end{tabular}
+    }
+    \caption{The filter graph set-up}
+    \label{tab:1}
+  \end{table}
+\end{small}
 
 % We have done experiments for several different sets of parameters. In
 % this paper we show the results for the parameters enumerated in Table
@@ -215,23 +219,23 @@ other hand varies from 3000 bytes to almost 4.8 Mega byte.
 \begin{figure*}[t!]
   \centering
   \subfigure[Binomial Option Pricing]{
-    \includegraphics[angle=0, scale=0.72]{./figures/bin_surface}
+    \includegraphics[angle=0, scale=0.7]{./figures/bin_surface}
     \label{fig:bin1ho}
   }
   \subfigure[2 Dimensional Convolution]{
-    \includegraphics[angle=0, scale=0.72]{./figures/conv_surface}
+    \includegraphics[angle=0, scale=0.7]{./figures/conv_surface}
     \label{fig:conv1ho}
   }
   \subfigure[Gram Schmidt linear-algebra kernel]{
-    \includegraphics[angle=0, scale=0.72]{./figures/gram_surface}
+    \includegraphics[angle=0, scale=0.7]{./figures/gram_surface}
     \label{fig:gram1ho}
   }
-  \subfigure[2 Dimensional Seidel stencil computation]{
-    \includegraphics[angle=0, scale=0.72]{./figures/sei_surface}
-    \label{fig:sei1ho}
-  }
+  %~ \subfigure[2 Dimensional Seidel stencil computation]{
+    %~ \includegraphics[angle=0, scale=0.72]{./figures/sei_surface}
+    %~ \label{fig:sei1ho}
+  %~ }
   \subfigure[2 Dimensional Jacobi stencil computation]{
-    \includegraphics[angle=0, scale=0.72]{./figures/jac_surface}
+    \includegraphics[angle=0, scale=0.7]{./figures/jac_surface}
     \label{fig:jacl1ho}
   }
   \caption{Comparison of execution times of ``Our Framework" and
@@ -242,11 +246,11 @@ other hand varies from 3000 bytes to almost 4.8 Mega byte.
 \begin{figure*}[t!]
   \centering
   \subfigure[Binomial Option Pricing]{
-    \includegraphics[angle=0, scale=0.65]{./figures/bin_32-64_surface}
+    \includegraphics[angle=0, scale=0.55]{./figures/bin_32-64_surface}
     \label{fig:bin1comm}
   }
   \subfigure[2 Dimensional Jacobi stencil computation]{
-    \includegraphics[angle=0, scale=0.65]{./figures/jac_32-64_surface}
+    \includegraphics[angle=0, scale=0.55]{./figures/jac_32-64_surface}
     \label{fig:jac1comm}
   }
   \caption{Choosing the proper tile size}
@@ -289,32 +293,36 @@ points that our framework is better compared to heterogeneous bin
 packing. As we can see from Table~\ref{tab:2}, our framework out
 performs the heterogeneous bin-packing on all the applications.
 
-\begin{table*}[t!]
-  \centering
-  \begin{tabular}{|c|c|c|c|c|c|}
-    \hline
-    \textbf{Application} &
-    \multicolumn{2}{|c|}{\textbf{Max latency (sec)}} &
-    \multicolumn{2}{|c|}{\textbf{Min latency (sec)}} &
-    \textbf{Better (\%)} \\
-    \hline
-    & {HBP} & {Our framework} &
-    {HBP} & {Our framework} & HBP vs Our framework\\
-    \hline
-    Binomial option pricing & $1.35e+8$ & $5.27e+7$ & 77356.9 & 1 & 100 \\
-    \hline
-    Convolution & 489065 & 78.52 & 53.64 & 16.26 & 94\\
-    \hline
-    Gram Schmidt & 18984.5 & 177.97 & 2947.65 & 1.20 & 94\\
-    \hline
-    Gauss-Seidel & N/A & 3635.62 & N/A & 9.67 & 100\\
-    \hline
-    Jacobi & 13919.2 & 39.89 & 1.69 & 0.97 & 92\\
-    \hline
-  \end{tabular}
-  \caption{Major statistics comparing heterogeneous bin packing and our framework}
-  \label{tab:2}
-\end{table*}
+\begin{small}
+  \begin{table*}[t!]
+    \centering
+    \resizebox{!}{11mm}{
+      \begin{tabular}{|c|c|c|c|c|c|}
+        \hline
+        \textbf{Application} &
+        \multicolumn{2}{|c|}{\textbf{Max latency (sec)}} &
+        \multicolumn{2}{|c|}{\textbf{Min latency (sec)}} &
+        \textbf{Better (\%)} \\
+        \hline
+        & {HBP} & {Our framework} &
+        {HBP} & {Our framework} & HBP vs Our framework\\
+        \hline
+        Binomial option pricing & $1.35e+8$ & $5.27e+7$ & 77356.9 & 1 & 100 \\
+        \hline
+        Convolution & 489065 & 78.52 & 53.64 & 16.26 & 94\\
+        \hline
+        Gram Schmidt & 18984.5 & 177.97 & 2947.65 & 1.20 & 94\\
+        \hline
+        Gauss-Seidel & N/A & 3635.62 & N/A & 9.67 & 100\\
+        \hline
+        Jacobi & 13919.2 & 39.89 & 1.69 & 0.97 & 92\\
+        \hline
+      \end{tabular}
+    }
+    \caption{Major statistics comparing heterogeneous bin packing and our framework}
+    \label{tab:2}
+  \end{table*}
+\end{small}
 
 There are a number of reasons for the large differences seen in
 Figure~\ref{fig:ho}.
