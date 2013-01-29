@@ -19,23 +19,23 @@ significant benefits.
 Although the potential of heterogeneous computing is great, exploiting
 that potential is more difficult. Given a parallel application, it is
 difficult to map the available parallelism onto the hardware. For
-example, how does one decide which parallel tasks should run on which
+example, how does one decide which parallel filters should run on which
 type of execution unit? Given a system with dozens or hundreds of CPUs,
 GPUs and other units, how does one divide the work between them?  There
 are several conflicting factors. For example, one wants to allocate
-tasks to the type of execution unit that will execute it most
+filters to the type of execution unit that will execute it most
 efficiently. On the other hand, one wants to achieve a good load balance
 by dividing the work evenly across the units. % At the same time, one must
-% respect data dependencies between tasks. And finally, data
+% respect data dependencies between filters. And finally, data
 % communication costs between processing elements can be substantial,
 % and are usually themselves heterogeneous. Communication with nearby
 % processing elements is usually much faster than communication with
 % more distant ones.
-We want to allocate the tasks to reduce communication costs while at the
+We want to allocate the filters to reduce communication costs while at the
 same time taking account of all the other factors.
 
 In this paper we consider the problem of mapping graphs of parallel
-tasks to heterogeneous HPC computing systems. This problem has been
+filters to heterogeneous HPC computing systems. This problem has been
 studied extensively for homogeneous architectures where all processing
 elements are the same. Although the homogeneous case is
 NP-hard~\cite{vsar89}, several heuristic solutions have been found that
@@ -43,7 +43,7 @@ work well in practice. However, extending these solutions to the
 heterogeneous case is difficult for two reasons.
 
 % Firstly, good solutions to the homogeneous case often work well by
-% dividing the tasks evenly across the available processors. However,
+% dividing the filters evenly across the available processors. However,
 In the heterogeneous case some processing elements are more powerful
 than others, so achieving a good load balance usually involves
 distributing the work unevenly. % So we need algorithms the will divide
@@ -64,7 +64,7 @@ computation run better on CPUs and some on GPUs.  For a mapping
 algorithm to work well, it needs to take account of the strengths and
 weaknesses of different types of processing elements.
 
-In this paper we present an approach to mapping parallel task graphs to
+In this paper we present an approach to mapping parallel filter graphs to
 heterogeneous architectures that addresses both of these problems.  A
 common approach to solving the homogeneous case is to \textit{partition}
 the graph across the processing elements~\cite{aale01,kpur99,enys98}.
@@ -84,12 +84,12 @@ Our \textbf{main contributions} are as follows:
 \item We present a novel approach to characterizing the type of
   processing elements based on their level of SIMD parallelism which
   allows us to distinguish the suitability of different types of units
-  to different tasks.
-\item We provide a novel algorithm for mapping task and data parallelism
+  to different filters.
+\item We provide a novel algorithm for mapping filter and data parallelism
   to heterogeneous architectures based on hierarchical graph
   partitioning.
-\item In addition to mapping tasks to processing elements, our framework
-  also allocates the data stores being used by the different tasks.
+\item In addition to mapping filters to processing elements, our framework
+  also allocates the data stores being used by the different filters.
 % \item We provide an experimental evaluation of these techniques
 % and compare with other algorithms.
 \end{itemize}
@@ -126,53 +126,53 @@ conclude in Section~\ref{sec:conclusion}.
 % maximize speed-up we would like to exploit both SIMD and MIMD
 % parallelism in heterogeneous architectures.
 
-% % One way to represent program parallelism is to build a task graph.  A
-% % task graph is a graph where the nodes represent computation and the
+% % One way to represent program parallelism is to build a filter graph.  A
+% % filter graph is a graph where the nodes represent computation and the
 % % edges represent data dependencies between the computations.
-% Figure~\ref{fig:1} shows a simple task graph for the Jacobi code. There
-% are many ways in which the task graph can be built. In the current
-% paper, the task graph is built using a parallelizing compiler that
+% Figure~\ref{fig:1} shows a simple filter graph for the Jacobi code. There
+% are many ways in which the filter graph can be built. In the current
+% paper, the filter graph is built using a parallelizing compiler that
 % % <<<<<<< HEAD
-% automatically detects task parallelism in code that operates on
+% automatically detects filter parallelism in code that operates on
 % arrays. Each node in the graph corresponds to one of the assignment
 % % ======= automatically detects simple data parallelism in code that
 % % operates on arrays.  Each node in the graph corresponds to one of the
 % % assignment >>>>>>> 42ffdc746763a12ade4dfcf6d9c9091b66029af3
 % statements in the Jacobi source code in Figure~\ref{fig:2}.
 
-% % Note that although each node in our version of the task graph contains
+% % Note that although each node in our version of the filter graph contains
 % % just a single assignment statement,
 % Each of those statements is executed many times, and in fact there is a
 % great deal of data parallelism in each node. This data parallelism can
 % be exploited using either SIMD parallelism (found in CPUs with vector
 % units and GPUs) or MIMD parallelism (by using multiple processing
 % elements to perform the computation) or a combination of both. % Thus, to
-% % map the task graph to a heterogeneous architecture we need to be aware
+% % map the filter graph to a heterogeneous architecture we need to be aware
 % % both of the number and type of available processing elements and the
 % % amount of available SIMD parallelism available within each type of
 % % processing element.
-% Therefore, we annotate the task graph with the amount of SIMD
+% Therefore, we annotate the filter graph with the amount of SIMD
 % parallelism available in each node, as described in
 % Section~\ref{sec:preliminaries}.
 
-% % By annotating the task graph nodes with the level of available SIMD
+% % By annotating the filter graph nodes with the level of available SIMD
 % % parallelism it is possible to make better mapping decisions.  For
 % % example, GPUs typically offer very high levels of SIMD parallelism but
 % % perform poorly on code with little data parallelism.
 
-% % In addition to allocating these tasks based on appropriate levels of SIMD
+% % In addition to allocating these filters based on appropriate levels of SIMD
 % % parallelism, it is also important to divide the overall work of the
-% % task graph across the available resources. 
+% % filter graph across the available resources.
 
 % Heuristics developed for homogeneous architectures that divide the work
 % evenly among the resources do not work well for heterogeneous
 % architectures. This is because one might execute sequential code very
 % efficiently while another provides a lot of SIMD parallelism making it a
-% challenge to divide the tasks. Moreover, this causes the communication
+% challenge to divide the filters. Moreover, this causes the communication
 % volume between resources to be very different. In such a case any
 % imbalance in communication could severely impact the performance of the
 % application, making it important to account for the communication costs
-% between the resources when mapping the task graph.
+% between the resources when mapping the filter graph.
 
 % \begin{scriptsize}
 %   \begin{figure}[h!]
@@ -188,15 +188,15 @@ conclude in Section~\ref{sec:conclusion}.
 % the computation capacity is balanced across clusters and the
 % communication volume between them are minimized. An example of such
 % recursive clustering is shown in Figure \ref{fig:res}. Once the machine
-% has been divided into a hierarchy of clusters, we partition the task
+% has been divided into a hierarchy of clusters, we partition the filter
 % graph across the clusters until we reach the lowest level where each
-% task is allocated to a specific resource as described in
-% section~\ref{sec:task-graph-part}.
+% filter is allocated to a specific resource as described in
+% section~\ref{sec:filter-graph-part}.
 
 %~ David's Text
-%~ In addition to allocating tasks to PEs with appropriate levels of SIMD
+%~ In addition to allocating filters to PEs with appropriate levels of SIMD
 %~ parallelism, it is also important to divide the overall work of the
-%~ task graph across the available PEs. However, there are two
+%~ filter graph across the available PEs. However, there are two
 %~ major problems with doing this for a heterogeneous target architecture.
 %~ First, the capabilities of the different PEs may be very different.
 %~ One might execute sequential code very efficiently while another
@@ -216,13 +216,13 @@ conclude in Section~\ref{sec:conclusion}.
 %~ approximately equal capacity.
 %~
 %~ Once the machine has been divided into a hierarchy of clusters,
-%~ we partition the task graph across the clusters. At each level
+%~ we partition the filter graph across the clusters. At each level
 %~ of the hierarchy of clusters, the capacity of each cluster has
 %~ approximately equal computational capacity. Therefore, simple
 %~ graph partitioning algorithms aimed at an even split of the
 %~ graph work well. At each level of the hierarchy of clusters
-%~ we divide the task graph among the clusters, until we reach the
-%~ lowest level where each task is allocated to a specific processing
+%~ we divide the filter graph among the clusters, until we reach the
+%~ lowest level where each filter is allocated to a specific processing
 %~ element.
 
 
@@ -361,7 +361,7 @@ conclude in Section~\ref{sec:conclusion}.
 % For example, binomial option pricing~\cite{ssol10,hpra10},
 % k-means~\cite{jzha11}, Gauss-Seidel stencil computations~\cite{hcou09},
 % etc, are well suited to be optimized across heterogeneous HPC
-% architectures. Exploiting both data and task parallelism is essential in
+% architectures. Exploiting both data and filter parallelism is essential in
 % the general case.
 
 % The rest of the paper is arranged as follows:
@@ -486,7 +486,7 @@ conclude in Section~\ref{sec:conclusion}.
 % calculations, Gauss-Seidel stencil computations, etc, are well suited to
 % be optimized across heterogeneous HPC architectures. In general we have
 % found it is much more essential to exploit data-parallelism as compared
-% to task-parallelism to achieve speedups. But, exploiting both types of
+% to filter-parallelism to achieve speedups. But, exploiting both types of
 % parallelism is essential in the general case.
 
 % In this paper we propose a framework, which can be used by topology

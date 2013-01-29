@@ -1,8 +1,8 @@
-\subsection{Generating the resource graph}
+\subsection{Clustering the resource graph}
 \label{sec:gener-reso-graph}
 
 The resource graph represents the cluster of compute nodes on which the
-task graph will be executed. % There is a plethora of different
+filter graph will be executed. % There is a plethora of different
 % architectures and topologies that an HPC architecture might be
 % configured in. Hence, in order to accommodate the varying types of
 % topologies and configurations, we use synthetic topologies to test our
@@ -44,9 +44,9 @@ communication. The properties of the resource graph are described below:
 \subsubsection{Clustering the topology}
 \label{sec:clustering-topology}
 
-% Mapping the task graph on a heterogeneous architecture is a known NP
+% Mapping the filter graph on a heterogeneous architecture is a known NP
 % hard problem. The problem mainly lies in the size of the resource
-% graph and the sheer number of ways in which the task graph can be
+% graph and the sheer number of ways in which the filter graph can be
 % mapped on to the resource graph. In our approach we take a staged
 % graph partitioning approach.
 The \underline{main idea} behind our partitioning approach is to first
@@ -176,22 +176,22 @@ build the hierarchy are as follows:
 % and at the top most level all the nodes from a single virtual node.
 
 \subsection{Task graph partitioning}
-\label{sec:task-graph-part}
+\label{sec:filter-graph-part}
 
-The task partitioning on the resulting hierarchical cluster takes a
-top-down approach. We start with the task graph extracted from the
-application (Figure~\ref{fig:1}). We then recursively partition the task
+The filter partitioning on the resulting hierarchical cluster takes a
+top-down approach. We start with the filter graph extracted from the
+application (Figure~\ref{fig:1}). We then recursively partition the filter
 graph (using K-way partitioning) on the hierarchical cluster of the
 resource-graph. For the example cluster in Figure~\ref{fig:res}, we
-start by partitioning the task graph in Figure~\ref{fig:1}, first into
+start by partitioning the filter graph in Figure~\ref{fig:1}, first into
 two (K=2) partitions considering two equally weighted compute nodes at
 level 2. Once a partition is obtained for this level, we move onto the
-next level (level 1), whereby all the task graph nodes allocated onto
+next level (level 1), whereby all the filter graph nodes allocated onto
 node \texttt{A2} are further partitioned onto the nodes \texttt{A1} and
 \texttt{C1} (again K=2), which are coupled into the contracted node
 \texttt{A2}. This process is continued recursively for all contracted
 nodes until the final level (level 0). During each partition we make
-sure that the task node requirements are closely matched to the resource
+sure that the filter node requirements are closely matched to the resource
 node capabilities.
 
 % To partition the application we start with the top most level in the
@@ -199,7 +199,7 @@ node capabilities.
 % that level. We then move on to the next level and partition the
 % application on to the virtual nodes that the current node belongs to.
 % In this way we follow the structure of the resource graph until we reach
-% level, by which reach the actual mapping of the task graph on to the
+% level, by which reach the actual mapping of the filter graph on to the
 % resource graph.
 
 Doing it in this top down manner has two important consequences.

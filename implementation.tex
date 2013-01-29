@@ -29,7 +29,7 @@ Figure~\ref{fig:7}.
 
 \begin{itemize}
 
-% \item The task-graph in Figure~\ref{fig:1}, is represented as an
+% \item The filter-graph in Figure~\ref{fig:1}, is represented as an
 %   undirected graph in the Metis file format.
 
 \item The resource graph is represented in the Metis graph format. We
@@ -50,10 +50,10 @@ Figure~\ref{fig:7}.
 
 \end{itemize}
 
-\subsection{Partitioning the task-graph}
-\label{sec:part-task-graph}
+\subsection{Partitioning the filter-graph}
+\label{sec:part-filter-graph}
 
-In partitioning the task graph, we need to balance the constraints on to
+In partitioning the filter graph, we need to balance the constraints on to
 the available partitions. Metis offers the ability to load balance
 multiple constraints on to different partitions based on the metric
 \mbox{`tp-weight'}. We calculate the ratios between the capabilities of
@@ -66,16 +66,16 @@ follows:
 \item We start at the top most level (level 3, Figure~\ref{fig:res} or
   Figure~\ref{fig:7}) in the resource-graph hierarchy, and request for
   the number of partitions equal to that of the child nodes at the next
-  level, usually a 2-way partition. For example, all the task graph
+  level, usually a 2-way partition. For example, all the filter graph
   nodes are first allocate to \texttt{A1} in Figure~\ref{fig:7}, we then
   perform a 2-way partition of this graph onto nodes \texttt{A2} and
-  \texttt{B2}. All the task graph vertices allocated to \texttt{A2} are
+  \texttt{B2}. All the filter graph vertices allocated to \texttt{A2} are
   then again re-partitioned onto the resource nodes \texttt{A1} and
   \texttt{C1}, same for \texttt{B2} and so on and so forth.
 
 \item The capabilities of the resource graph are represented as ratios
   for each of the constraint as the `tp-weight' metric when partitioning
-  the task graph using Metis. For example, consider the partitioning
+  the filter graph using Metis. For example, consider the partitioning
   onto the level 1 resource graph in Figure~\ref{fig:7}. There are 4
   contracted nodes. We generate two sets of `tp-weights', with 2
   elements each, one for each of the node sets contracted to form the
@@ -91,17 +91,17 @@ follows:
   other two nodes \texttt{B1} and \texttt{D1} are contracted to form the
   second parent in level 2, \texttt{B2}, we end up with two sets of
   `tp-weights'. The MIPS and vector length ratios are shown in
-  Figure~\ref{fig:7}. These ratios make sure that the task nodes are
+  Figure~\ref{fig:7}. These ratios make sure that the filter nodes are
   allocated to the correct resource graph node. An example allocation of
-  the heaviest task node (statement \texttt{3}) from Figure~\ref{fig:1},
+  the heaviest filter node (statement \texttt{3}) from Figure~\ref{fig:1},
   is shown in Figure~\ref{fig:7}.
 
-\item As we go down on to each level we partition the task graph into
+\item As we go down on to each level we partition the filter graph into
   smaller fine grained parts until we reach the lowest level. Note that
   the `tp-weight' sets are calculated for every level in the
   resource-graph hierarchy.
 
-\item Finally, the entire task graph ends up being partitioned onto the
+\item Finally, the entire filter graph ends up being partitioned onto the
   most appropriate PE in the resource-graph.
 
 \end{itemize}

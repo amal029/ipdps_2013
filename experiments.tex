@@ -11,9 +11,11 @@ framework against a bin-packing heuristic, because it is a well known
 fact that the optimal solution for a partitioning problem is NP hard,
 one cannot find optimal solutions for large processing
 architectures. Heuristic bin packing solutions have given good results
-in the general case~\cite{ecof78}. Comparing with the heterogeneous bin
-packing (HBP) heuristic allows us to gauge the effectiveness of our algorithm
-against a standard effective technique.
+in the general case~\cite{ecof78}. There exists no other heuristics (to the
+best of our knowledge) other than A-BFD which is able to model both vector and
+scalar processing elements in a given architecture. Hence, comparing with
+A-BFD allows us to gauge the effectiveness of our algorithm against a standard
+technique.
 
 \subsection{Our implementation}
 \label{sec:our-implementation}
@@ -30,12 +32,12 @@ link's bandwidths as communication weight on the edges. We then
 construct our clustered structure (Figure~\ref{fig:res}) by asking for a
 2-way partition at each level of the $log_2|V_r|$ height. Metis
 partitions the graph by load balancing the constraints and performing a
-minimum edge cut.  In partitioning the task graph, we need to balance
+minimum edge cut.  In partitioning the filter graph, we need to balance
 the constraints on to the available partitions. Metis offers the ability
 to load balance multiple constraints on to different partitions based on
 the metric \mbox{`tp-weight'}. We calculate the ratios between the
 capabilities of different partitions and represent them as this metric
-in order to load balance on to the available partitions. 
+in order to load balance on to the available partitions.
 
 
 % \subsection{Heterogeneous Bin Packing}
@@ -43,7 +45,7 @@ in order to load balance on to the available partitions.
 % Let $\mathcal{I}$ be the items to be accommodated into the bins and let
 % $\mathcal{K}$ be the set of bins available.  From the standpoint of the
 % mapping problem, $\mathcal{I}$ refers to the set of
-% \mbox{application-tasks ($|V_t|$)} and $\mathcal{K}$ refers to the PEs
+% \mbox{application-filters ($|V_t|$)} and $\mathcal{K}$ refers to the PEs
 % ($|V_r|$). Similar to the Knapsack problem~\cite{sski08}, by which A-BFD
 % is inspired, each element $i \in \mathcal{I},\ \mathcal{K}$ has two
 % constraints on them represented by \mbox{$c_i$ (cost)}, which models
@@ -65,8 +67,8 @@ in order to load balance on to the available partitions.
 % items allocated to the chosen bin to the newly found empty bin which is
 % cheaper. One of the main advantages of\ \textit{A-BFD} is that it is
 % very fast with a best case complexity of $O(N_\mathcal{I})$ without the
-% post pass, where $N_\mathcal{I}$ is the number of items (number of tasks
-% $|V_t|$ in the task graph $G_t$). Including the post pass, the best case
+% post pass, where $N_\mathcal{I}$ is the number of items (number of filters
+% $|V_t|$ in the filter graph $G_t$). Including the post pass, the best case
 % complexity becomes $O(N_\mathcal{I} + N_\mathcal{K})$ where
 % $N_\mathcal{K}$ is the number of bins (number of PEs $|V_r|$ in the
 % resource graph $G_r$).
@@ -75,7 +77,7 @@ in order to load balance on to the available partitions.
 \label{sec:experimental-setup}
 
 The experimental set-up consists of the resource graph generation and the
-task graph generation. Herein, we describe the two set-ups.
+filter graph generation. Herein, we describe the two set-ups.
 
 \subsubsection{The resource graph set-up}
 \label{sec:resource-graph-setup}
@@ -125,7 +127,7 @@ defined as one execution of the following sequence of steps.
 \item For each core $C_i$ in the processor $P_i$ sample $V_i$ and $M_i$
   randomly from set \veclenset and \mipsset.
 
-\item Use our framework to extract data and task parallelism that is
+\item Use our framework to extract data and filter parallelism that is
   best utilizable by the heterogeneity created by parameters in items 1,
   2, and 3 above. Determine the execution time
   $L^{\mathcal{M}}$.
@@ -142,8 +144,8 @@ the seed for the random number generator.  This reduces the dependence
 of our results on a lucky sequence of numbers from the random number
 generator.
 
-\subsubsection{The task graph set-up}
-\label{sec:task-graph-setup}
+\subsubsection{The stream graph set-up}
+\label{sec:filter-graph-setup}
 
 We chose 5 applications from the HPC arena: binomial option pricing (a
 financial derivatives application), 2-dimensional convolution (for image
@@ -152,7 +154,7 @@ Gauss-Seidel stencil computations, and finally our motivating example
 itself the 2-dimensional Jacobi stencil computation. Next for these 5
 applications, we varied the vector strip from 10 to 50, which resulted
 in graphs varying from around 50 to 5000 nodes and with 23 to 12,000
-edges. For example, given a task node with a vector length requirement
+edges. For example, given a filter node with a vector length requirement
 ($T^i_1$) of 30,000 elements, a vector strip of 10 means dividing the
 total vector requirement by 10, which results in 10 nodes each requiring
 3000 vector elements. Similarly, the LLVM instruction count ($T^i_0$)
@@ -202,7 +204,7 @@ other hand varies from 3000 bytes to almost 4.8 Mega byte.
     & 50 & 168 & 570\\
     \hline
   \end{tabular}
-  \caption{The task graph set-up}
+  \caption{The filter graph set-up}
   \label{tab:1}
 \end{table}
 
@@ -327,14 +329,21 @@ Figure~\ref{fig:ho}.
   the correct locations, in fact data-stores do not play a part in the
   whole process at all and the same can be said about communication.
 
+\item Bin-packing ignores communication unlike our framework.
+
 \end{itemize}
 
-Since communication does not play a part in the heuristic bin-packing
-solution, we ignored the communication values when comparing with bin
-packing. However, in order to show how communication can have a significant
-effect onto the application design and parallelism potential, in the next
+In order to show how communication can have a significant
+effect on the application design and parallelism potential, in the next
 section we perform design space exploration with the effect
 of communication as the main objective.
+
+%~ Since communication does not play a part in the heuristic bin-packing
+%~ solution, we ignored the communication values when comparing with bin
+%~ packing. However, in order to show how communication can have a significant
+%~ effect onto the application design and parallelism potential, in the next
+%~ section we perform design space exploration with the effect
+%~ of communication as the main objective.
 
 \subsection{Affects of varying communication}
 \label{sec:arch-expl-with}
@@ -344,7 +353,7 @@ of communication as the main objective.
 % keeping the bandwidth of the resource graph links high enough to not
 % have any affect on the overall application latency. We purposely did
 % this, in order to make a fair comparison with bin packing since it does
-% not consider communication when partitioning the nodes in the task
+% not consider communication when partitioning the nodes in the filter
 % graph.
 
 In this section we vary the bandwidth (weights on the resource graph

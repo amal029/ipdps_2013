@@ -1,5 +1,5 @@
 % -*- mode:latex; mode:flyspell -*-
-\subsection{Generating the task graph}
+\subsection{Generating the filter graph}
 \label{sec:build-appl-graph}
 
 % \begin{figure*}[t!]
@@ -18,10 +18,10 @@
 %   \label{fig:3}
 % \end{figure*}
 
-The task graph is built from the application by the compiler % extracts
-% task and data parallelism form the application for partitioning the
+The filter graph is built from the application by the compiler % extracts
+% filter and data parallelism form the application for partitioning the
 % application onto the architecture. The compiler looks at every
-% statement in the program to form the task graph. The task graph is
+% statement in the program to form the filter graph. The filter graph is
 % formed
 in the
 following manner:
@@ -41,7 +41,7 @@ following manner:
 
 \item Every loop is fissed (split into multiple loops) thereby forming
   multiple statements. The intuition behind fissing the loops is two
-  fold: (a) task parallelism can be exploited by running independent
+  fold: (a) filter parallelism can be exploited by running independent
   loop statements separately on different machines (see
   Figure~\ref{fig:1}, where statements \texttt{1} and \texttt{2} are
   split statements) and (b) the graph partitioner would give us feedback
@@ -51,7 +51,7 @@ following manner:
 \item The vector counts for each statement is determined using
   dependence analysis and using the polyhedral model~\cite{mgri98}. The
   largest vector size requirement is given as the second requirement
-  ($T^i_1$) in the task graph.
+  ($T^i_1$) in the filter graph.
 
 \item The polyhedral model is also used to find the iteration count of
   the statements and to determine the total amount of data (in bits)
@@ -76,7 +76,7 @@ As we can see from Figure~\ref{fig:1}, three of the statements in Jacobi
 example require almost a million vector instructions to be carried out
 in parallel. % The vector counts can increase quite quickly for large
 % examples (notice that the current 1 million vector count is just for a
-% small 1000 $\times$ 1000 Jacobi matrix). 
+% small 1000 $\times$ 1000 Jacobi matrix).
 In order to properly utilize the underlying vector hardware these vector
 lengths need to be split into smaller vector lengths. The resultant
 vector lengths depend upon the underlying hardware. Splitting the vector
@@ -89,7 +89,7 @@ sizes are available as in the case of HPC architectures determining the
 optimal vector tiles is a challenge and can be solved with
 \textit{simulated annealing} (SA)~\cite{tbra01} or \textit{genetic
   algorithm} (GA)~\cite{tbra01} heuristics. In this article we do not
-solve the problem of determining the tile sizes. Instead our framework
+solve the problem of determining the tile sizes because it is out of the scope of this paper. Instead our framework
 allows the application designers to plug and play with different vector
 tiles in order to determine the tile size that suits their
 architecture. We randomly generate different tile sizes for

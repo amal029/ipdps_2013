@@ -225,7 +225,7 @@
 %
 % paper title
 % can use linebreaks \\ within to get better formatting as desired
-\title{Exploiting task and data parallelism on heterogeneous
+\title{Exploiting filter and data parallelism on heterogeneous
   architectures in a HPC setting}
 % \title{A framework for design space exploration for HPC architectures}
 
@@ -297,7 +297,7 @@ Email: avinmali@ie.ibm.com, drshoukatali@gmail.com}
   In this article we provide a framework for exploiting parallelism onto
   heterogeneous HPC architectures. Given an HPC cluster with varying
   compute units, communication constraints and topology, our framework
-  can be utilized for partitioning applications exhibiting task and data
+  can be utilized for partitioning applications exhibiting filter and data
   parallelism resulting in increased throughput. % Our framework can also
   % be used by designers at an early design stage to explore the type of
   % compute units needed and the topology that would be suited for a
@@ -315,7 +315,7 @@ Email: avinmali@ie.ibm.com, drshoukatali@gmail.com}
   on line.
 
   % In this paper we solve the problem of partitioning applications with a
-  % mixture of both: task-parallel and data-parallel parts onto
+  % mixture of both: filter-parallel and data-parallel parts onto
   % heterogeneous compute clusters. The challenge lies in the utilization
   % of vector and non-vector processing elements, while accounting for
   % varying communication latencies and bandwidths. We propose a graph
@@ -368,7 +368,7 @@ Email: avinmali@ie.ibm.com, drshoukatali@gmail.com}
 
 \addtocounter{footnote}{1}
 \footnotetext[\value{footnote}]{Ellipses represent data stores. Rectangles
-  represent task nodes. Rounded rectangle represents data parallel
+  represent filter nodes. Rounded rectangle represents data parallel
   nodes. The dots represent other data parallel nodes not shown in the
   figure. Dashed arrows represent communication between data stores and
   execution statements. Solid arrows represent dependence edges.}
@@ -379,13 +379,13 @@ Email: avinmali@ie.ibm.com, drshoukatali@gmail.com}
     \BUseVerbatim[fontshape=tr,fontsize=\small,fontfamily=courier]{VerbEnv}
     \label{fig:1a}
   }
-  \subfigure[The task graph for the Jacobi example
+  \subfigure[The filter graph for the Jacobi example
   $^{\decimal{footnote}}$]{
     \includegraphics[scale=0.44]{./figures/jacobi2d}
     \label{fig:1b}
     % \scalebox{0.37}{\input{./figures/jacobi2d-eps-converted-to.pdf}
   }
-  \caption{Jacobi example and its task-graph}
+  \caption{Jacobi example and its stream-graph}
   \label{fig:1}
 \end{figure*}
 
@@ -406,7 +406,7 @@ telecommunications, etc.
 
 In the streaming model statements (also called filters/actors or
 kernels) execute iteratively processing the incoming tokens of
-data. Consider the Jacobi example and its task graph in
+data. Consider the Jacobi example and its filter graph in
 Figure~\ref{fig:1}, the Jacobi kernel is used in fluid dynamics and heat
 transfer problems. We consider every statement (marked $1$ to $4$) in
 this example to be a kernel statement that can be run in a software
@@ -435,7 +435,7 @@ and so on and so forth. The latency of the application (termed makespan)
 is the period, which iterates continuously (shown within the double
 lined columns in Table~\ref{tab:3}). In such a model, the resource
 allocation (rather than dependencies) determines the application
-latency, especially without back-edges in the task graph (as is the case
+latency, especially without back-edges in the filter graph (as is the case
 with our model and compiler). In Table~\ref{tab:3}, the resource
 allocation on processing element \texttt{P1} determines the application
 latency, because that is the maximum of the two allocation latencies.
@@ -444,55 +444,64 @@ latency, because that is the maximum of the two allocation latencies.
 
 We refer to our application graph, as a \textit{Static Task Graph} (STG)
 defined formally as a weighted directed graph: $G_t(V_t, E_t)$, where
-$V_t$ is the set of all tasks in the application graph and $E_t$
-represents the communication between these tasks. The system resources
+$V_t$ is the set of all filters in the application graph and $E_t$
+represents the communication between these filters. The system resources
 are represented by a weighted undirected graph $G_r(V_r, E_r)$ where
 $V_r$ represents a set of processing elements (PEs) which can have
 different processing capabilities and $E_r$ represent the communication
 links between these PEs with differing latencies and bandwidths. Each
-vertex in the task graph, $t_i \in V_t$ is referred to as a task and
+vertex in the filter graph, $t_i \in V_t$ is referred to as a filter and
 each vertex in the resource graph, $r_i \in V_r$ is referred to as a
 processing element (PE). % We use $N_T$ to denote
-% the total number of tasks in the task graph and $N_R$ to denote the
+% the total number of filters in the filter graph and $N_R$ to denote the
 % total number of processing elements. By our definition of previous
 % notations, it follows that $N_T = |V_t|$ and $N_R = |V_r|$.
 
 \subsection{Problem Definition}
 
-Given a graph $G_t(V_t, E_t)$, each vertex in the task graph, $t_i \in
+Given a graph $G_t(V_t, E_t)$, each vertex in the filter graph, $t_i \in
 V_t$ has a set of associated requirements represented by $T^{i}_{j}$
 where $j=0...n_t$ with $n_t$ being the number of requirements. These
 requirements represent the computational requirements of the
-kernel. Consider the task graph in Figure~\ref{fig:1} for the running
-Jacobi example. The \texttt{boxed} statements give the number of
-instructions and the vector count requirements ($T^i_0\ \mathrm{and}\
-T^i_1$), i.e., $n_t=2$ for this example. The communication edges ($(t_i,
-t_j) \in E_t$) between data-stores (statements without the constraints
-in Figure~\ref{fig:1}) and the execution statements represent the amount
-of data that needs to be transferred from the store and its utilization
-at the statement level, denoted by $e^c, \forall E_t \in (V_t \times
-V_t)$ The task graphs are generated directly from the program by our
-compiler. More information about the generation of the task graphs is
-provided later in Section~\ref{sec:build-appl-graph}.
+kernel.
+
+%~ Consider the filter graph in Figure~\ref{fig:1} for the running
+%~ Jacobi example. The \texttt{boxed} statements give the number of
+%~ instructions and the vector count requirements ($T^i_0\ \mathrm{and}\
+%~ T^i_1$), i.e., $n_t=2$ for this example.
+
+The communication edges are decorated with \mbox{$e^c, \forall E_t \in (V_t \times
+V_t)$}, which denotes the data the filter requires for processing.
+%~ $(t_i,t_j) \in E_t$
+%~ between data-stores (statements without the constraints
+%~ in Figure~\ref{fig:1}) and the execution statements
+%~ represent the amount of data that needs to be transferred from the
+%~ store and its utilization at the statement level, denoted by $e^c,
+%~ \forall E_t \in (V_t \times V_t)$.
+The filter graphs are generated directly from the program by our compiler. More
+information about the generation of the filter graphs is provided later in
+Section~\ref{sec:build-appl-graph}.
 
 % From the perspective of the running example, constraint 0 of the first
 % statement ($3$), represented by $T^{1}_{c0}$ denotes ----Avinash add
 % some text here referring to the running jacobi example please----. Each
 % edge $(t_i, t_j) \in E_t$ corresponds to the amount of data that has to
-% be transferred from task $t_i$ to task $t_j$.
+% be transferred from filter $t_i$ to filter $t_j$.
 
 Similarly we have a resource graph $G_r(V_r, E_r)$ where each vertex
-denotes a processing element. It consists of a set of vertices $V_r =
-\{r_1, r_2, ... , r_n\}$ and a set of edges $E_r$. Each processing
-element $r_i \in V_r$ has a number of computational capabilities,
-represented by $R^{i}_{j}$ where $j=0...n_r$ with $n_r$ being the number
-of constrains for the resource node. In our formulation $n_t = n_r$.
-Please note that for some resource graph shown in Figure~\ref{fig:res}
-(level 0), which has $|V_r|$ nodes and 2 capabilities. For each node,
-capability 1 ($R^i_0$) represents the frequency of the PE or how many
+denotes a processing element (PE).
+%~ It consists of a set of vertices $V_r =
+%~ \{r_1, r_2, ... , r_n\}$ and a set of edges $E_r$.
+Each resource node $r_i \in V_r$ has a number of computational capabilities,
+represented by $R^{i}_{j}$ where $j=0...n_r$.
+%~ with $n_r$ being the number of constrains for the resource node.
+In our formulation $n_t = n_r$.
+%~ Please note that for some resource graph shown in Figure~\ref{fig:res}
+%~ (level 0), which has $|V_r|$ nodes and 2 capabilities.
+For each node, capability : $R^i_0$ represents the frequency of the PE or how many
 scalar instructions the PE can perform in one second (the
-\textit{Million Instructions Per Second} (MIPS) count). Capability 2
-($R^i_1$) denotes the maximum number of parallel vector operations it
+\textit{Million Instructions Per Second} (MIPS) count). Capability : $R^i_1$
+denotes the maximum number of parallel vector operations it
 can perform (the vector length). Each edge $e \in E_r$ has a weight
 which represents the bandwidth between two PEs $r_i$ and $r_j$ which is
 denoted by $E^c$.
@@ -506,34 +515,36 @@ denoted by $E^c$.
 % generation about the generation of the resource graphs is provided later in
 % Section~\ref{sec:gener-reso-graph}.
 
-The problem at hand is to effectively map the said task graph $G_t$ onto
+The problem at hand is to effectively map the said filter graph $G_t$ onto
 given resource graph $G_r$. This problem is known to be
 NP-Hard~\cite{vsar89}. % This immediately implicates that we have to look
 % for heuristic solutions.
 
-For evaluating our mapping, we adapt a cost function used by numerous
-other papers~\cite{ssan05,ajai04,dajw12} for our setup.  Given some
+%~ For evaluating our mapping, we adapt a cost function used by numerous
+%~ other papers~\cite{ssan05,ajai04,dajw12} for our setup.
+Given some
 application node $i \in V_t$ mapped to some resource $j \in V_r$, the
 latency for that node is computed by Equation~(\ref{eq:3}). In this
-formulation for some task $i$ being mapped onto some resource $j$, we
+formulation for some filter $i$ being mapped onto some resource $j$, we
 first calculate the number of vectorized instructions that can be
 executed in parallel (by dividing required vector length by the vector
 capacity of $j$ represented by $R^j_1$). We then multiply this number by
 the number of iterative (non-vectorized) instructions required to get
-the total number of instructions to be performed by that task-graph
+the total number of instructions to be performed by that stream-graph
 node. Once we have this number we calculate latency of execution of this
-task-graph node $i$ on this resource $j$ by dividing it with the MIPS
+stream-graph node $i$ on this resource $j$ by dividing it with the MIPS
 value of the resource denoted by $R^j_0$. Calculation of the
-communication latency is rather simple, we divide the number of bits
-required to be transferred by the bandwidth of the shortest path.
+communication latency requires dividing the number of bits
+by the bandwidth of the shortest path.
 
-Given the task-graph and the resource-graph, let $\mathcal{M}$ be some
+Given the stream-graph and the resource-graph, let $\mathcal{M}$ be some
 mapping of the application on the resource-graph. For a particular
 allocation onto some resource node $s \in V_r$, we define its
 computation a communication latency as in Equation~(\ref{eq:1}).
 
 %\vspace{-0.7cm}
 
+\begin{scriptsize}
 \begin{equation}
   \label{eq:3}
   \begin{array}{c}
@@ -543,7 +554,10 @@ computation a communication latency as in Equation~(\ref{eq:1}).
     j, \forall l \in V_r
   \end{array}
 \end{equation}
+\end{scriptsize}
 
+\begin{figure}
+\begin{scriptsize}
 \begin{equation}
   \begin{array}{c}
     L^{\mathcal{M}}_s = Lcomp^{\mathcal{M}}_s +
@@ -558,12 +572,16 @@ computation a communication latency as in Equation~(\ref{eq:1}).
   \end{array}
   \label{eq:1}
 \end{equation}
+\end{scriptsize}
+\end{figure}
 
 Finally, the complete application latency can then be defined as:
+\begin{scriptsize}
 \begin{equation}
   \label{eq:2}
   L^{\mathcal{M}} = max ({L^{\mathcal{M}}_s}), \forall s \in V_r
 \end{equation}
+\end{scriptsize}
 
 The objective of our framework is to find a mapping $\mathcal{M}$
 that minimizes the total application latency as described in
@@ -577,12 +595,12 @@ Equation~(\ref{eq:2}).
 % \item A framework that allows topology designers to efficaciously
 %   explore the design space to determine the type of underlying
 %   architecture that would suit a given application.
-% \item A new heuristic based framework that exploits task and data
+% \item A new heuristic based framework that exploits filter and data
 %   parallelism exhibited by applications for mapping them onto
 %   heterogeneous HPC architectures.
-% \item Along with mapping application-tasks onto resource nodes, the
+% \item Along with mapping application-filters onto resource nodes, the
 %   framework also allocates data-stores being utilized by the different
-%   application-tasks.
+%   application-filters.
 % \item A rigorous experimental setup to analyse the effectiveness of our
 %   framework.
 % \end{itemize}
@@ -592,7 +610,7 @@ Equation~(\ref{eq:2}).
 
 In this section we describe our heuristic algorithm. There are three
 important concepts that need description. First, we describe how we
-extract fine grained parallelism from the application into the task
+extract fine grained parallelism from the application into the filter
 graph. Next, we describe how the topology clusters are formed from the
 resource graphs accounting for communication and heterogeneity of the
 topology. Finally, we describe how the mapping is performed.
@@ -615,10 +633,10 @@ technique to partition and schedule applications onto heterogeneous
 execution architectures. % Our framework can be utilized by designers to
 % quickly gauge the type of underlying architecture that is best suited
 % to run a given application. Moreover,
-Our framework considers both task and data parallelism, which allows the
+Our framework considers both filter and data parallelism, which allows the
 application writers to design and tune their applications to extract
 parallelism. We also consider communication along application and
-underlying architecture edges, which when combined with the task and
+underlying architecture edges, which when combined with the filter and
 data parallelism gives a better estimate of the application latency than
 the currently described research literature targeting similar problems.
 
