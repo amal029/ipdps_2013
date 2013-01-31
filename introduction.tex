@@ -35,7 +35,7 @@ We want to allocate the filters to reduce communication costs while at the
 same time taking account of all the other factors.
 
 In this paper we consider the problem of mapping graphs of parallel
-filters to heterogeneous HPC computing systems. This problem has been
+tasks to heterogeneous HPC computing systems. This problem has been
 studied extensively for homogeneous architectures where all processing
 elements are the same. Although the homogeneous case is
 NP-hard~\cite{vsar89}, several heuristic solutions have been found that
@@ -62,17 +62,17 @@ some processing elements simply being more powerful than others. % For
 A GPU is not simply a more powerful CPU. In fact, some types of
 computation run better on CPUs and some on GPUs.  For a mapping
 algorithm to work well, it needs to take account of the strengths and
-weaknesses of different types of processing elements. In this paper we present
-an approach to mapping parallel filter graphs to
-heterogeneous architectures that addresses both of these problems.
+weaknesses of different types of processing elements. In this paper we
+present an approach to mapping parallel tasks to heterogeneous
+architectures that addresses both of these concerns.
 
 Our \textbf{main contributions} are as follows:
 \begin{itemize}
 \item We present a novel approach to characterizing the type of
-  processing elements based on their level of SIMD parallelism which
+  processing elements based on their level of vector parallelism which
   allows us to distinguish the suitability of different types of units
   to different filters.
-\item We provide a novel algorithm for mapping filter and data parallelism
+\item We provide a novel algorithm for mapping task and data parallelism
   to heterogeneous architectures based on hierarchical graph
   partitioning.
 \item In addition to mapping filters to processing elements, our framework

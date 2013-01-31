@@ -18,13 +18,13 @@
 %   \label{fig:3}
 % \end{figure*}
 
-The filter graph is built from the application by the compiler % extracts
+The filter graph (Figure~\ref{fig:1b}) is built from the application by
+the compiler % extracts
 % filter and data parallelism form the application for partitioning the
 % application onto the architecture. The compiler looks at every
 % statement in the program to form the filter graph. The filter graph is
 % formed
-in the
-following manner:
+in the following manner:
 
 \begin{itemize}
 
@@ -35,9 +35,13 @@ following manner:
   % Figure~\ref{fig:2} is shown in Figure~\ref{fig:3}.
   The LLVM instruction count gives an approximation of the instruction
   count of the underlying hardware, while remaining independent of the
-  hardware itself. The difference between $T^4_1$ and $T^0_1$ can be
-  accounted for by the differing loop iteration counts and loop-collapse
-  for statement 1, but not for statement 4 for illustrative purposes.
+  hardware itself. For example, filter $1$ requires 1 million vector
+  instructions to be done in parallel ($T^1_1$), while statement $4$
+  requires 999 iterations, each computing $998,001$ vector instructions
+  in parallel ($T^4_0$ and $T^4_1$). The difference between $T^4_1$ and
+  $T^1_1$ can be accounted for by the differing loop iteration counts
+  and loop-collapse for statement 1, but not for statement 4 for
+  illustrative purposes.
 
 \item Every loop is fissed (split into multiple loops) thereby forming
   multiple statements. The intuition behind fissing the loops is two
@@ -55,11 +59,13 @@ following manner:
 
 \item The polyhedral model is also used to find the iteration count of
   the statements and to determine the total amount of data (in bits)
-  required to process by that statement. For example, statement
-  \texttt{4} requires \texttt{7.8085KB} of data, while the first two
-  statements \texttt{1} and \texttt{2} require 64-bits more due to the
-  difference in the loop iteration count and the \texttt{double} type of
-  arrays \texttt{A} and \texttt{B}. % (see Figure~\ref{fig:2})
+  required to process by that statement. In our model all communication
+  between filters takes place indirectly via these data-stores. For
+  example, statement \texttt{4} requires \texttt{7.8085KB} of data,
+  while the first two statements \texttt{1} and \texttt{2} require
+  64-bits more due to the difference in the loop iteration count and the
+  \texttt{double} type of arrays \texttt{A} and
+  \texttt{B}. % (see Figure~\ref{fig:2})
 
 \item The dependence edges in Figure~\ref{fig:1} are represented by solid
 arcs. For example, in the Jacobi example, statements \texttt{1} and
