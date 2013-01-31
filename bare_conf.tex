@@ -403,11 +403,6 @@ Email: avinmali@ie.ibm.com, drshoukatali@gmail.com}
 \end{SaveVerbatim}
 
 \addtocounter{footnote}{1}
-\footnotetext[\value{footnote}]{Ellipses represent data stores. Rectangles
-  represent filter nodes. Rounded rectangle represents data parallel
-  nodes. The dots represent other data parallel nodes not shown in the
-  figure. Dashed arrows represent communication between data stores and
-  execution statements. Solid arrows represent dependence edges.}
 
 \begin{figure*}[t!]
   \centering
@@ -592,7 +587,7 @@ computation a communication latency as in Equation~(\ref{eq:1}).
 \end{equation}
 \end{scriptsize}
 
-\begin{figure}
+\begin{figure}[h!]
 \begin{scriptsize}
 \begin{equation}
   \begin{array}{c}
@@ -611,6 +606,8 @@ computation a communication latency as in Equation~(\ref{eq:1}).
 \end{scriptsize}
 \end{figure}
 
+\vspace{-3mm}
+
 Finally, the complete application latency can then be defined as:
 \begin{scriptsize}
 \begin{equation}
@@ -618,6 +615,8 @@ Finally, the complete application latency can then be defined as:
   L^{\mathcal{M}} = max ({L^{\mathcal{M}}_s}), \forall s \in V_r
 \end{equation}
 \end{scriptsize}
+
+\vspace{-6mm}
 
 The objective of our framework is to find a mapping $\mathcal{M}$
 that minimizes the total application latency as described in
@@ -641,8 +640,29 @@ Equation~(\ref{eq:2}).
 %   framework.
 % \end{itemize}
 
+\footnotetext[\value{footnote}]{Ellipses represent data stores. Rectangles
+  represent filter nodes. Rounded rectangle represents data parallel
+  nodes. The dots represent other data parallel nodes not shown in the
+  figure. Dashed arrows represent communication between data stores and
+  execution statements. Solid arrows represent dependence edges.}
+
 \section{Our framework}
 \label{sec:our-framework}
+
+A
+common approach to solving the homogeneous case is to \textit{partition}
+the graph across the processing elements~\cite{aale01,kpur99,enys98}.
+However, we have found that such heuristic partitioning approaches do
+not work well for heterogeneous architectures. Instead we propose a
+novel approach where the architecture is hierarchically partitioned into
+sub-clusters.  Each sub-cluster at the same level of the hierarchy has
+approximately the same computing capability and has relatively local
+communication.  This allows us to use existing approaches that work well
+for the homogeneous case to partition the graph across the sub-clusters
+at each level of the hierarchy. We show that this is an effective
+approach if the sub-clusters are well balanced at each level of the
+hierarchy.
+
 
 In this section we describe our heuristic algorithm. There are three
 important concepts that need description. First, we describe how we

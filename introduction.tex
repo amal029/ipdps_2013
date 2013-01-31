@@ -62,22 +62,9 @@ some processing elements simply being more powerful than others. % For
 A GPU is not simply a more powerful CPU. In fact, some types of
 computation run better on CPUs and some on GPUs.  For a mapping
 algorithm to work well, it needs to take account of the strengths and
-weaknesses of different types of processing elements.
-
-In this paper we present an approach to mapping parallel filter graphs to
-heterogeneous architectures that addresses both of these problems.  A
-common approach to solving the homogeneous case is to \textit{partition}
-the graph across the processing elements~\cite{aale01,kpur99,enys98}.
-However, we have found that such heuristic partitioning approaches do
-not work well for heterogeneous architectures. Instead we propose a
-novel approach where the architecture is hierarchically partitioned into
-sub-clusters.  Each sub-cluster at the same level of the hierarchy has
-approximately the same computing capability and has relatively local
-communication.  This allows us to use existing approaches that work well
-for the homogeneous case to partition the graph across the sub-clusters
-at each level of the hierarchy. We show that this is an effective
-approach if the sub-clusters are well balanced at each level of the
-hierarchy.
+weaknesses of different types of processing elements. In this paper we present
+an approach to mapping parallel filter graphs to
+heterogeneous architectures that addresses both of these problems.
 
 Our \textbf{main contributions} are as follows:
 \begin{itemize}
