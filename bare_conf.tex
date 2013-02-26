@@ -198,7 +198,6 @@
 
 
 
-
 % *** Do not adjust lengths that control margins, column widths, etc. ***
 % *** Do not use packages that alter fonts (such as pslatex).         ***
 % There should be no need to do such things with IEEEtran.cls V1.6 and later.
@@ -469,9 +468,9 @@ period, which iterates continuously (shown within the double lined
 columns in Table~\ref{tab:3}). In such a model, the resource allocation
 (rather than dependencies) determines the application latency,
 especially without back-edges in the filter graph (as is the case with
-our model and compiler). In Table~\ref{tab:3}, the resource allocation
-on processing element \texttt{P1} determines the application latency,
-because that is the maximum of the two allocation latencies.
+our model). In Table~\ref{tab:3}, the resource allocation on processing
+element \texttt{P1} determines the application latency, because that is
+the maximum of the two allocation latencies.
 
 \subsection{Notations}
 
@@ -652,27 +651,27 @@ Equation~(\ref{eq:2}).
 \section{Our framework}
 \label{sec:our-framework}
 
-A
-common approach to solving the homogeneous case is to \textit{partition}
-the graph across the processing elements~\cite{aale01,kpur99,enys98}.
-However, we have found that such heuristic partitioning approaches do
-not work well for heterogeneous architectures. Instead we propose a
-novel approach where the architecture is hierarchically partitioned into
-sub-clusters.  Each sub-cluster at the same level of the hierarchy has
-approximately the same computing capability and has relatively local
-communication.  This allows us to use existing approaches that work well
-for the homogeneous case to partition the graph across the sub-clusters
-at each level of the hierarchy. We show that this is an effective
-approach if the sub-clusters are well balanced at each level of the
-hierarchy.
+A common approach to solving the homogeneous case is to
+\textit{partition} the graph across the processing
+elements~\cite{aale01,kpur99,enys98}.  However, we have found that such
+heuristic partitioning approaches do not work well for heterogeneous
+architectures. Instead we propose a novel approach where the
+architecture is hierarchically partitioned into sub-clusters.  Each
+sub-cluster at the same level of the hierarchy has approximately the
+same computing capability and has relatively local communication.  This
+allows us to use existing approaches that work well for the homogeneous
+case to partition the graph across the sub-clusters at each level of the
+hierarchy. We show that this is an effective approach if the
+sub-clusters are well balanced at each level of the hierarchy.
 
 
-In this section we describe our heuristic algorithm. There are three
-important concepts that need description. First, we describe how we
-extract fine grained parallelism from the application into the filter
-graph. Next, we describe how the topology clusters are formed from the
-resource graphs accounting for communication and heterogeneity of the
-topology. Finally, we describe how the mapping is performed.
+In this section we describe our heuristic algorithm. There are two
+important concepts that need description. First, we describe how the
+topology clusters are formed from the resource graphs accounting for
+communication and heterogeneity of the topology. Secondly, given a
+filter graph with data parallel filters, task parallel filters, and
+communication extracted as shown in Figure~\ref{fig:1b} how the mapping
+is performed.
 
 %\input{task_graph}
 
@@ -699,16 +698,25 @@ underlying architecture edges, which when combined with the filter and
 data parallelism gives a better estimate of the application latency than
 the currently described research literature targeting similar problems.
 
-We have tested our framework on a subset of the many high performance
-computing applications currently in use in the industry against well
-known heterogeneous bin packing (HBP). Some of our worst case speed-ups
-were 350 times for Jacobi stencil computations and 107 times for Gram
-Schmidt linear-algebra kernel. In cases where the resource's
-capabilities did not match that of the application's requirements such
-as Gauss-Seidel stencil computations, HBP was not able to determine any
-mapping of the application. Finally, the execution time of our algorithm
-is XXX seconds even for 256 PE architectures, which makes it suitable
-for both on-line and off-line scheduling.
+We have tested our framework on a statistical sample of randomly
+generated filter graphs with varying compute, vector, communication
+requirements. Moreover, we compare our technique with the well
+established \textit{Simulated Annealing} (SA) heuristic. Our framework
+outperforms SA substantially on average by XXX times. Finally, being a
+heuristic it can accommodate large resource graphs and filter graphs,
+whereas SA needs to be bounded in time (3 minutes in our case) to obtain
+the results.
+
+% We have tested our framework on a subset of the many high performance
+% computing applications currently in use in the industry against well
+% known heterogeneous bin packing (HBP). Some of our worst case speed-ups
+% were 350 times for Jacobi stencil computations and 107 times for Gram
+% Schmidt linear-algebra kernel. In cases where the resource's
+% capabilities did not match that of the application's requirements such
+% as Gauss-Seidel stencil computations, HBP was not able to determine any
+% mapping of the application. Finally, the execution time of our algorithm
+% is XXX seconds even for 256 PE architectures, which makes it suitable
+% for both on-line and off-line scheduling.
 
 % Our framework was also twice as fast as HBP in the best case for Jacobi
 % stencil computations. We also have speed-ups in the order of 100s for

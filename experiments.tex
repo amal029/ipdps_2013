@@ -1,21 +1,21 @@
 \section{Experiments and results}
 \label{sec:experiments-results}
 
-To determine how good our framework is, we compare it against an
-adaptation of the well known heterogeneous bin packing solution as
-discussed by Teodor et al.~\cite{tcra11}. They adapt the well-known
-\textit{Best First Decreasing (BFD)} heuristic, which works only for
-homogeneous bins, to form the \textit{Adapted BFD (A-BFD)} heuristic
-which works for heterogeneous bins. We have chosen to compare our
-framework against a bin-packing heuristic, because it is a well known
-fact that the optimal solution for a partitioning problem is NP hard,
-one cannot find optimal solutions for large processing
-architectures. Heuristic bin packing solutions have given good results
-in the general case~\cite{ecof78}. There exists no other heuristics (to the
-best of our knowledge) other than A-BFD which is able to model both vector and
-scalar processing elements in a given architecture. Hence, comparing with
-A-BFD allows us to gauge the effectiveness of our algorithm against a standard
-technique.
+% To determine how good our framework is, we compare it against an
+% adaptation of the well known heterogeneous bin packing solution as
+% discussed by Teodor et al.~\cite{tcra11}. They adapt the well-known
+% \textit{Best First Decreasing (BFD)} heuristic, which works only for
+% homogeneous bins, to form the \textit{Adapted BFD (A-BFD)} heuristic
+% which works for heterogeneous bins. We have chosen to compare our
+% framework against a bin-packing heuristic, because it is a well known
+% fact that the optimal solution for a partitioning problem is NP hard,
+% one cannot find optimal solutions for large processing
+% architectures. Heuristic bin packing solutions have given good results
+% in the general case~\cite{ecof78}. There exists no other heuristics (to the
+% best of our knowledge) other than A-BFD which is able to model both vector and
+% scalar processing elements in a given architecture. Hence, comparing with
+% A-BFD allows us to gauge the effectiveness of our algorithm against a standard
+% technique.
 
 \subsection{Our implementation}
 \label{sec:our-implementation}
@@ -87,7 +87,7 @@ The experimental set up consists of the following.
 \begin{enumerate}
 
 \item An interconnection network with \numtplgynodes
-  nodes. \numtplgynodes vary from 2 to 121 PEs. A node could be just a
+  nodes. \numtplgynodes vary from 64 to 4096 PEs. A node could be just a
   multi-core CPU or a multi-core CPU with a GPU attached to it.
 
 \item A set of \gpunum GPUs where \gpunum is at most \numtplgynodes. The
@@ -144,118 +144,118 @@ the seed for the random number generator.  This reduces the dependence
 of our results on a lucky sequence of numbers from the random number
 generator.
 
-\subsubsection{The stream graph set-up}
+\subsubsection{Random filter graph generation}
 \label{sec:filter-graph-setup}
 
-We chose 5 applications from the HPC arena: binomial option pricing (a
-financial derivatives application), 2-dimensional convolution (for image
-processing), Gram Schmidt linear algebra kernel, 2-dimensional
-Gauss-Seidel stencil computations, and finally our motivating example
-itself the 2-dimensional Jacobi stencil computation. Next for these 5
-applications, we varied the vector strip from 10 to 50, which resulted
-in graphs varying from around 50 to 5000 nodes and with 23 to 12,000
-edges. For example, given a filter node with a vector length requirement
-($T^i_1$) of 30,000 elements, a vector strip of 10 means dividing the
-total vector requirement by 10, which results in 10 nodes each requiring
-3000 vector elements. Similarly, the LLVM instruction count ($T^i_0$)
-for each node varies depending upon the application at hand.
+% We chose 5 applications from the HPC arena: binomial option pricing (a
+% financial derivatives application), 2-dimensional convolution (for image
+% processing), Gram Schmidt linear algebra kernel, 2-dimensional
+% Gauss-Seidel stencil computations, and finally our motivating example
+% itself the 2-dimensional Jacobi stencil computation. Next for these 5
+% applications, we varied the vector strip from 10 to 50, which resulted
+% in graphs varying from around 50 to 5000 nodes and with 23 to 12,000
+% edges. For example, given a filter node with a vector length requirement
+% ($T^i_1$) of 30,000 elements, a vector strip of 10 means dividing the
+% total vector requirement by 10, which results in 10 nodes each requiring
+% 3000 vector elements. Similarly, the LLVM instruction count ($T^i_0$)
+% for each node varies depending upon the application at hand.
 
-A detailed description of the applications and their features is shown
-in Table~\ref{tab:1}. In general the vector requirement of the
-applications in our benchmark suite varies from 1000 to 1 Million
-elements. The LLVM instruction count varies from around 1 to 0.3
-billion. The edge weights depicting the amount of data transfer on the
-other hand varies from 3000 bytes to almost 4.8 Mega byte.
+% A detailed description of the applications and their features is shown
+% in Table~\ref{tab:1}. In general the vector requirement of the
+% applications in our benchmark suite varies from 1000 to 1 Million
+% elements. The LLVM instruction count varies from around 1 to 0.3
+% billion. The edge weights depicting the amount of data transfer on the
+% other hand varies from 3000 bytes to almost 4.8 Mega byte.
 
-\begin{small}
-  \begin{table}[h!]
-    \centering
-    \resizebox{!}{38mm}{
-      \begin{tabular}{|c|c|c|c|}
-        \hline
-        \textbf{Application} & \textbf{Vector strip} & $|V_t|$ & $|E_t|$ \\
-        \hline
-        \multirow{5}{*}{Binomial option pricing} & 10 & 82 & 206 \\
-        & 20 & 102 & 306 \\
-        & 30 & 122 & 406 \\
-        & 40 & 142 & 506 \\
-        & 50 & 162 & 606 \\
-        \hline
-        \multirow{5}{*}{Convolution} & 10 & 79 & 143 \\
-        & 20 & 89 & 173 \\
-        & 30 & 99 & 203 \\
-        & 40 & 109 & 233 \\
-        & 50 & 119 & 263 \\
-        \hline
-        \multirow{5}{*}{Gram Schmidt} & 10 & 228 & 443 \\
-        & 20 & 838 & 1653 \\
-        & 30 & 1848 & 3663 \\
-        & 40 & 3258 & 6473 \\
-        & 50 & 5068 & 10083\\
-        \hline
-        \multirow{5}{*}{Gauss-Seidel} & 10 & 227 & 531 \\
-        & 20 & 837 & 2041 \\
-        & 30 & 1847 & 4551 \\
-        & 40 & 3257 & 8061 \\
-        & 50 & 5067 & 12571\\
-        \hline
-        \multirow{5}{*}{Jacobi} & 10 & 48 & 130 \\
-        & 20 & 78 & 240 \\
-        & 30 & 108 & 350 \\
-        & 40 & 138 & 460 \\
-        & 50 & 168 & 570\\
-        \hline
-      \end{tabular}
-    }
-    \caption{The filter graph set-up}
-    \label{tab:1}
-  \end{table}
-\end{small}
+% \begin{small}
+%   \begin{table}[h!]
+%     \centering
+%     \resizebox{!}{38mm}{
+%       \begin{tabular}{|c|c|c|c|}
+%         \hline
+%         \textbf{Application} & \textbf{Vector strip} & $|V_t|$ & $|E_t|$ \\
+%         \hline
+%         \multirow{5}{*}{Binomial option pricing} & 10 & 82 & 206 \\
+%         & 20 & 102 & 306 \\
+%         & 30 & 122 & 406 \\
+%         & 40 & 142 & 506 \\
+%         & 50 & 162 & 606 \\
+%         \hline
+%         \multirow{5}{*}{Convolution} & 10 & 79 & 143 \\
+%         & 20 & 89 & 173 \\
+%         & 30 & 99 & 203 \\
+%         & 40 & 109 & 233 \\
+%         & 50 & 119 & 263 \\
+%         \hline
+%         \multirow{5}{*}{Gram Schmidt} & 10 & 228 & 443 \\
+%         & 20 & 838 & 1653 \\
+%         & 30 & 1848 & 3663 \\
+%         & 40 & 3258 & 6473 \\
+%         & 50 & 5068 & 10083\\
+%         \hline
+%         \multirow{5}{*}{Gauss-Seidel} & 10 & 227 & 531 \\
+%         & 20 & 837 & 2041 \\
+%         & 30 & 1847 & 4551 \\
+%         & 40 & 3257 & 8061 \\
+%         & 50 & 5067 & 12571\\
+%         \hline
+%         \multirow{5}{*}{Jacobi} & 10 & 48 & 130 \\
+%         & 20 & 78 & 240 \\
+%         & 30 & 108 & 350 \\
+%         & 40 & 138 & 460 \\
+%         & 50 & 168 & 570\\
+%         \hline
+%       \end{tabular}
+%     }
+%     \caption{The filter graph set-up}
+%     \label{tab:1}
+%   \end{table}
+% \end{small}
 
-% We have done experiments for several different sets of parameters. In
-% this paper we show the results for the parameters enumerated in Table
-% \ref{parametr_tbl}.
+% % We have done experiments for several different sets of parameters. In
+% % this paper we show the results for the parameters enumerated in Table
+% % \ref{parametr_tbl}.
 
-\begin{figure*}[t!]
-  \centering
-  \subfigure[Binomial Option Pricing]{
-    \includegraphics[angle=0, scale=0.7]{./figures/bin_surface}
-    \label{fig:bin1ho}
-  }
-  \subfigure[2 Dimensional Convolution]{
-    \includegraphics[angle=0, scale=0.7]{./figures/conv_surface}
-    \label{fig:conv1ho}
-  }
-  \subfigure[Gram Schmidt linear-algebra kernel]{
-    \includegraphics[angle=0, scale=0.7]{./figures/gram_surface}
-    \label{fig:gram1ho}
-  }
-  %~ \subfigure[2 Dimensional Seidel stencil computation]{
-    %~ \includegraphics[angle=0, scale=0.72]{./figures/sei_surface}
-    %~ \label{fig:sei1ho}
-  %~ }
-  \subfigure[2 Dimensional Jacobi stencil computation]{
-    \includegraphics[angle=0, scale=0.7]{./figures/jac_surface}
-    \label{fig:jacl1ho}
-  }
-  \caption{Comparison of execution times of ``Our Framework" and
-    ``Heterogeneous Bin Packing"}
-  \label{fig:ho}
-\end{figure*}
+% \begin{figure*}[t!]
+%   \centering
+%   \subfigure[Binomial Option Pricing]{
+%     \includegraphics[angle=0, scale=0.7]{./figures/bin_surface}
+%     \label{fig:bin1ho}
+%   }
+%   \subfigure[2 Dimensional Convolution]{
+%     \includegraphics[angle=0, scale=0.7]{./figures/conv_surface}
+%     \label{fig:conv1ho}
+%   }
+%   \subfigure[Gram Schmidt linear-algebra kernel]{
+%     \includegraphics[angle=0, scale=0.7]{./figures/gram_surface}
+%     \label{fig:gram1ho}
+%   }
+%   %~ \subfigure[2 Dimensional Seidel stencil computation]{
+%     %~ \includegraphics[angle=0, scale=0.72]{./figures/sei_surface}
+%     %~ \label{fig:sei1ho}
+%   %~ }
+%   \subfigure[2 Dimensional Jacobi stencil computation]{
+%     \includegraphics[angle=0, scale=0.7]{./figures/jac_surface}
+%     \label{fig:jacl1ho}
+%   }
+%   \caption{Comparison of execution times of ``Our Framework" and
+%     ``Heterogeneous Bin Packing"}
+%   \label{fig:ho}
+% \end{figure*}
 
-\begin{figure*}[t!]
-  \centering
-  \subfigure[Binomial Option Pricing]{
-    \includegraphics[angle=0, scale=0.55]{./figures/bin_32-64_surface}
-    \label{fig:bin1comm}
-  }
-  \subfigure[2 Dimensional Jacobi stencil computation]{
-    \includegraphics[angle=0, scale=0.55]{./figures/jac_32-64_surface}
-    \label{fig:jac1comm}
-  }
-  \caption{Choosing the proper tile size}
-  \label{fig:comm}
-\end{figure*}
+% \begin{figure*}[t!]
+%   \centering
+%   \subfigure[Binomial Option Pricing]{
+%     \includegraphics[angle=0, scale=0.55]{./figures/bin_32-64_surface}
+%     \label{fig:bin1comm}
+%   }
+%   \subfigure[2 Dimensional Jacobi stencil computation]{
+%     \includegraphics[angle=0, scale=0.55]{./figures/jac_32-64_surface}
+%     \label{fig:jac1comm}
+%   }
+%   \caption{Choosing the proper tile size}
+%   \label{fig:comm}
+% \end{figure*}
 
 \subsection{Experimental Results}
 \label{sec:results-1}
@@ -265,86 +265,86 @@ Intel Xeon E5620 CPU running at 2.4Ghz with 24GB DDR3 RAM. The system
 is running Linux kernel ver 3.0.40-1. Our framework was compiled
 using gcc version 4.7.1 with '-O3' optimization flag.
 
-The results for the experiments with the above experimental set-up
-comparing our approach with the aforementioned heterogeneous bin packing
-approach is shown in Figure~\ref{fig:ho}. Our approach performs better
-compared to heterogeneous bin packing for all the applications. The
-graphs in Figure~\ref{fig:ho} consists of two surfaces layered on top of
-each other. In these graphs the larger the value, the worse the latency
-and hence the performance of the application. % For all graphs, the
-% surface representing the heterogeneous bin-packing solution is always
-% layered atop our results, which clearly show the superiority of our
-% approach. Note that the z-axis in all the graph in Figure~\ref{fig:ho}
-% are in logarithmic scale with a base of 10. This in turn implies that
-% our results are almost an order of magnitude better than those
-% obtained by the heterogeneous bin packing heuristic.
+% The results for the experiments with the above experimental set-up
+% comparing our approach with the aforementioned heterogeneous bin packing
+% approach is shown in Figure~\ref{fig:ho}. Our approach performs better
+% compared to heterogeneous bin packing for all the applications. The
+% graphs in Figure~\ref{fig:ho} consists of two surfaces layered on top of
+% each other. In these graphs the larger the value, the worse the latency
+% and hence the performance of the application. % For all graphs, the
+% % surface representing the heterogeneous bin-packing solution is always
+% % layered atop our results, which clearly show the superiority of our
+% % approach. Note that the z-axis in all the graph in Figure~\ref{fig:ho}
+% % are in logarithmic scale with a base of 10. This in turn implies that
+% % our results are almost an order of magnitude better than those
+% % obtained by the heterogeneous bin packing heuristic.
 
-For Seidel, the results for bin-packing could not be obtained, because
-the required vector element length was larger than the available
-capability of the underlying hardware. Our approach is able to deal with
-such a situation, by fitting the required vector length to the
-capability and then running the rest in an iterative manner.
+% For Seidel, the results for bin-packing could not be obtained, because
+% the required vector element length was larger than the available
+% capability of the underlying hardware. Our approach is able to deal with
+% such a situation, by fitting the required vector length to the
+% capability and then running the rest in an iterative manner.
 
-The major differences between the two algorithms are provided in
-Table~\ref{tab:2}. The \textbf{Max latency} and \textbf{Min latency}
-columns give the maximum and the minimum latencies for bin packing and
-our framework, respectively. The final column gives the number of data
-points that our framework is better compared to heterogeneous bin
-packing. As we can see from Table~\ref{tab:2}, our framework out
-performs the heterogeneous bin-packing on all the applications.
+% The major differences between the two algorithms are provided in
+% Table~\ref{tab:2}. The \textbf{Max latency} and \textbf{Min latency}
+% columns give the maximum and the minimum latencies for bin packing and
+% our framework, respectively. The final column gives the number of data
+% points that our framework is better compared to heterogeneous bin
+% packing. As we can see from Table~\ref{tab:2}, our framework out
+% performs the heterogeneous bin-packing on all the applications.
 
-\begin{small}
-  \begin{table*}[t!]
-    \centering
-    \resizebox{!}{11mm}{
-      \begin{tabular}{|c|c|c|c|c|c|}
-        \hline
-        \textbf{Application} &
-        \multicolumn{2}{|c|}{\textbf{Max latency (sec)}} &
-        \multicolumn{2}{|c|}{\textbf{Min latency (sec)}} &
-        \textbf{Better (\%)} \\
-        \hline
-        & {HBP} & {Our framework} &
-        {HBP} & {Our framework} & HBP vs Our framework\\
-        \hline
-        Binomial option pricing & $1.35e+8$ & $5.27e+7$ & 77356.9 & 1 & 100 \\
-        \hline
-        Convolution & 489065 & 78.52 & 53.64 & 16.26 & 94\\
-        \hline
-        Gram Schmidt & 18984.5 & 177.97 & 2947.65 & 1.20 & 94\\
-        \hline
-        Gauss-Seidel & N/A & 3635.62 & N/A & 9.67 & 100\\
-        \hline
-        Jacobi & 13919.2 & 39.89 & 1.69 & 0.97 & 92\\
-        \hline
-      \end{tabular}
-    }
-    \caption{Major statistics comparing heterogeneous bin packing and our framework}
-    \label{tab:2}
-  \end{table*}
-\end{small}
+% \begin{small}
+%   \begin{table*}[t!]
+%     \centering
+%     \resizebox{!}{11mm}{
+%       \begin{tabular}{|c|c|c|c|c|c|}
+%         \hline
+%         \textbf{Application} &
+%         \multicolumn{2}{|c|}{\textbf{Max latency (sec)}} &
+%         \multicolumn{2}{|c|}{\textbf{Min latency (sec)}} &
+%         \textbf{Better (\%)} \\
+%         \hline
+%         & {HBP} & {Our framework} &
+%         {HBP} & {Our framework} & HBP vs Our framework\\
+%         \hline
+%         Binomial option pricing & $1.35e+8$ & $5.27e+7$ & 77356.9 & 1 & 100 \\
+%         \hline
+%         Convolution & 489065 & 78.52 & 53.64 & 16.26 & 94\\
+%         \hline
+%         Gram Schmidt & 18984.5 & 177.97 & 2947.65 & 1.20 & 94\\
+%         \hline
+%         Gauss-Seidel & N/A & 3635.62 & N/A & 9.67 & 100\\
+%         \hline
+%         Jacobi & 13919.2 & 39.89 & 1.69 & 0.97 & 92\\
+%         \hline
+%       \end{tabular}
+%     }
+%     \caption{Major statistics comparing heterogeneous bin packing and our framework}
+%     \label{tab:2}
+%   \end{table*}
+% \end{small}
 
-There are a number of reasons for the large differences seen in
-Figure~\ref{fig:ho}.
+% There are a number of reasons for the large differences seen in
+% Figure~\ref{fig:ho}.
 
-\begin{itemize}
+% \begin{itemize}
 
-\item The bin packing solution gives priority to volume, which means
-  vectors are packed into a single large vector processor, while giving
-  very little consideration to the instruction count requirement.
+% \item The bin packing solution gives priority to volume, which means
+%   vectors are packed into a single large vector processor, while giving
+%   very little consideration to the instruction count requirement.
 
-\item The bin packing heuristic does not consider placing data-stores in
-  the correct locations, in fact data-stores do not play a part in the
-  whole process at all and the same can be said about communication.
+% \item The bin packing heuristic does not consider placing data-stores in
+%   the correct locations, in fact data-stores do not play a part in the
+%   whole process at all and the same can be said about communication.
 
-\item Bin-packing ignores communication unlike our framework.
+% \item Bin-packing ignores communication unlike our framework.
 
-\end{itemize}
+% \end{itemize}
 
-In order to show how communication can have a significant
-effect on the application design and parallelism potential, in the next
-section we perform design space exploration with the effect
-of communication as the main objective.
+% In order to show how communication can have a significant
+% effect on the application design and parallelism potential, in the next
+% section we perform design space exploration with the effect
+% of communication as the main objective.
 
 %~ Since communication does not play a part in the heuristic bin-packing
 %~ solution, we ignored the communication values when comparing with bin
@@ -353,48 +353,48 @@ of communication as the main objective.
 %~ section we perform design space exploration with the effect
 %~ of communication as the main objective.
 
-\subsection{Affects of varying communication}
-\label{sec:arch-expl-with}
+% \subsection{Affects of varying communication}
+% \label{sec:arch-expl-with}
 
-% In the previous section we compared our results with heterogeneous bin
-% packing, without any regards for the communication. This was done by
-% keeping the bandwidth of the resource graph links high enough to not
-% have any affect on the overall application latency. We purposely did
-% this, in order to make a fair comparison with bin packing since it does
-% not consider communication when partitioning the nodes in the filter
-% graph.
+% % In the previous section we compared our results with heterogeneous bin
+% % packing, without any regards for the communication. This was done by
+% % keeping the bandwidth of the resource graph links high enough to not
+% % have any affect on the overall application latency. We purposely did
+% % this, in order to make a fair comparison with bin packing since it does
+% % not consider communication when partitioning the nodes in the filter
+% % graph.
 
-In this section we vary the bandwidth (weights on the resource graph
-edges, $E^C$) to explore best vector tile sizes for the applications.
-For experimental purposes, we use a 2D tiled mesh of 16 $\times$ 16 PEs
-(total of 256 PEs). The bandwidth of the links is randomly selected from
-a normal distribution between 32-64 MB/s for each edge. In this set-up,
-a GPU-CPU combination is placed at every fourth corner in the tiled
-mesh. Finally, every CPU core in this set-up runs at 2GHz and has a
-vector capacity of 64, i.e., 64 floating point elements can be processed
-at once. Similarly, all GPUs run at 700MHz and can perform 4096 floating
-point operations in a SIMD fashion. The application set is varied in the
-exact same manner as the previous experimental set-up.
+% In this section we vary the bandwidth (weights on the resource graph
+% edges, $E^C$) to explore best vector tile sizes for the applications.
+% For experimental purposes, we use a 2D tiled mesh of 16 $\times$ 16 PEs
+% (total of 256 PEs). The bandwidth of the links is randomly selected from
+% a normal distribution between 32-64 MB/s for each edge. In this set-up,
+% a GPU-CPU combination is placed at every fourth corner in the tiled
+% mesh. Finally, every CPU core in this set-up runs at 2GHz and has a
+% vector capacity of 64, i.e., 64 floating point elements can be processed
+% at once. Similarly, all GPUs run at 700MHz and can perform 4096 floating
+% point operations in a SIMD fashion. The application set is varied in the
+% exact same manner as the previous experimental set-up.
 
 
-Two of the most interesting results that we obtained for the above
-experimental set-up is shown in
-Figure~\ref{fig:comm}. Figure~\ref{fig:bin1comm}, gives the varying
-latency of execution for the different vector strip sizes for the
-binomial option pricing application. As we can see, with increasing
-vector strip sizes the latency of execution reduces. In our experiments
-we found that a vector strip size of 50 is best suited for this example
-and gave the best performance. Moreover, we also found that from the 256
-PEs, this example only utilized 46 PEs and that too mostly GPUs.  Jacobi
-on the other hand performs best for a vector strip size of
-20. Increasing the vector strip size after that has an adverse affect on
-the resulting partitioning as the communication overheads are far
-greater than the computation potential. Finally, in both these
-applications the placement of the data stores plays an important role,
-since there is a single data store, which needs to be accessed by all
-the nodes split due to vector tiling, the communication overhead
-increases if the store is not placed on a correct PE: usually a PE with
-high bandwidth connection to the PE processing the vector statement.
+% Two of the most interesting results that we obtained for the above
+% experimental set-up is shown in
+% Figure~\ref{fig:comm}. Figure~\ref{fig:bin1comm}, gives the varying
+% latency of execution for the different vector strip sizes for the
+% binomial option pricing application. As we can see, with increasing
+% vector strip sizes the latency of execution reduces. In our experiments
+% we found that a vector strip size of 50 is best suited for this example
+% and gave the best performance. Moreover, we also found that from the 256
+% PEs, this example only utilized 46 PEs and that too mostly GPUs.  Jacobi
+% on the other hand performs best for a vector strip size of
+% 20. Increasing the vector strip size after that has an adverse affect on
+% the resulting partitioning as the communication overheads are far
+% greater than the computation potential. Finally, in both these
+% applications the placement of the data stores plays an important role,
+% since there is a single data store, which needs to be accessed by all
+% the nodes split due to vector tiling, the communication overhead
+% increases if the store is not placed on a correct PE: usually a PE with
+% high bandwidth connection to the PE processing the vector statement.
 
 %%% Local Variables:
 %%% mode: latex
