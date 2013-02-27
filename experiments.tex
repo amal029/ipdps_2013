@@ -17,6 +17,7 @@
 % A-BFD allows us to gauge the effectiveness of our algorithm against a standard
 % technique.
 
+
 \subsection{Our implementation}
 \label{sec:our-implementation}
 
@@ -39,6 +40,59 @@ the metric \mbox{`tp-weight'}. We calculate the ratios between the
 capabilities of different partitions and represent them as this metric
 in order to load balance on to the available partitions.
 
+
+\subsection{Random Graph Generator}
+\label{sec:rand-graph-generator}
+We built a random graph generator to test our partitioning methodology
+rigorously against a variety of application graphs. The random graph generator
+needs as input the following parameters :
+
+\begin{itemize}
+\item Number of nodes ($n$) - Total number of nodes to be present in the
+application graph
+\item Indegree ($i$) - Average indegree of every vertex
+\item Outdegree ($o$) - Average outdegree of every vertex
+\item Communication to Computation Ratio - CCR ($c$) - It is the ratio
+of the average communication cost of an edge leaving a vertex to the average
+computation cost of the vertex the edge is leaving from. If a DAG's
+$c$ is low, then it can be called a computation intensive application
+and if it is greater than 1 it can be called a communication intensive
+application
+\item Structure of the graph ($\alpha$) - We
+generate the height of the graph based on $\alpha$ as
+$\frac{\sqrt{n}}{\alpha}$. This implies the width of the graph becomes
+$\sqrt{n}*{\alpha}$. Higher values of $\alpha$ give wider graphs which
+means the graph has more inherent parallelism, while lower values give taller
+graphs which means the graph is inherently serial
+\item Beta ($\beta$) - We use this parameter to decide if an actor in the
+application graph is CPU intensive or GPU intensive. Smaller values of $\beta$
+makes actors CPU intensive(by making first constraint larger than the second),
+while larger values make it GPU intensive(bu making the second constraint larger
+than the first)
+\item Skewedness factor ($\gamma$) - This parameter dictates how computation is
+spread across the graph. Smaller values of $\gamma$ give uniformly distributed
+values for the constraints of the actors while larger values produces skewed
+graphs
+\end{itemize}
+
+For our experiments we generated random graphs by choosing values for the input
+parameters from the following sets :
+
+\begin{itemize}
+\item $\chi_{n} = \{256, 1024, 16384\}$
+\item $\chi_{i} = \{1\}$
+\item $\chi_{o} = \{2, 4, 8\}$
+\item $\chi_{c} = \{0.0001, 0.001, 0.009\}$
+\item $\chi_{\alpha} = \{0.1, 1.0, 10.0\}$
+\item $\chi_{\beta} = \{5, 25, 50, 75, 95\}$
+\item $\chi_{\gamma} = \{25, 50, 75\}$
+\end{itemize}
+
+We generated one graph per combination for a total of [servesh fill this number
+in]. Since the random graph generator has a variety of inputs and these inputs
+are filled in from a large set of possible values, a diverse set of DAGs are
+generated with various characteristics. Experiments based on diverse set of DAGs
+prevent biasing towards a particular partitioning algorithm.
 
 % \subsection{Heterogeneous Bin Packing}
 
