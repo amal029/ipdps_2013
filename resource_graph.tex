@@ -212,10 +212,9 @@ Doing it in this top down manner has two important consequences.
   time complexity of $O(|E_t| \times log_2|V_r|)$~\cite{gkar98}. Our
   algorithm gives a worst case complexity of \mbox{$log_2|V_r| \times
     O(|E_t| \times log_2 |V_r|)$} when using the multi-level K-way
-  partitioning. But, in the average case the term $log_2|V_r|$ is
-  inconsequential, since we ask for a balanced 2-way partition at all
-  levels. Hence, the average case complexity is equal to the K-way
-  partitioning algorithm.
+  partitioning. But, in the average case we ask for a balanced 2-way
+  partition at all levels, which results in a complexity of $log_2 |V_r|
+  \times O (E_t)$ in the average case.
 
 \item \textit{Refined mapping:} By dividing the mapping on to several
   levels we can achieve much better load balancing by considering only

@@ -312,7 +312,7 @@ David Gregg\IEEEauthorrefmark{2}}
 Trinity College Dublin, Dublin 2, Ireland\\
 Email: muralis@scss.tcd.ie, vasudeva@scss.tcd.ie, David.Gregg.cs.tcd.ie }
 \IEEEauthorblockA{\IEEEauthorrefmark{4}IBM Research - Ireland\\
-Email: avinmali@ie.ibm.com, drshoukatali@gmail.com}
+Email: avinmali@ie.ibm.com}
 }
 
 
@@ -439,7 +439,7 @@ telecommunications, etc.
 In the streaming model statements (also called filters/actors/tasks or
 kernels) execute iteratively, processing the incoming tokens of
 data. Consider the Jacobi example and its filter graph in
-Figure~\ref{fig:1}, the Jacobi algorithm is used in fluid dynamics and
+Figure~\ref{fig:1}. The Jacobi algorithm is used in fluid dynamics and
 heat transfer problems. We consider every statement (marked $1$ to $4$)
 in this example to be a filter that can be run in a software
 pipelined~\cite{audu09} manner on a given architecture. An
@@ -506,15 +506,14 @@ $T^i_1$ represents the vector requirements.
 
 The communication edges are decorated with \mbox{$e^c \in E_t$}, which
 denotes the data the filter requires for processing.
-%~ $(t_i,t_j) \in E_t$
-%~ between data-stores (statements without the constraints
-%~ in Figure~\ref{fig:1}) and the execution statements
-%~ represent the amount of data that needs to be transferred from the
-%~ store and its utilization at the statement level, denoted by $e^c,
-%~ \forall E_t \in (V_t \times V_t)$.
-The filter graphs are generated directly from the program by our compiler. More
-information about the generation of the filter graphs is provided later in
-Section~\ref{sec:build-appl-graph}.
+% ~ $(t_i,t_j) \in E_t$ ~ between data-stores (statements without the
+% constraints ~ in Figure~\ref{fig:1}) and the execution statements ~
+% represent the amount of data that needs to be transferred from the ~
+% store and its utilization at the statement level, denoted by $e^c, ~
+% \forall E_t \in (V_t \times V_t)$.  The filter graphs are generated
+% directly from the program by our compiler. More information about the
+% generation of the filter graphs is provided later in
+% Section~\ref{sec:build-appl-graph}.
 
 % From the perspective of the running example, constraint 0 of the first
 % statement ($3$), represented by $T^{1}_{c0}$ denotes ----Avinash add
@@ -532,12 +531,12 @@ capabilities, represented by $R^{i}_{j}$ where $j=0...n_r$.
 In our formulation $n_t = n_r$.
 %~ Please note that for some resource graph shown in Figure~\ref{fig:res}
 %~ (level 0), which has $|V_r|$ nodes and 2 capabilities.
-For each node, capability : $R^i_0$ represents the frequency of the PE or how many
-scalar instructions the PE can perform in one second (the
-\textit{Million Instructions Per Second} (MIPS) count). Capability : $R^i_1$
-denotes the maximum number of parallel vector operations it
-can perform (the vector length). Each edge $e \in E_r$ has a weight
-which represents the bandwidth between two PEs $r_i$ and $r_j$ which is
+For each node, capability: $R^i_0$ represents the frequency of the PE or
+how many scalar instructions the PE can perform in one second (the
+\textit{Million Instructions Per Second} (MIPS) count). Capability :
+$R^i_1$ denotes the maximum number of parallel vector operations it can
+perform (the vector length). Each edge $e \in E_r$ has a weight which
+represents the bandwidth between two PEs $r_i$ and $r_j$ which is
 denoted by $E^c$.
 
 % While generating the resource graph, we might have to contract edges(becaus we
@@ -549,7 +548,7 @@ denoted by $E^c$.
 % generation about the generation of the resource graphs is provided later in
 % Section~\ref{sec:gener-reso-graph}.
 
-The problem at hand is to effectively map the said filter graph $G_t$ onto
+The problem at hand is to effectively map the filter graph $G_t$ onto
 given resource graph $G_r$. This problem is known to be
 NP-Hard~\cite{vsar89}. % This immediately implicates that we have to look
 % for heuristic solutions.
@@ -657,12 +656,13 @@ elements~\cite{aale01,kpur99,enys98}.  However, we have found that such
 heuristic partitioning approaches do not work well for heterogeneous
 architectures. Instead we propose a novel approach where the
 architecture is hierarchically partitioned into sub-clusters.  Each
-sub-cluster at the same level of the hierarchy has approximately the
-same computing capability and has relatively local communication.  This
-allows us to use existing approaches that work well for the homogeneous
-case to partition the graph across the sub-clusters at each level of the
-hierarchy. We show that this is an effective approach if the
-sub-clusters are well balanced at each level of the hierarchy.
+sub-cluster at the same level of the architecture hierarchy has
+approximately the same computing capability and has relatively local
+communication. This allows us to use existing approaches that work well
+for the homogeneous case to partition \textit{heterogeneous}
+architectures across the sub-clusters at each level of the hierarchy. We
+show that this is an effective approach if the sub-clusters are well
+balanced at each level of the hierarchy.
 
 
 In this section we describe our heuristic algorithm. There are two

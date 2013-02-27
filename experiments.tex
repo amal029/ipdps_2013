@@ -27,8 +27,8 @@ used for implementing our algorithm. Herein, we describe how we used
 Metis to implement the graph partitioning.
 
 The resource graph is represented in the Metis graph format. We
-represent the PEs capabilities as constraints of the nodes and the
-link's bandwidths as communication weight on the edges. We then
+represent the PEs' capabilities as constraints of the nodes and the
+links' bandwidths as communication weight on the edges. We then
 construct our clustered structure (Figure~\ref{fig:res}) by asking for a
 2-way partition at each level of the $log_2|V_r|$ height. Metis
 partitions the graph by load balancing the constraints and performing a
@@ -87,12 +87,12 @@ The experimental set up consists of the following.
 \begin{enumerate}
 
 \item An interconnection network with \numtplgynodes
-  nodes. \numtplgynodes vary from 64 to 4096 PEs. A node could be just a
-  multi-core CPU or a multi-core CPU with a GPU attached to it.
+  nodes. \numtplgynodes vary from 64 to 4096 PEs. A node can be just a
+  multi-core CPU or a multi-core CPU with an attached GPU.
 
 \item A set of \gpunum GPUs where \gpunum is at most \numtplgynodes. The
-  GPUs are connected in the network at pre-determined locations, chosen
-  randomly in the normal distribution of 25\% to 75\% of $|V_r|$.
+  GPUs are connected in the network at locations, chosen randomly in the
+  normal distribution of 25\% to 75\% of $|V_r|$.
 
 \item A set $\veclenset = \{G_1, G_2, G_3, ... G_{|\veclenset|}\}$ where
   $G_i$ is a power of 2.  Every GPU in this experiment has a vector
@@ -108,7 +108,7 @@ The experimental set up consists of the following.
   $M_i$ is a power of 2.  Every $C_i \in \corenumset$ and GPU in this
   experiment has a MIPS count of $M_i$ where $M_i$ is sampled randomly
   from the set \mipsset. The elements of set \mipsset are chosen from a
-  normal distribution ranging from: 100 to 1000000.
+  normal distribution ranging from: XXX to XXX.
 
 \end{enumerate}
 
