@@ -128,7 +128,7 @@
 
 
 
-%\usepackage[caption=false]{caption}
+\usepackage{caption}
 %\usepackage[font=footnotesize]{subfig}
 % subfig.sty, also written by Steven Douglas Cochran, is the modern
 % replacement for subfigure.sty. However, subfig.sty requires and
@@ -216,6 +216,7 @@
 \newcommand{\mipsset}{\ensuremath{\bm{M}}\xspace}
 \newcommand{\corenumset}{\ensuremath{\bm{C}}\xspace}
 \newcommand{\expt}{\ensuremath{\bm{E}}\xspace}
+\newcommand{\bw}{\ensuremath{\bm{B}}\xspace}
 \newcommand{\ul}{\underline}
 \newcommand{\noname}{The NoNamer\xspace}
 
@@ -231,17 +232,17 @@
 
 \raggedbottom
 
-\addtolength{\floatsep}{-9mm}
-\addtolength{\textfloatsep}{-7mm}
-\addtolength{\intextsep}{-3mm}
-\addtolength{\dbltextfloatsep}{-7mm}
-\addtolength{\dblfloatsep}{-2mm}
-\addtolength{\abovecaptionskip}{-2mm}
-\addtolength{\belowcaptionskip}{-2mm}
+\addtolength{\floatsep}{-8mm}
+\addtolength{\textfloatsep}{-6mm}
+\addtolength{\intextsep}{-2mm}
+\addtolength{\dbltextfloatsep}{-6mm}
+\addtolength{\dblfloatsep}{-1mm}
+\addtolength{\abovecaptionskip}{-1mm}
+\addtolength{\belowcaptionskip}{-1mm}
 
-\addtolength{\abovedisplayskip}{-4mm}
-\addtolength{\belowdisplayskip}{-4mm}
-\addtolength{\arraycolsep}{-2mm}
+\addtolength{\abovedisplayskip}{-3mm}
+\addtolength{\belowdisplayskip}{-3mm}
+\addtolength{\arraycolsep}{-1mm}
 
 \let\oldthebibliography=\thebibliography
 \let\endoldthebibliography=\endthebibliography
@@ -260,8 +261,8 @@
 %
 % paper title
 % can use linebreaks \\ within to get better formatting as desired
-\title{Hetrogeneous Multiconstraint Application Partitioner (HMAP) - \\
-Exploiting parallelism in a hetrogeneous HPC environment}
+\title{Hetrogeneous Multiconstraint Application Partitioner (HMAP)}
+%- \\Exploiting parallelism in a hetrogeneous HPC environment}
 % \title{A framework for design space exploration for HPC architectures}
 
 
@@ -323,20 +324,19 @@ Email: avinmali@ie.ibm.com}
 
 
 \begin{abstract}
-
-  In this article we provide a framework for exploiting parallelism onto
-  heterogeneous HPC architectures. Given an Hetrogeneous HPC cluster with varying
-  compute units, communication constraints and topology, our Hetrogeneous
-  Multiconstraint Application Partitioner (HMAP) framework can be utilized for
-  partitioning applications exhibiting task and data parallelism resulting in
-  increased throughput. The challenge lies in the fact that heterogeneous
-  compute clusters consist of processing elements exhibiting different compute
-  speeds, vector lengths, and communication bandwidths, which all need to be
-  considered when partitioning the application and associated data. We
-  tackle this problem using a staged graph partitioning framework. HMAP
-  framework finishes within seconds even for architectures with 100's of
-  processing elements, which makes our algorithm suitable for exploring
-  parallelism potential off line or on line.
+  In this article we propose a novel framework -- \textit{Hetrogeneous
+  Multiconstraint Application Partitioner} (HMAP) for exploiting parallelism on
+  heterogeneous \textit{High Performance Computing} (HPC) architectures. Given
+  an hetrogeneous HPC cluster with varying compute units, communication
+  constraints and topology, HMAP framework can be utilized for partitioning
+  applications exhibiting task and data parallelism resulting in increased
+  performance. The challenge lies in the fact that heterogeneous compute
+  clusters consist of processing elements exhibiting different compute speeds,
+  vector lengths, and communication bandwidths, which all need to be considered
+  when partitioning the application and associated data. We tackle this problem
+  using a staged graph partitioning approach. HMAP framework finishes within
+  seconds even for architectures with 100's of processing elements, which makes
+  our algorithm suitable for exploring parallelism potential.
 
   % In this paper we solve the problem of partitioning applications with a
   % mixture of both: filter-parallel and data-parallel parts onto
@@ -634,7 +634,7 @@ Equation~(\ref{eq:2}).
   figure. Dashed arrows represent communication between data stores and
   execution statements. Solid arrows represent dependence edges.}
 
-\section{Our framework}
+\section{HMAP framework}
 \label{sec:our-framework}
 
 A common approach to solving the homogeneous case is to
@@ -651,7 +651,7 @@ architectures across the sub-clusters at each level of the hierarchy. We
 show that this is an effective approach if the sub-clusters are well
 balanced at each level of the hierarchy.
 
-In this section we describe our heuristic algorithm. There are two
+In this section we describe our heuristic framework HMAP. There are two
 important concepts that need description. First, we describe how the
 topology clusters are formed from the resource graphs accounting for
 communication and heterogeneity of the topology. Secondly, given a

@@ -110,7 +110,7 @@ The experimental set up consists of the following.
   $G_i$ is a power of 2.  Every GPU in this experiment has a vector
   length of $G_i$ where $G_i$ is sampled randomly from the set
   \veclenset. The elements of set \veclenset are chosen from a normal
-  distribution ranging from: 1024 to 16284.
+  distribution ranging from: 10000 to 100000.
 
 \item A set $\corenumset = \{C_1, C_2, C_3, ... C_{|\corenumset|}\}$
   where $C_i$ is a power of 2.  Every CPU in this experiment has $C_i$
@@ -120,12 +120,16 @@ The experimental set up consists of the following.
   $M_i$ is a power of 2.  Every $C_i \in \corenumset$ and GPU in this
   experiment has a MIPS count of $M_i$ where $M_i$ is sampled randomly
   from the set \mipsset. The elements of set \mipsset are chosen from a
-  normal distribution ranging from: XXX to XXX.
+  normal distribution ranging from: 1000 to 100000.
+
+\item A set $\bw = \{B_1, B_2, B_3, ... B_{|B|}\}$ where $B_i$ is a power of 2.
+  Every CPU/GPU in this experiment has a bandwidth of $B_i$ in MB/s where $B_i$
+  is sampled randomly from a normal distribution ranging from: 100 to 100000
 
 \end{enumerate}
 
-For given values of \numtplgynodes, \gpunum, \veclenset, \corenumset,
-and \mipsset and a given application, let the $k$-th \ul{trial} be
+For given values of \numtplgynodes, \gpunum, \veclenset, \corenumset, \mipsset
+and \bw and a given application, let the $k$-th \ul{trial} be
 defined as one execution of the following sequence of steps.
 
 \begin{itemize}
@@ -147,7 +151,7 @@ defined as one execution of the following sequence of steps.
 \end{itemize}
 
 An experiment, \expt(\numtplgynodes, \gpunum, \veclenset, \corenumset
-\mipsset), consists of conducting enough of the above trials so that
+\mipsset, \bw), consists of conducting enough of the above trials so that
 width of the 95\% confidence interval on the average value of
 $Latency^{\zeta_\mathcal{M}}$ is less than 10\% of the average
 value. This results in a variable number of trials with different
@@ -194,17 +198,17 @@ For our experiments we generated random graphs by choosing values for the input
 parameters from the following sets :
 
 \begin{itemize}
-\item $\chi_{n} = \{256, 1024, 16384\}$
+\item $\chi_{n} = \{128, 256, 512, 1024, 4096, 8192, 16384\}$
 \item $\chi_{i} = \{1\}$
 \item $\chi_{o} = \{2, 4, 8\}$
-\item $\chi_{c} = \{0.0001, 0.001, 0.009\}$
+\item $\chi_{c} = \{0.0001, 0.001, 0.01, 0.1, 1\}$
 \item $\chi_{\alpha} = \{0.1, 1.0, 10.0\}$
 \item $\chi_{\beta} = \{5, 25, 50, 75, 95\}$
-\item $\chi_{\gamma} = \{25, 50, 75\}$
+\item $\chi_{\gamma} = \{5, 25, 50, 75, 95\}$
 \end{itemize}
 
-We generated one graph per combination for a total of [servesh fill this number
-in]. Since the random graph generator has a variety of inputs and these inputs
+We generated one graph per combination for a total of 7875 application graphs.
+Since the random graph generator has a variety of inputs and these inputs
 are filled in from a large set of possible values, a diverse set of DAGs are
 generated with various characteristics. Experiments based on diverse set of DAGs
 prevent biasing towards a particular partitioning algorithm.
@@ -322,33 +326,39 @@ prevent biasing towards a particular partitioning algorithm.
 \subsection{Experimental Results}
 \label{sec:results-1}
 
-\begin{figure*}[t!]
+\begin{figure*}[ht!]
   \centering
-  \subfigure[CPU]{
-    \includegraphics[angle=0, scale=0.41]{./figures/cpu}
+  \subfigure[\centering CPU intensive graphs
+  ($\beta-{5,25,50}$) ]{
+    \includegraphics[angle=0, scale=0.44]{./figures/cpu}
     \label{fig:cpu}
   }
-  \subfigure[GPU]{
-    \includegraphics[angle=0, scale=0.41]{./figures/gpu}
+  \subfigure[\centering GPU intensive graphs ($\beta-{50,75,95}$)]{
+    \includegraphics[angle=0, scale=0.44]{./figures/gpu}
     \label{fig:gpu}
   }
-  \subfigure[Serial]{
-    \includegraphics[angle=0, scale=0.41]{./figures/serial}
+  \subfigure[\centering Serial applications
+  ($\alpha-{1,0.1}$ $\beta-{50}$)]{
+    \includegraphics[angle=0, scale=0.44]{./figures/serial}
     \label{fig:serial}
   }
-  \subfigure[Parallel]{
-    \includegraphics[angle=0, scale=0.41]{./figures/parallel}
+  \subfigure[\centering Task parallel applications
+  ($\alpha-{10,1}$ $\beta-{50}$)]{
+    \includegraphics[angle=0, scale=0.44]{./figures/parallel}
     \label{fig:parallel}
   }
-  \subfigure[Communication Intensive Applications]{
-    \includegraphics[angle=0, scale=0.41]{./figures/comm}
+  \subfigure[\centering Comm. intensive graphs
+  ($\alpha-1$ $\beta-50$ $c-1$)]{
+    \includegraphics[angle=0, scale=0.44]{./figures/comm}
     \label{fig:comm}
   }
   \subfigure[Overall]{
-    \includegraphics[angle=0, scale=0.41]{./figures/overall}
+    \includegraphics[angle=0, scale=0.44]{./figures/overall}
     \label{fig:overall}
   }
-  \caption{Experimental Results on random application graphs}
+  \caption{\centering Experimental results based on random application
+  graphs.\\ Each graph shows the latency for a given architecture and
+  application graphs that belong to a certain criteria}
   \label{fig:exp-res}
 \end{figure*}
 
@@ -356,6 +366,38 @@ The experimental set-up consists of a dual socket system consisting of
 Intel Xeon E5620 CPU running at 2.4Ghz with 24GB DDR3 RAM. The system
 is running Linux kernel ver 3.0.40-1. Our framework was compiled
 using gcc version 4.7.1 with '-O3' optimization flag.
+
+A total of 55120 experiments were performed on each case individually.
+The results comparing K-way partitioning using metis and HMAP framework
+are shown in \ref{fig:exp-res}. The results are divided into a total of 5
+graphs each representing a common characteristic of the application and
+finally \re{fig:overall} shows the average application latency based on all
+the input graphs. Overall it just took us XXX time over metis for the biggest
+architecture of 4096 nodes to determine a partition.
+
+Figure \ref{fig:cpu} and \ref{fig:gpu} represents application graphs that
+consists of proportionally larger CPU and GPU intensive filters respectively.
+On all archtitectures we perform consistently better and on an average we
+achieve better results in the case of GPU intesive applications, whereas metis
+which uses k-way partitioning alone provides almost similar latencies.
+
+In the case of figure \ref{fig:serial} and \ref{fig:parallel} which represents
+applications that are tall consisting of more filters that can only be
+executed serially and fat consisting of more task parallel filters, the trend
+continues and we are able to provide better latencies in the case of larger
+archtiectures when compared with metis alone.
+
+The figure \ref{fig:comm} which shows the set of application graphs which are
+highly communication intensive determined by the CCR $c=1$, we perform
+significantly better in comparison to metis for larger archtiectures. This is
+due to our clustering approach that ensures topology nodes that communicate
+with high bandwidths are combined together at each level.
+
+Finally, in figure \ref{fig:overall} we see that we are able to scale better
+when compared with metis. In smaller architecture sizes metis is able to
+produce good mapping, whereas on larger architecture sizes we are able to
+perform over several magnitudes better in comparison.
+
 
 % The results for the experiments with the above experimental set-up
 % comparing our approach with the aforementioned heterogeneous bin packing
