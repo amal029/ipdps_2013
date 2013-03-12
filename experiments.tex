@@ -40,14 +40,14 @@ the metric \mbox{`tp-weight'}. We calculate the ratios between the
 capabilities of different partitions and represent them as this metric
 in order to load balance on to the available partitions.
 
-\subsection{The Simulate annealing approach}
-\label{sec:simul-anne-appr}
-
-We compare our heuristic framework with a well establish meta-heuristic
-called \textit{Simulated Annealing} (SA) as described in~\cite{horsi06}
-for resource allocation. We had to modify the SA approach described
-in~\cite{horsi06} to include SIMD parallelism. This was done by simply
-modifying the objective function to the one described in~(\ref{eq:2}).
+%~ \subsection{The Simulate annealing approach}
+%~ \label{sec:simul-anne-appr}
+%~
+%~ We compare our heuristic framework with a well establish meta-heuristic
+%~ called \textit{Simulated Annealing} (SA) as described in~\cite{horsi06}
+%~ for resource allocation. We had to modify the SA approach described
+%~ in~\cite{horsi06} to include SIMD parallelism. This was done by simply
+%~ modifying the objective function to the one described in~(\ref{eq:2}).
 
 % \subsection{Random Graph Generator}
 % \label{sec:rand-graph-generator}
@@ -321,6 +321,36 @@ prevent biasing towards a particular partitioning algorithm.
 
 \subsection{Experimental Results}
 \label{sec:results-1}
+
+\begin{figure*}[t!]
+  \centering
+  \subfigure[CPU]{
+    \includegraphics[angle=0, scale=0.41]{./figures/cpu}
+    \label{fig:cpu}
+  }
+  \subfigure[GPU]{
+    \includegraphics[angle=0, scale=0.41]{./figures/gpu}
+    \label{fig:gpu}
+  }
+  \subfigure[Serial]{
+    \includegraphics[angle=0, scale=0.41]{./figures/serial}
+    \label{fig:serial}
+  }
+  \subfigure[Parallel]{
+    \includegraphics[angle=0, scale=0.41]{./figures/parallel}
+    \label{fig:parallel}
+  }
+  \subfigure[Communication Intensive Applications]{
+    \includegraphics[angle=0, scale=0.41]{./figures/comm}
+    \label{fig:comm}
+  }
+  \subfigure[Overall]{
+    \includegraphics[angle=0, scale=0.41]{./figures/overall}
+    \label{fig:overall}
+  }
+  \caption{Experimental Results on random application graphs}
+  \label{fig:exp-res}
+\end{figure*}
 
 The experimental set-up consists of a dual socket system consisting of
 Intel Xeon E5620 CPU running at 2.4Ghz with 24GB DDR3 RAM. The system

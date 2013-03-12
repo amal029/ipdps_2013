@@ -260,8 +260,8 @@
 %
 % paper title
 % can use linebreaks \\ within to get better formatting as desired
-\title{Exploiting task and data parallelism on heterogeneous
-  architectures in a HPC environment}
+\title{Hetrogeneous Multiconstraint Application Partitioner (HMAP) - \\
+Exploiting parallelism in a hetrogeneous HPC environment}
 % \title{A framework for design space exploration for HPC architectures}
 
 
@@ -315,14 +315,8 @@ Email: muralis@scss.tcd.ie, vasudeva@scss.tcd.ie, David.Gregg.cs.tcd.ie }
 Email: avinmali@ie.ibm.com}
 }
 
-
-
-
 % use for special paper notices
 %\IEEEspecialpapernotice{(Invited Paper)}
-
-
-
 
 % make the title area
 \maketitle
@@ -331,25 +325,18 @@ Email: avinmali@ie.ibm.com}
 \begin{abstract}
 
   In this article we provide a framework for exploiting parallelism onto
-  heterogeneous HPC architectures. Given an HPC cluster with varying
-  compute units, communication constraints and topology, our framework
-  can be utilized for partitioning applications exhibiting task and data
-  parallelism resulting in increased
-  throughput. % Our framework can also
-  % be used by designers at an early design stage to explore the type of
-  % compute units needed and the topology that would be suited for a
-  % given
-  % application, thereby reducing costs and power requirements.
-  The challenge lies in the fact that heterogeneous compute clusters
-  consist of processing elements exhibiting different compute speeds,
-  vector lengths, and communication bandwidths, which all need to be
+  heterogeneous HPC architectures. Given an Hetrogeneous HPC cluster with varying
+  compute units, communication constraints and topology, our Hetrogeneous
+  Multiconstraint Application Partitioner (HMAP) framework can be utilized for
+  partitioning applications exhibiting task and data parallelism resulting in
+  increased throughput. The challenge lies in the fact that heterogeneous
+  compute clusters consist of processing elements exhibiting different compute
+  speeds, vector lengths, and communication bandwidths, which all need to be
   considered when partitioning the application and associated data. We
-  tackle this problem using a staged graph partitioning framework. Our
-  experiments show orders of magnitude speed up for
-  applications. Furthermore our framework finishes within seconds even
-  for architectures with 100's of processing elements, which makes our
-  algorithm suitable for exploring parallelism potential off line or on
-  line.
+  tackle this problem using a staged graph partitioning framework. HMAP
+  framework finishes within seconds even for architectures with 100's of
+  processing elements, which makes our algorithm suitable for exploring
+  parallelism potential off line or on line.
 
   % In this paper we solve the problem of partitioning applications with a
   % mixture of both: filter-parallel and data-parallel parts onto
@@ -664,7 +651,6 @@ architectures across the sub-clusters at each level of the hierarchy. We
 show that this is an effective approach if the sub-clusters are well
 balanced at each level of the hierarchy.
 
-
 In this section we describe our heuristic algorithm. There are two
 important concepts that need description. First, we describe how the
 topology clusters are formed from the resource graphs accounting for
@@ -688,24 +674,23 @@ is performed.
 
 In this paper we have described a novel staged graph based partitioning
 technique to partition and schedule applications onto heterogeneous
-execution architectures. % Our framework can be utilized by designers to
-% quickly gauge the type of underlying architecture that is best suited
-% to run a given application. Moreover,
-Our framework considers both filter and data parallelism, which allows the
-application writers to design and tune their applications to extract
-parallelism. We also consider communication along application and
-underlying architecture edges, which when combined with the filter and
-data parallelism gives a better estimate of the application latency than
-the currently described research literature targeting similar problems.
+execution architectures. HMAP framework considers both filter and data
+parallelism, which allows the application writers to design and tune their
+applications to extract parallelism. We also consider communication along
+application and underlying architecture edges, which when combined with the
+filter and data parallelism gives a better estimate of the application latency
+than the currently described research literature targeting similar problems.
 
 We have tested our framework on a statistical sample of randomly
 generated filter graphs with varying compute, vector, communication
-requirements. Moreover, we compare our technique with the well
-established \textit{Simulated Annealing} (SA) heuristic. Our framework
-outperforms SA substantially on average by XXX times. Finally, being a
-heuristic it can accommodate large resource graphs and filter graphs,
-whereas SA needs to be bounded in time (3 minutes in our case) to obtain
-the results.
+requirements.
+
+%~ Moreover, we compare our technique with the well
+%~ established \textit{Simulated Annealing} (SA) heuristic. Our framework
+%~ outperforms SA substantially on average by XXX times. Finally, being a
+%~ heuristic it can accommodate large resource graphs and filter graphs,
+%~ whereas SA needs to be bounded in time (3 minutes in our case) to obtain
+%~ the results.
 
 % We have tested our framework on a subset of the many high performance
 % computing applications currently in use in the industry against well

@@ -29,9 +29,22 @@ clusters~\cite{ssan05,skum02} do not consider vectorization potential
 available on the compute clusters and only concentrate on partitioning
 task parallel processes.
 
+Random search techniques when combined with a certain objective use random
+choices to guide them through a search space to arrive at a solution. The
+objective is mostly derived from information obtained from previous random
+searches or prior information about the system. Genetic Algorithms~\cite{} are the
+commonly used from this technique and generate reasonably good results but
+this requires significantly more time than heusristic based
+alogirthms~\cite{}. Moreover determining optimal parameters to fine tune these
+random techniques to get good results is a challenge. Parameters that give
+good results for a certain scenario may not be the same for a different one.
+Several other techniques also exist that belong to the same category in
+addition to GA such as simulated Annealing~\cite{} and local search
+methods~\cite{} suffer from the same disadvantages.
 
 
-%%% Local Variables: 
+
+%%% Local Variables:
 %%% mode: latex
 %%% TeX-master: "bare_conf"
-%%% End: 
+%%% End:
