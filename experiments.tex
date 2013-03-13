@@ -106,24 +106,24 @@ The experimental set up consists of the following.
   GPUs are connected in the network at locations, chosen randomly in the
   normal distribution of 25\% to 75\% of $|V_r|$.
 
-\item A set $\veclenset = \{G_1, G_2, G_3, ... G_{|\veclenset|}\}$ where
-  $G_i$ is a power of 2.  Every GPU in this experiment has a vector
+\item A set $\veclenset = \{G_1, G_2, G_3, ... G_{|\veclenset|}\}$
+  Every GPU in this experiment has a vector
   length of $G_i$ where $G_i$ is sampled randomly from the set
   \veclenset. The elements of set \veclenset are chosen from a normal
   distribution ranging from: 10000 to 100000.
 
 \item A set $\corenumset = \{C_1, C_2, C_3, ... C_{|\corenumset|}\}$
-  where $C_i$ is a power of 2.  Every CPU in this experiment has $C_i$
+  Every CPU in this experiment has $C_i$
   cores where $C_i$ is sampled randomly from the set \corenumset.
 
-\item A set $\mipsset = \{M_1, M_2, M_3, ... M_{|\mipsset|}\}$ where
-  $M_i$ is a power of 2.  Every $C_i \in \corenumset$ and GPU in this
+\item A set $\mipsset = \{M_1, M_2, M_3, ... M_{|\mipsset|}\}$
+   Every $C_i \in \corenumset$ and GPU in this
   experiment has a MIPS count of $M_i$ where $M_i$ is sampled randomly
   from the set \mipsset. The elements of set \mipsset are chosen from a
   normal distribution ranging from: 1000 to 100000.
 
-\item A set $\bw = \{B_1, B_2, B_3, ... B_{|B|}\}$ where $B_i$ is a power of 2.
-  Every CPU/GPU in this experiment has a bandwidth of $B_i$ in MB/s where $B_i$
+\item A set $\bw = \{B_1, B_2, B_3, ... B_{|B|}\}$
+  Every $|V_r|$ node in this experiment has a bandwidth of $B_i$ in MB/s where $B_i$
   is sampled randomly from a normal distribution ranging from: 100 to 100000
 
 \end{enumerate}
@@ -372,8 +372,8 @@ The results comparing K-way partitioning using metis and HMAP framework
 are shown in \ref{fig:exp-res}. The results are divided into a total of 5
 graphs each representing a common characteristic of the application and
 finally \re{fig:overall} shows the average application latency based on all
-the input graphs. Overall it just took us XXX time over metis for the biggest
-architecture of 4096 nodes to determine a partition.
+the input graphs. Overall it just took us 50 seconds more than metis for the
+biggest architecture of 4096 nodes to determine a partition.
 
 Figure \ref{fig:cpu} and \ref{fig:gpu} represents application graphs that
 consists of proportionally larger CPU and GPU intensive filters respectively.
