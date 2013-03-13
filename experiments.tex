@@ -199,7 +199,7 @@ parameters from the following sets :
 
 \begin{itemize}
 \item $\chi_{n} = \{128, 256, 512, 1024, 4096, 8192, 16384\}$
-\item $\chi_{i} = \{1\}$
+%\item $\chi_{i} = \{1\}$
 \item $\chi_{o} = \{2, 4, 8\}$
 \item $\chi_{c} = \{0.0001, 0.001, 0.01, 0.1, 1\}$
 \item $\chi_{\alpha} = \{0.1, 1.0, 10.0\}$
@@ -371,7 +371,7 @@ A total of 55120 experiments were performed on each case individually.
 The results comparing K-way partitioning using metis and HMAP framework
 are shown in \ref{fig:exp-res}. The results are divided into a total of 5
 graphs each representing a common characteristic of the application and
-finally \re{fig:overall} shows the average application latency based on all
+finally \ref{fig:overall} shows the average application latency based on all
 the input graphs. Overall it just took us 50 seconds more than metis for the
 biggest architecture of 4096 nodes to determine a partition.
 
@@ -385,13 +385,28 @@ In the case of figure \ref{fig:serial} and \ref{fig:parallel} which represents
 applications that are tall consisting of more filters that can only be
 executed serially and fat consisting of more task parallel filters, the trend
 continues and we are able to provide better latencies in the case of larger
-archtiectures when compared with metis alone.
+archtiectures when compared with metis alone. We attribute this to the
+following, for smaller architectures, the constraints(tp-weights) are enough to
+show the difference between machines to metis. Whereas, when the architecture
+becomes big, the relative difference between two partitions become so small that
+metis is unable to tell them apart. The problem becomes one of unexpressability.
+Our framework alleviates this by asking for a very small number of
+partitions(usually in the range of 2 to 4) at every stage.
 
 The figure \ref{fig:comm} which shows the set of application graphs which are
 highly communication intensive determined by the CCR $c=1$, we perform
 significantly better in comparison to metis for larger archtiectures. This is
 due to our clustering approach that ensures topology nodes that communicate
-with high bandwidths are combined together at each level.
+with high bandwidths are combined together at each level. Also, metis is unaware
+of the communication between nodes in the topology as it only cares about a
+min-cut across partitions. Our framework on the other hand, takes into account
+the communication in the topology and indirectly matches heavy edges from the
+filter graph onto high bandwidth edges in the topology graph.
+
+We also observed that metis performs better than our framework in the case of
+rectangular topologies. We believe this is because rectangular topologies are
+harder to collate into homogenous clusters as there are straddlers in non-square
+architectures.   
 
 Finally, in figure \ref{fig:overall} we see that we are able to scale better
 when compared with metis. In smaller architecture sizes metis is able to
