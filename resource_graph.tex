@@ -50,7 +50,7 @@ communication. The properties of the resource graph are described below:
 % graph partitioning approach.
 The \underline{main idea} behind our partitioning approach is to first
 hierarchically cluster the nodes in the heterogeneous topology, provided
-by the designer, thereby forming fewer contracted resource nodes. The
+by the designer, thereby forming clusters. The
 application is then partitioned in stages (levels) onto the resulting
 hierarchy. The \underline{intuition} behind this approach is two fold:
 
@@ -60,14 +60,14 @@ hierarchy. The \underline{intuition} behind this approach is two fold:
   partitioning an application onto a given architecture is equivalent to
   a heterogeneous K-way partitioning problem. Hierarchically clustering
   a heterogeneous topology such that the resulting hierarchy consists of
-  contracted PEs with equivalent compute capabilities can reduce the
+  clustered PEs with equivalent compute capabilities can reduce the
   heterogeneous K-way partitioning problem to a homogeneous one.
 
 \item \textit{Considering communication links:} The communication can be
   considered into the equation, while building the hierarchical cluster
   using the min-cut technique. Thus, a min-cut load-balancing of the PEs
   in a topology intuitively means: we are clustering together PEs, which
-  have large bandwidth together into a single contracted node, while
+  have large bandwidth together into a single cluster, while
   making an attempt to load balance the two capabilities: MIPS and
   vector lengths.
 
@@ -79,22 +79,22 @@ build the hierarchy are as follows:
 
 \begin{itemize}
 
-\item \textit{Effective computation during contraction:} Given a
+\item \textit{Effective computation during clustering:} Given a
   topology graph with $|V_r|$ resources, we cluster the PEs in levels,
   whereby the height of the cluster is $log_2|V_r|$. For example,
-  consider the PEs at level 0 in Figure~\ref{fig:res}. Contraction from
+  consider the PEs at level 0 in Figure~\ref{fig:res}. Clustering from
   level 0 to level 1 results in 4 PEs at level 1, where the two
-  capabilities, $R^k_0,\ R^k_1$ for each contracted node $k = \{i, j\},
+  capabilities, $R^k_0,\ R^k_1$ for each cluster $k = \{i, j\},
   \exists i \in V_r \wedge \exists j \in V_r$ is computed as: $R^k_0 =
   R^i_0 + R^j_0$, and $R^k_1 = R^k_1 + R^j_1$. Without loss of
   generality we assume this for any $k = \{i,j,..,n\}, \forall n \in
   V_r$. This process is continued until we reach the top-level with just
-  1 contracted node. We end up with a load-balanced hierarchy, with each
+  1 cluster. We end up with a load-balanced hierarchy, with each
   level showing a larger amount of homogeneity, and a smaller number of
-  contracted PEs. The reason for a level based contraction, instead of
-  contracting all nodes into a single 2 node partition, is that when
+  clustered PEs. The reason for a level based clustering, instead of
+  clustering all nodes into a single 2 node partition, is that when
   partitioning the application on the resulting top-down cluster, we
-  have fine grained details within each of the contracted node.
+  have fine grained details within each of the cluster.
 
   % \item Firstly, we form virtual representations of the resource graph
   %   by clustering the nodes. These virtual nodes are formed by min
@@ -154,20 +154,20 @@ build the hierarchy are as follows:
   For the topology, at level 0, in Figure~\ref{fig:res}, we first
   calculate the best possible paths between every pair of nodes
   \mbox{$(i,j) \in (V_r \times V_r)$}. Now let us consider the example
-  of the contracted nodes \texttt{B1} and \texttt{C1}. Node \texttt{B1}
-  is a contraction of the set of children nodes $\{3, 8, 6\}$ and
-  \texttt{C1} is the contraction of the node set $\{2, 1\}$. Being an
+  of the clustered nodes \texttt{B1} and \texttt{C1}. Node \texttt{B1}
+  is a cluster of the set of children nodes $\{3, 8, 6\}$ and
+  \texttt{C1} is the cluster of the node set $\{2, 1\}$. Being an
   undirected graph with loss of generality we can consider \texttt{B1}
   to be the source and \texttt{C1} to be the destination. Hence, the
   worst path, in terms of latency of data-transfer, following the
   all-pair Floyd-Warshall algorithm, between nodes $3$ and $2$ within
-  the contracted nodes is given by the maximum latency path amongst the
+  the clustered nodes is given by the maximum latency path amongst the
   memoized best edges: $max((3,2),\ (8,2),\ (6,2))$. Similar computation
-  is carried out for all link pairs in the contracted node with $1$ as
+  is carried out for all link pairs in the clustered node with $1$ as
   the destination node to find the minimum latency path. Finally, the
   reciprocal of these two latencies and its addition gives us the
   effective bandwidth between the two clusters. This effective
-  bandwidth is the overall bottleneck between the two contracted nodes.
+  bandwidth is the overall bottleneck between the two clustered nodes.
 
   % The communication bandwidth between the clustered nodes is determined
   % by,\\ ${ \sum ( \min for same destn ( \max bw R^i, R^j ) ) ) }$\\ The
@@ -219,9 +219,9 @@ two (K=2) partitions considering two equally weighted compute nodes at
 level 2. Once a partition is obtained for this level, we move onto the
 next level (level 1), whereby all the filter graph nodes allocated onto
 node \texttt{A2} are further partitioned onto the nodes \texttt{A1} and
-\texttt{C1} (again K=2), which are coupled into the contracted node
-\texttt{A2}. This process is continued recursively for all contracted
-nodes until the final level (level 0). During each partition we make
+\texttt{C1} (again K=2), which are coupled into the cluster
+\texttt{A2}. This process is continued recursively for all clusters until the
+final level (level 0). During each partition we make
 sure that the filter node requirements are closely matched to the resource
 node capabilities.
 
