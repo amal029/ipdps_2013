@@ -16,14 +16,13 @@ communication. The properties of the resource graph are described below:
 \item \textbf{Compute nodes:} The compute nodes (PEs) are assumed to
   belong under two categories of processing units, mainly CPUs and
   GPUs. Following the current trend, the CPUs have a larger MIPS
-  count. The MIPS capacity of a PE is denoted by the first decoration
+  count. The MIPS capacity of a PE is denoted by the first constraint
   $R^i_0, \forall i \in V_r$. The GPU nodes have a lower MIPS count, but
-  have a large resident vector length, denoted by the second decoration
+  have a large resident vector length, denoted by the second constraint
   $R^i_1, \forall i \in V_r$. For example, the fifth PE (\texttt{E0}) at
   level 0 is a CPU, since it has a small vector count and a large MIPS
   count, the first PE (\texttt{A0}) on the other hand is a GPU, since
   the capabilities are reversed.
-
 
   % The scalar instructions of a Processing Element (\textbf{PE}) that
   % represents a CPU is much higher that that of a GPU. At the same time
@@ -36,7 +35,7 @@ communication. The properties of the resource graph are described below:
   topology the PEs are connected in a grid with individual communication
   links between them. The bandwidth of these links is non uniform. The
   different bandwidths on the communication links is represented by the
-  decoration $E^C$. Our framework can handle any kind of topology, the
+  constraint $E^C$. Our framework can handle any kind of topology, the
   2D mesh shown in Figure~\ref{fig:res}, is just an example topology.
 
 \end{itemize}
@@ -109,16 +108,48 @@ build the hierarchy are as follows:
   %   levels, where the $ Number\ of\ levels = log_2 ( Number\ of\ Nodes
   %   )$.
 
-\item \textit{Effective communication during contraction:} It is
-  essential that we handle communication correctly while contracting
-  nodes. There are a number of paths that communication between two
-  nodes might follow. The \underline{effective bandwidth} between any
-  two contracted nodes depends upon the route in the topology graph
-  between these contracted nodes. We use the all-pair
-  Floyd-Warshall~\cite{sski08} algorithm to calculate the shortest path,
-  in terms of latency of data-transfer, for every communication link
-  in the topology. Once the nodes are contracted we use the bottleneck
-  amongst these possible links as our effective bandwidth.
+\item \textit{Effective communication during clustering:}
+  When clustering nodes the effective communication between two such clusters is
+  hard to determine. This is because the clustering itself is a virtual
+  representation of the actual nodes and between any two nodes across different
+  clusters there might be multiple unique paths. Choosing a suitable path is a routing
+  problem and its beyond the scope of this paper.
+
+  Instead we assume that the link with the least bandwidth would act as the
+  bottleneck in the worst case scenario. These unique links are determined
+  for all the nodes in the cluster. Then to get the \textit{effective
+  bandwidth} between these clusters we aggregate these bandiwdths.
+  The various steps in which this is calculated is explained below:
+
+  \begin{enumerate}
+
+  \item We use the all-pair Floyd-Warshall~\cite{sski08} algorithm to calculate
+  the shortest path, in terms of latency of data-transfer, for every
+  communication link in the topology. From this we calculate the bandwidth of
+  these links by inverting its latency. This creates a list which contains all
+  of the best case bandwidth between any two nodes.
+
+  \item For any two clusters, we assume a source node in one cluster and
+  determine the paths to all the nodes across the cluster. From this we choose
+  the link with the least bandwidth.
+
+  \item Then we repeat the step above for the other nodes and end up with the
+  paths which would act as a bottleneck for any given unique source and
+  destination pair.
+
+  \item On aggregating the bandiwdths of all these links we end up with the
+  effective bandiwdth between the two clusters.
+
+  \end{enumerate}
+
+  %~ There are a number of paths that communication between two
+  %~ nodes might follow. The \underline{effective bandwidth} between any
+  %~ two nodes in different cluster depends upon the route in the topology graph
+  %~ between these contracted nodes.
+%~
+%~
+   %~ Once the nodes are contracted we use the bottleneck
+  %~ amongst these possible links as our effective bandwidth.
 
   For the topology, at level 0, in Figure~\ref{fig:res}, we first
   calculate the best possible paths between every pair of nodes
@@ -134,8 +165,8 @@ build the hierarchy are as follows:
   memoized best edges: $max((3,2),\ (8,2),\ (6,2))$. Similar computation
   is carried out for all link pairs in the contracted node with $1$ as
   the destination node to find the minimum latency path. Finally, the
-  addition of these two latencies and its reciprocal gives us the
-  effective bandwidth between the two contracted nodes. This effective
+  reciprocal of these two latencies and its addition gives us the
+  effective bandwidth between the two clusters. This effective
   bandwidth is the overall bottleneck between the two contracted nodes.
 
   % The communication bandwidth between the clustered nodes is determined
