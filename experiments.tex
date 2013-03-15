@@ -328,26 +328,27 @@ prevent biasing towards a particular partitioning algorithm.
 
 \begin{figure*}[ht!]
   \centering
-  \subfigure[\centering CPU intensive graphs
-  ($\beta-{5,25,50}$) ]{
+  \subfigure[CPU intensive graphs
+    ($\beta-5,25,50$) ]
+  {
     \includegraphics[angle=0, scale=0.44]{./figures/cpu}
     \label{fig:cpu}
   }
-  \subfigure[\centering GPU intensive graphs ($\beta-{50,75,95}$)]{
+  \subfigure[GPU intensive graphs ($\beta-50,75,95$)]{
     \includegraphics[angle=0, scale=0.44]{./figures/gpu}
     \label{fig:gpu}
   }
-  \subfigure[\centering Serial applications
-  ($\alpha-{1,0.1}$ $\beta-{50}$)]{
+  \subfigure[Serial applications
+  ($\alpha-1,0.1$ $\beta-50$)]{
     \includegraphics[angle=0, scale=0.44]{./figures/serial}
     \label{fig:serial}
   }
-  \subfigure[\centering Task parallel applications
-  ($\alpha-{10,1}$ $\beta-{50}$)]{
+  \subfigure[Task parallel applications
+  ($\alpha-10,1$ $\beta-50$)]{
     \includegraphics[angle=0, scale=0.44]{./figures/parallel}
     \label{fig:parallel}
   }
-  \subfigure[\centering Comm. intensive graphs
+  \subfigure[Comm. intensive graphs
   ($\alpha-1$ $\beta-50$ $c-1$)]{
     \includegraphics[angle=0, scale=0.44]{./figures/comm}
     \label{fig:comm}
@@ -356,7 +357,7 @@ prevent biasing towards a particular partitioning algorithm.
     \includegraphics[angle=0, scale=0.44]{./figures/overall}
     \label{fig:overall}
   }
-  \caption{\centering Experimental results based on random application
+  \caption{Experimental results based on random application
   graphs.\\ Each graph shows the latency for a given architecture and
   application graphs that belong to a certain criteria}
   \label{fig:exp-res}
@@ -406,7 +407,7 @@ filter graph onto high bandwidth edges in the topology graph.
 We also observed that metis performs better than our framework in the case of
 rectangular topologies. We believe this is because rectangular topologies are
 harder to collate into homogenous clusters as there are straddlers in non-square
-architectures.   
+architectures.
 
 Finally, in figure \ref{fig:overall} we see that we are able to scale better
 when compared with metis. In smaller architecture sizes metis is able to

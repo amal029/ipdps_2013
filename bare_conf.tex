@@ -255,6 +255,8 @@
   \end{oldthebibliography}%
 }
 
+\captionsetup{justification=centering}
+
 %squeeze
 
 \begin{document}
@@ -418,14 +420,7 @@ notations used.
 \subsection{Execution model}
 \label{sec:execution-model}
 
-In this paper we consider the streaming~\cite{jbuck94} model of
-computation. Streaming is a popular model for programs such as image and
-signal processing, financial applications, networking,
-telecommunications, etc.
-
-In the streaming model statements (also called filters/actors/tasks or
-kernels) execute iteratively, processing the incoming tokens of
-data. Consider the Jacobi example and its filter graph in
+Consider the Jacobi example and its filter graph in
 Figure~\ref{fig:1}. The Jacobi algorithm is used in fluid dynamics and
 heat transfer problems. We consider every statement (marked $1$ to $4$)
 in this example to be a filter that can be run in a software

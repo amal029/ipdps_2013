@@ -1,10 +1,9 @@
 \section{Introduction}
 \label{sec:introduction}
 
-High Performance Computing (HPC) clusters increasingly consist of large numbers
-of heterogeneous
-processing elements such as CPUs, graphics processing units (GPUs),
-field programmable gate arrays (FPGAs), low-power processors intended
+High performance computing (HPC) clusters increasingly consist of large numbers
+of heterogeneous processing elements such as CPUs, graphics processing units
+(GPUs), field programmable gate arrays (FPGAs), low-power processors intended
 for digital signal processing (DSP), etc. By combining heterogeneous
 processing units it may be possible to divide the work so that different
 types of computation in the application are run on different types of
@@ -15,10 +14,15 @@ dozens or even hundreds of times faster on a GPU than on a CPU that has
 similar cost and power consumption. On the other hand, computations with
 less data parallelism and more complex control flow may run faster on
 CPUs. Matching the type of computation to the processor can yield
-significant benefits.
+significant benefits. Although the potential of heterogeneous computing is
+great, exploiting that potential is more difficult.
 
-Although the potential of heterogeneous computing is great, exploiting
-that potential is more difficult. Given a parallel application, it is
+In this paper we consider the streaming~\cite{jbuck94} model of
+computation. Streaming is a popular model for programs such as image and
+signal processing, financial applications, networking,
+telecommunications, etc. In the streaming model statements (also called
+filters/actors/tasks or kernels) execute iteratively, processing the incoming
+tokens of data. Given a parallel application, it is
 difficult to map the available parallelism onto the hardware. For
 example, how does one decide which parallel filters should run on which
 type of execution unit? Given a system with dozens or hundreds of CPUs,
