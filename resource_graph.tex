@@ -18,7 +18,7 @@ communication. The properties of the resource graph are described below:
   GPUs. Following the current trend, the CPUs have a larger MIPS
   count. The MIPS capacity of a PE is denoted by the first constraint
   $R^i_0, \forall i \in V_r$. The GPU nodes have a lower MIPS count, but
-  have a large resident vector length, denoted by the second constraint
+  have a large vector length, denoted by the second constraint
   $R^i_1, \forall i \in V_r$. For example, the fifth PE (\texttt{E0}) at
   level 0 is a CPU, since it has a small vector count and a large MIPS
   count, the first PE (\texttt{A0}) on the other hand is a GPU, since
@@ -49,7 +49,7 @@ communication. The properties of the resource graph are described below:
 % mapped on to the resource graph. In our approach we take a staged
 % graph partitioning approach.
 The \underline{main idea} behind our partitioning approach is to first
-hierarchically cluster the nodes in the heterogeneous topology, provided
+hierarchically cluster the nodes in the heterogeneous architecture provided
 by the designer, thereby forming clusters. The
 application is then partitioned in stages (levels) onto the resulting
 hierarchy. The \underline{intuition} behind this approach is two fold:
@@ -60,7 +60,7 @@ hierarchy. The \underline{intuition} behind this approach is two fold:
   partitioning an application onto a given architecture is equivalent to
   a heterogeneous K-way partitioning problem. Hierarchically clustering
   a heterogeneous topology such that the resulting hierarchy consists of
-  clustered PEs with equivalent compute capabilities can reduce the
+  clustered PEs with balanced compute capabilities can reduce the
   heterogeneous K-way partitioning problem to a homogeneous one.
 
 \item \textit{Considering communication links:} The communication can be
@@ -111,12 +111,12 @@ build the hierarchy are as follows:
 \item \textit{Effective communication during clustering:}
   When clustering nodes the effective communication between two such clusters is
   hard to determine. This is because the clustering itself is a virtual
-  representation of the actual nodes and between any two nodes across different
-  clusters there might be multiple unique paths. Choosing a suitable path is a routing
-  problem and its beyond the scope of this paper.
+  representation of the actual nodes. Moreover there might be multiple unique 
+  paths between two nodes across different clusters. Choosing a suitable path 
+  is a routing problem and its beyond the scope of this paper.
 
-  Instead we assume that the link with the least bandwidth would act as the
-  bottleneck in the worst case scenario. These unique links are determined
+  Instead we assume that in the worst case scenario the link with the least 
+  bandwidth would act as the bottleneck. These unique links are determined
   for all the nodes in the cluster. Then to get the \textit{effective
   bandwidth} between these clusters we aggregate these bandiwdths.
   The various steps in which this is calculated is explained below:
@@ -141,6 +141,12 @@ build the hierarchy are as follows:
   effective bandiwdth between the two clusters.
 
   \end{enumerate}
+
+  The purpose of calculating this effective bandwidth is that during clustering
+  of the nodes at each level we would like to balance the nodes not only based on
+  their compute capabilities but also their communication potential. This would
+  give us more balanced clusters with both computation and communication taken
+  into account.
 
   %~ There are a number of paths that communication between two
   %~ nodes might follow. The \underline{effective bandwidth} between any
@@ -167,7 +173,7 @@ build the hierarchy are as follows:
   the destination node to find the minimum latency path. Finally, the
   reciprocal of these two latencies and its addition gives us the
   effective bandwidth between the two clusters. This effective
-  bandwidth is the overall bottleneck between the two clustered nodes.
+  bandwidth represents the communication link between the two clustered nodes.
 
   % The communication bandwidth between the clustered nodes is determined
   % by,\\ ${ \sum ( \min for same destn ( \max bw R^i, R^j ) ) ) }$\\ The

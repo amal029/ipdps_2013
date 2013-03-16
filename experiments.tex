@@ -21,23 +21,25 @@
 \subsection{Our implementation}
 \label{sec:our-implementation}
 
-We use the Metis~\cite{gkar95} graph partitioning library to implement
-our partitioning algorithm. We are not tied to Metis and any other graph
+We use the Metis~\cite{gkar95} graph partitioning library in the implementation
+of our partitioning algorithm. We are not tied to Metis and any other graph
 partitioner such as Zoltan~\cite{kdev09} or Scotch~\cite{cche08} can be
-used for implementing our algorithm. Herein, we describe how we used
-Metis to implement the graph partitioning.
+used for implementing our algorithm. 
 
+We now describe how we used Metis to implement the graph partitioning.
 The resource graph is represented in the Metis graph format. We
 represent the PEs' capabilities as constraints of the nodes and the
 links' bandwidths as communication weight on the edges. We then
 construct our clustered structure (Figure~\ref{fig:res}) by asking for a
 2-way partition at each level of the $log_2|V_r|$ height. Metis
 partitions the graph by load balancing the constraints and performing a
-minimum edge cut.  In partitioning the filter graph, we need to balance
-the constraints on to the available partitions. Metis offers the ability
+minimum edge cut.  In partitioning the filter graph, we need to distribute
+the constraints on to the available partitions such that capability and requirement
+is balanced. Metis offers the ability
 to load balance multiple constraints on to different partitions based on
-the metric \mbox{`tp-weight'}. We calculate the ratios between the
-capabilities of different partitions and represent them as this metric
+the metric \mbox{`tp-weight'}. This metric basically represents the ratio between
+a given type of constraint across the different partitions. We calculate the ratios 
+between the capabilities of different partitions and represent them as this metric
 in order to load balance on to the available partitions.
 
 %~ \subsection{The Simulate annealing approach}
@@ -153,18 +155,18 @@ defined as one execution of the following sequence of steps.
 An experiment, \expt(\numtplgynodes, \gpunum, \veclenset, \corenumset
 \mipsset, \bw), consists of conducting enough of the above trials so that
 width of the 95\% confidence interval on the average value of
-$Latency^{\zeta_\mathcal{M}}$ is less than 10\% of the average
+$L^{\mathcal{M}}$ is less than 10\% of the average
 value. This results in a variable number of trials with different
 experimental set-ups. Note that two trials differ from each other only
 in the seed for the random number generator.  This reduces the
 dependence of our results on a lucky sequence of numbers from the random
 number generator.
 
-\subsubsection{Random filter graph generation}
+\subsubsection{Random application graph generation}
 \label{sec:filter-graph-setup}
 
 We built a random graph generator to test our partitioning methodology
-rigorously. The random graph generator needs as input the following
+rigorously. The random graph generator takes as input the following
 parameters:
 
 \begin{itemize}
@@ -174,7 +176,7 @@ parameters:
 \item Outdegree ($o$) - Average outdegree of every vertex
 \item Communication to Computation Ratio - CCR ($c$) - It is the ratio
   of the average communication cost of an out-edge the average
-  computation cost of the vertex itself. If a DAG's $c$ is low, then it
+  computation cost of the vertex itself. If a application graph's $c$ is low, then it
   can be called a computation intensive application and if it is greater
   than 1 it can be called a communication intensive application
 \item Structure of the graph ($\alpha$) - We generate the height of the
@@ -187,7 +189,10 @@ parameters:
   the filter graph is CPU intensive or GPU intensive. Smaller values of
   $\beta$ makes actors CPU intensive (by making first constraint larger
   than the second), while larger values make it GPU intensive (by making
-  the second constraint larger than the first)
+  the second constraint larger than the first). What this essentially 
+  means is that smaller values of $\beta$ creates filters which require
+  lot more scalar requirement, whereas larger values would result in filters
+  with more vector requirement.
 \item Skewedness factor ($\gamma$) - This parameter dictates how
   computation is spread across the graph. Smaller values of $\gamma$
   give uniformly distributed values for the constraints of the actors
@@ -209,7 +214,7 @@ parameters from the following sets :
 
 We generated one graph per combination for a total of 7875 application graphs.
 Since the random graph generator has a variety of inputs and these inputs
-are filled in from a large set of possible values, a diverse set of DAGs are
+are filled in from a large set of possible values, a diverse set of application graphs are
 generated with various characteristics. Experiments based on diverse set of DAGs
 prevent biasing towards a particular partitioning algorithm.
 
@@ -366,24 +371,37 @@ prevent biasing towards a particular partitioning algorithm.
 The experimental set-up consists of a dual socket system consisting of
 Intel Xeon E5620 CPU running at 2.4Ghz with 24GB DDR3 RAM. The system
 is running Linux kernel ver 3.0.40-1. Our framework was compiled
-using gcc version 4.7.1 with '-O3' optimization flag.
+using GCC version 4.7.1 with '-O3' optimization flag.
 
-A total of 55120 experiments were performed on each case individually.
+We ran over 100,000 experiments for using the random application graphs
+and our HMPA heuristic and K-way partitioning..
 The results comparing K-way partitioning using metis and HMAP framework
-are shown in \ref{fig:exp-res}. The results are divided into a total of 5
+are shown in figure \ref{fig:exp-res}. In all the graphs the applications
+graphs that matches a particular criteria are partitioned for a given architecture
+and the latency corresponding latency is calculated. This is then averaged
+for all graphs that belong to the group and these are plotted across the different
+architectures.
+
+The results are divided into five
 graphs each representing a common characteristic of the application and
 finally \ref{fig:overall} shows the average application latency based on all
 the input graphs. Overall it just took us 50 seconds more than metis for the
-biggest architecture of 4096 nodes to determine a partition.
+biggest architecture of 4096 nodes to determine a good partition of the 
+application graph onto the given hetrogeneous architecture.
 
 Figure \ref{fig:cpu} and \ref{fig:gpu} represents application graphs that
-consists of proportionally larger CPU and GPU intensive filters respectively.
-On all archtitectures we perform consistently better and on an average we
-achieve better results in the case of GPU intesive applications, whereas metis
-which uses k-way partitioning alone provides almost similar latencies.
+consists of proportionally larger CPU and GPU intensive filters, respectively.
+The graphs with values for $\beta - 5,25,50$ represents those with more scalar
+requirements i.e. CPU intensive filters. Whereas the graphs with 
+$\beta - 50,25,95$ are those with more vector requirements. On resource architecture
+size of 64 nodes metis performs 1.2x faster than our heuristic but on all bigger
+sizes we start to perform better and for the largest one of 4096 nodes we perform
+over 3x faster than k-way partioning alone.
 
-In the case of figure \ref{fig:serial} and \ref{fig:parallel} which represents
-applications that are tall consisting of more filters that can only be
+In the case of figures \ref{fig:serial} and \ref{fig:parallel} which represents
+applications that belong to $\alpha-1,0.1  \beta-50$(serial) and $\alpha-10,1 \beta-50$
+(parallel) respectively.
+ are tall consisting of more filters that can only be
 executed serially and fat consisting of more task parallel filters, the trend
 continues and we are able to provide better latencies in the case of larger
 archtiectures when compared with metis alone. We attribute this to the

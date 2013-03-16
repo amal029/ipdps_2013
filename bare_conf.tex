@@ -445,7 +445,7 @@ communication latency of statements.
 In a software pipelined model, the different iterations of the filters
 are run in parallel, e.g., $1_0$ is the $1^{st}$ iteration of statement
 $1$ in the Jacobi example, while $1_1$ is the second iteration and so on
-and so forth. The latency of the application (termed makespan) is the
+and so forth. The latency of the application is the
 total time taken by the application for execution, which iterates continuously
 (shown within the double lined
 columns in Table~\ref{tab:3}). In such a model, the resource allocation
@@ -487,7 +487,7 @@ $T^i_1$ represents the vector requirements.
 %~ instructions and the vector count requirements ($T^i_0\ \mathrm{and}\
 %~ T^i_1$), i.e., $n_t=2$ for this example.
 
-The communication edges are decorated with \mbox{$e^c \in E_t$}, which
+The communication edges are represented with \mbox{$e^c \in E_t$}, which
 denotes the data the filter requires for processing.
 % ~ $(t_i,t_j) \in E_t$ ~ between data-stores (statements without the
 % constraints ~ in Figure~\ref{fig:1}) and the execution statements ~
@@ -637,7 +637,8 @@ A common approach to solving the homogeneous case is to
 elements~\cite{aale01,kpur99,enys98}.  However, we have found that such
 heuristic partitioning approaches do not work well for heterogeneous
 architectures. Instead we propose a novel approach where the
-architecture is hierarchically partitioned into sub-clusters.  Each
+architecture is hierarchically partitioned into sub-clusters. 
+Our heuristic algorithm does this in such a way that the
 sub-cluster at the same level of the architecture hierarchy has
 approximately the same computing capability and has relatively local
 communication. This allows us to use existing approaches that work well
@@ -646,7 +647,7 @@ architectures across the sub-clusters at each level of the hierarchy. We
 show that this is an effective approach if the sub-clusters are well
 balanced at each level of the hierarchy.
 
-In this section we describe our heuristic framework HMAP. There are two
+In this section we describe our heuristic HMAP. There are two
 important concepts that need description. First, we describe how the
 topology clusters are formed from the resource graphs accounting for
 communication and heterogeneity of the topology. Secondly, given a
