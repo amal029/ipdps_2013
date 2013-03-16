@@ -1,9 +1,9 @@
 \section{Introduction}
 \label{sec:introduction}
 
-HPC clusters increasingly consist of large numbers of heterogeneous
-processing elements such as CPUs, graphics processing units (GPUs),
-field programmable gate arrays (FPGAs), low-power processors intended
+High performance computing (HPC) clusters increasingly consist of large numbers
+of heterogeneous processing elements such as CPUs, graphics processing units
+(GPUs), field programmable gate arrays (FPGAs), low-power processors intended
 for digital signal processing (DSP), etc. By combining heterogeneous
 processing units it may be possible to divide the work so that different
 types of computation in the application are run on different types of
@@ -14,10 +14,15 @@ dozens or even hundreds of times faster on a GPU than on a CPU that has
 similar cost and power consumption. On the other hand, computations with
 less data parallelism and more complex control flow may run faster on
 CPUs. Matching the type of computation to the processor can yield
-significant benefits.
+significant benefits. Although the potential of heterogeneous computing is
+great, exploiting that potential is more difficult.
 
-Although the potential of heterogeneous computing is great, exploiting
-that potential is more difficult. Given a parallel application, it is
+In this paper we consider the streaming~\cite{jbuck94} model of
+computation. Streaming is a popular model for programs such as image and
+signal processing, financial applications, networking,
+telecommunications, etc. In the streaming model statements (also called
+filters/actors/tasks or kernels) execute iteratively, processing the incoming
+tokens of data. Given such a stream application, it is
 difficult to map the available parallelism onto the hardware. For
 example, how does one decide which parallel filters should run on which
 type of execution unit? Given a system with dozens or hundreds of CPUs,
@@ -34,8 +39,8 @@ by dividing the work evenly across the units. % At the same time, one must
 We want to allocate the filters to reduce communication costs while at the
 same time taking account of all the other factors.
 
-In this paper we consider the problem of mapping graphs of parallel
-tasks to heterogeneous HPC computing systems. This problem has been
+In this paper we consider the problem of mapping stream graphs onto
+heterogeneous HPC computing systems. This problem has been
 studied extensively for homogeneous architectures where all processing
 elements are the same. Although the homogeneous case is
 NP-hard~\cite{vsar89}, several heuristic solutions have been found that
@@ -75,15 +80,13 @@ Our \textbf{main contributions} are as follows:
 \item We provide a novel algorithm for mapping task and data parallelism
   to heterogeneous architectures based on hierarchical graph
   partitioning.
-\item In addition to mapping filters to processing elements, our framework
-  also allocates the data stores being used by the different filters.
+%\item In addition to mapping filters to processing elements, our framework
+%  also allocates the data stores being used by the different filters.
 % \item We provide an experimental evaluation of these techniques
 % and compare with other algorithms.
 \end{itemize}
 
-The rest of this paper is organized as follows. We first provide a
-motivating example in
-% Section~\ref{sec:motivating-example}.
+The rest of this paper is organized as follows.
 Section~\ref{sec:preliminaries} formalizes the problem statement and
 defines the objective function. Next, in
 Section~\ref{sec:our-framework}, we provide a detailed description of

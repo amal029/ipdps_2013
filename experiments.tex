@@ -21,33 +21,35 @@
 \subsection{Our implementation}
 \label{sec:our-implementation}
 
-We use the Metis~\cite{gkar95} graph partitioning library to implement
-our partitioning algorithm. We are not tied to Metis and any other graph
+We use the Metis~\cite{gkar95} graph partitioning library in the implementation
+of our partitioning algorithm. We are not tied to Metis and any other graph
 partitioner such as Zoltan~\cite{kdev09} or Scotch~\cite{cche08} can be
-used for implementing our algorithm. Herein, we describe how we used
-Metis to implement the graph partitioning.
+used for implementing our algorithm. 
 
+We now describe how we used Metis to implement the graph partitioning.
 The resource graph is represented in the Metis graph format. We
 represent the PEs' capabilities as constraints of the nodes and the
 links' bandwidths as communication weight on the edges. We then
 construct our clustered structure (Figure~\ref{fig:res}) by asking for a
 2-way partition at each level of the $log_2|V_r|$ height. Metis
 partitions the graph by load balancing the constraints and performing a
-minimum edge cut.  In partitioning the filter graph, we need to balance
-the constraints on to the available partitions. Metis offers the ability
+minimum edge cut.  In partitioning the filter graph, we need to distribute
+the constraints on to the available partitions such that capability and requirement
+is balanced. Metis offers the ability
 to load balance multiple constraints on to different partitions based on
-the metric \mbox{`tp-weight'}. We calculate the ratios between the
-capabilities of different partitions and represent them as this metric
+the metric \mbox{`tp-weight'}. This metric basically represents the ratio between
+a given type of constraint across the different partitions. We calculate the ratios 
+between the capabilities of different partitions and represent them as this metric
 in order to load balance on to the available partitions.
 
-\subsection{The Simulate annealing approach}
-\label{sec:simul-anne-appr}
-
-We compare our heuristic framework with a well establish meta-heuristic
-called \textit{Simulated Annealing} (SA) as described in~\cite{horsi06}
-for resource allocation. We had to modify the SA approach described
-in~\cite{horsi06} to include SIMD parallelism. This was done by simply
-modifying the objective function to the one described in~(\ref{eq:2}).
+%~ \subsection{The Simulate annealing approach}
+%~ \label{sec:simul-anne-appr}
+%~
+%~ We compare our heuristic framework with a well establish meta-heuristic
+%~ called \textit{Simulated Annealing} (SA) as described in~\cite{horsi06}
+%~ for resource allocation. We had to modify the SA approach described
+%~ in~\cite{horsi06} to include SIMD parallelism. This was done by simply
+%~ modifying the objective function to the one described in~(\ref{eq:2}).
 
 % \subsection{Random Graph Generator}
 % \label{sec:rand-graph-generator}
@@ -106,26 +108,30 @@ The experimental set up consists of the following.
   GPUs are connected in the network at locations, chosen randomly in the
   normal distribution of 25\% to 75\% of $|V_r|$.
 
-\item A set $\veclenset = \{G_1, G_2, G_3, ... G_{|\veclenset|}\}$ where
-  $G_i$ is a power of 2.  Every GPU in this experiment has a vector
+\item A set $\veclenset = \{G_1, G_2, G_3, ... G_{|\veclenset|}\}$
+  Every GPU in this experiment has a vector
   length of $G_i$ where $G_i$ is sampled randomly from the set
   \veclenset. The elements of set \veclenset are chosen from a normal
-  distribution ranging from: 1024 to 16284.
+  distribution ranging from: 10000 to 100000.
 
 \item A set $\corenumset = \{C_1, C_2, C_3, ... C_{|\corenumset|}\}$
-  where $C_i$ is a power of 2.  Every CPU in this experiment has $C_i$
+  Every CPU in this experiment has $C_i$
   cores where $C_i$ is sampled randomly from the set \corenumset.
 
-\item A set $\mipsset = \{M_1, M_2, M_3, ... M_{|\mipsset|}\}$ where
-  $M_i$ is a power of 2.  Every $C_i \in \corenumset$ and GPU in this
+\item A set $\mipsset = \{M_1, M_2, M_3, ... M_{|\mipsset|}\}$
+   Every $C_i \in \corenumset$ and GPU in this
   experiment has a MIPS count of $M_i$ where $M_i$ is sampled randomly
   from the set \mipsset. The elements of set \mipsset are chosen from a
-  normal distribution ranging from: XXX to XXX.
+  normal distribution ranging from: 1000 to 100000.
+
+\item A set $\bw = \{B_1, B_2, B_3, ... B_{|B|}\}$
+  Every $|E_r|$ node in this experiment has a bandwidth of $B_i$ in MB/s where $B_i$
+  is sampled randomly from a normal distribution ranging from: 100 to 100000
 
 \end{enumerate}
 
-For given values of \numtplgynodes, \gpunum, \veclenset, \corenumset,
-and \mipsset and a given application, let the $k$-th \ul{trial} be
+For given values of \numtplgynodes, \gpunum, \veclenset, \corenumset, \mipsset
+and \bw and a given application, let the $k$-th \ul{trial} be
 defined as one execution of the following sequence of steps.
 
 \begin{itemize}
@@ -147,20 +153,20 @@ defined as one execution of the following sequence of steps.
 \end{itemize}
 
 An experiment, \expt(\numtplgynodes, \gpunum, \veclenset, \corenumset
-\mipsset), consists of conducting enough of the above trials so that
+\mipsset, \bw), consists of conducting enough of the above trials so that
 width of the 95\% confidence interval on the average value of
-$Latency^{\zeta_\mathcal{M}}$ is less than 10\% of the average
+$L^{\mathcal{M}}$ is less than 10\% of the average
 value. This results in a variable number of trials with different
 experimental set-ups. Note that two trials differ from each other only
 in the seed for the random number generator.  This reduces the
 dependence of our results on a lucky sequence of numbers from the random
 number generator.
 
-\subsubsection{Random filter graph generation}
+\subsubsection{Random application graph generation}
 \label{sec:filter-graph-setup}
 
 We built a random graph generator to test our partitioning methodology
-rigorously. The random graph generator needs as input the following
+rigorously. The random graph generator takes as input the following
 parameters:
 
 \begin{itemize}
@@ -170,7 +176,7 @@ parameters:
 \item Outdegree ($o$) - Average outdegree of every vertex
 \item Communication to Computation Ratio - CCR ($c$) - It is the ratio
   of the average communication cost of an out-edge the average
-  computation cost of the vertex itself. If a DAG's $c$ is low, then it
+  computation cost of the vertex itself. If a application graph's $c$ is low, then it
   can be called a computation intensive application and if it is greater
   than 1 it can be called a communication intensive application
 \item Structure of the graph ($\alpha$) - We generate the height of the
@@ -183,7 +189,10 @@ parameters:
   the filter graph is CPU intensive or GPU intensive. Smaller values of
   $\beta$ makes actors CPU intensive (by making first constraint larger
   than the second), while larger values make it GPU intensive (by making
-  the second constraint larger than the first)
+  the second constraint larger than the first). What this essentially 
+  means is that smaller values of $\beta$ creates filters which require
+  lot more scalar requirement, whereas larger values would result in filters
+  with more vector requirement.
 \item Skewedness factor ($\gamma$) - This parameter dictates how
   computation is spread across the graph. Smaller values of $\gamma$
   give uniformly distributed values for the constraints of the actors
@@ -194,18 +203,18 @@ For our experiments we generated random graphs by choosing values for the input
 parameters from the following sets :
 
 \begin{itemize}
-\item $\chi_{n} = \{256, 1024, 16384\}$
-\item $\chi_{i} = \{1\}$
+\item $\chi_{n} = \{128, 256, 512, 1024, 4096, 8192, 16384\}$
+%\item $\chi_{i} = \{1\}$
 \item $\chi_{o} = \{2, 4, 8\}$
-\item $\chi_{c} = \{0.0001, 0.001, 0.009\}$
+\item $\chi_{c} = \{0.0001, 0.001, 0.01, 0.1, 1\}$
 \item $\chi_{\alpha} = \{0.1, 1.0, 10.0\}$
 \item $\chi_{\beta} = \{5, 25, 50, 75, 95\}$
-\item $\chi_{\gamma} = \{25, 50, 75\}$
+\item $\chi_{\gamma} = \{5, 25, 50, 75, 95\}$
 \end{itemize}
 
-We generated one graph per combination for a total of [servesh fill this number
-in]. Since the random graph generator has a variety of inputs and these inputs
-are filled in from a large set of possible values, a diverse set of DAGs are
+We generated one graph per combination for a total of 7875 application graphs.
+Since the random graph generator has a variety of inputs and these inputs
+are filled in from a large set of possible values, a diverse set of application graphs are
 generated with various characteristics. Experiments based on diverse set of DAGs
 prevent biasing towards a particular partitioning algorithm.
 
@@ -322,10 +331,107 @@ prevent biasing towards a particular partitioning algorithm.
 \subsection{Experimental Results}
 \label{sec:results-1}
 
+\begin{figure*}[ht!]
+  \centering
+  \subfigure[CPU intensive graphs
+    ($\beta-5,25,50$) ]
+  {
+    \includegraphics[angle=0, scale=0.44]{./figures/cpu}
+    \label{fig:cpu}
+  }
+  \subfigure[GPU intensive graphs ($\beta-50,75,95$)]{
+    \includegraphics[angle=0, scale=0.44]{./figures/gpu}
+    \label{fig:gpu}
+  }
+  \subfigure[Serial applications
+  ($\alpha-1,0.1$ $\beta-50$)]{
+    \includegraphics[angle=0, scale=0.44]{./figures/serial}
+    \label{fig:serial}
+  }
+  \subfigure[Task parallel applications
+  ($\alpha-10,1$ $\beta-50$)]{
+    \includegraphics[angle=0, scale=0.44]{./figures/parallel}
+    \label{fig:parallel}
+  }
+  \subfigure[Comm. intensive graphs
+  ($\alpha-1$ $\beta-50$ $c-1$)]{
+    \includegraphics[angle=0, scale=0.44]{./figures/comm}
+    \label{fig:comm}
+  }
+  \subfigure[Overall]{
+    \includegraphics[angle=0, scale=0.44]{./figures/overall}
+    \label{fig:overall}
+  }
+  \caption{Experimental results based on random application
+  graphs.\\ Each graph shows the latency for a given architecture and
+  application graphs that belong to a certain criteria}
+  \label{fig:exp-res}
+\end{figure*}
+
 The experimental set-up consists of a dual socket system consisting of
 Intel Xeon E5620 CPU running at 2.4Ghz with 24GB DDR3 RAM. The system
 is running Linux kernel ver 3.0.40-1. Our framework was compiled
-using gcc version 4.7.1 with '-O3' optimization flag.
+using GCC version 4.7.1 with '-O3' optimization flag.
+
+We ran over 100,000 experiments for using the random application graphs
+and our HMPA heuristic and K-way partitioning..
+The results comparing K-way partitioning using metis and HMAP framework
+are shown in figure \ref{fig:exp-res}. In all the graphs the applications
+graphs that matches a particular criteria are partitioned for a given architecture
+and the latency corresponding latency is calculated. This is then averaged
+for all graphs that belong to the group and these are plotted across the different
+architectures.
+
+The results are divided into five
+graphs each representing a common characteristic of the application and
+finally \ref{fig:overall} shows the average application latency based on all
+the input graphs. Overall it just took us 50 seconds more than metis for the
+biggest architecture of 4096 nodes to determine a good partition of the 
+application graph onto the given hetrogeneous architecture.
+
+Figure \ref{fig:cpu} and \ref{fig:gpu} represents application graphs that
+consists of proportionally larger CPU and GPU intensive filters, respectively.
+The graphs with values for $\beta - 5,25,50$ represents those with more scalar
+requirements i.e. CPU intensive filters. Whereas the graphs with 
+$\beta - 50,25,95$ are those with more vector requirements. On resource architecture
+size of 64 nodes metis performs 1.2x faster than our heuristic but on all bigger
+sizes we start to perform better and for the largest one of 4096 nodes we perform
+over 3x faster than k-way partioning alone.
+
+In the case of figures \ref{fig:serial} and \ref{fig:parallel} which represents
+applications that belong to $\alpha-1,0.1  \beta-50$(serial) and $\alpha-10,1 \beta-50$
+(parallel) respectively.
+ are tall consisting of more filters that can only be
+executed serially and fat consisting of more task parallel filters, the trend
+continues and we are able to provide better latencies in the case of larger
+archtiectures when compared with metis alone. We attribute this to the
+following, for smaller architectures, the constraints(tp-weights) are enough to
+show the difference between machines to metis. Whereas, when the architecture
+becomes big, the relative difference between two partitions become so small that
+metis is unable to tell them apart. The problem becomes one of unexpressability.
+Our framework alleviates this by asking for a very small number of
+partitions(usually in the range of 2 to 4) at every stage.
+
+The figure \ref{fig:comm} which shows the set of application graphs which are
+highly communication intensive determined by the CCR $c=1$, we perform
+significantly better in comparison to metis for larger archtiectures. This is
+due to our clustering approach that ensures topology nodes that communicate
+with high bandwidths are combined together at each level. Also, metis is unaware
+of the communication between nodes in the topology as it only cares about a
+min-cut across partitions. Our framework on the other hand, takes into account
+the communication in the topology and indirectly matches heavy edges from the
+filter graph onto high bandwidth edges in the topology graph.
+
+We also observed that metis performs better than our framework in the case of
+rectangular topologies. We believe this is because rectangular topologies are
+harder to collate into homogenous clusters as there are straddlers in non-square
+architectures.
+
+Finally, in figure \ref{fig:overall} we see that we are able to scale better
+when compared with metis. In smaller architecture sizes metis is able to
+produce good mapping, whereas on larger architecture sizes we are able to
+perform over several magnitudes better in comparison.
+
 
 % The results for the experiments with the above experimental set-up
 % comparing our approach with the aforementioned heterogeneous bin packing

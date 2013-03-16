@@ -77,18 +77,18 @@ follows:
   for each of the constraint as the `tp-weight' metric when partitioning
   the filter graph using Metis. For example, consider the partitioning
   onto the level 1 resource graph in Figure~\ref{fig:7}. There are 4
-  contracted nodes. We generate two sets of `tp-weights', with 2
-  elements each, one for each of the node sets contracted to form the
+  clustered nodes. We generate two sets of `tp-weights', with 2
+  elements each, one for each of the node sets clustered to form the
   parent level (level-2, Figure~\ref{fig:res} and
   Figure~\ref{fig:7}). Each element in the set represents the MIPS count
-  and the vector capacity of the underlying contracted node. Let us
-  consider node \texttt{A2}, which is effectively the contraction of
+  and the vector capacity of the underlying clustered node. Let us
+  consider node \texttt{A2}, which is effectively the clustering of
   nodes \texttt{C1} and \texttt{A1}. Thus, the MIPS capacity element, of
   the `tp-weight' set for weight set for the nodes \texttt{C1} and
   \texttt{A1} is calculated as: {$\{C1^{MIPS}_{tpw} = R^{C1}_0/R^{C1}_0
     + R^{A1}_0, A1^{MIPS}_{tpw} = R^{A1}_0/R^{C1}_0 + R^{A1}_0\}$}. Same
   is done to calculate the vector length capacity ratios. Since, the
-  other two nodes \texttt{B1} and \texttt{D1} are contracted to form the
+  other two nodes \texttt{B1} and \texttt{D1} are clustered to form the
   second parent in level 2, \texttt{B2}, we end up with two sets of
   `tp-weights'. The MIPS and vector length ratios are shown in
   Figure~\ref{fig:7}. These ratios make sure that the filter nodes are
