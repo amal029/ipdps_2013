@@ -182,16 +182,16 @@ parameters:
 \item Structure of the graph ($\alpha$) - We generate the height of the
   graph based on $\alpha$ as $\frac{\sqrt{n}}{\alpha}$. This implies the
   width of the graph becomes $\sqrt{n}*{\alpha}$. Higher values of
-  $\alpha$ give wider graphs which means the graph has more inherent
-  task parallelism, while lower values give taller graphs which means
+  $\alpha$ give wider graphs, which means the graph has more inherent
+  task parallelism, while lower values give taller graphs, which means
   the graph is inherently serial
 \item Beta ($\beta$) - We use this parameter to decide if an actor in
   the filter graph is CPU intensive or GPU intensive. Smaller values of
   $\beta$ makes actors CPU intensive (by making first constraint larger
   than the second), while larger values make it GPU intensive (by making
-  the second constraint larger than the first). What this essentially 
-  means is that smaller values of $\beta$ creates filters which require
-  lot more scalar requirement, whereas larger values would result in filters
+  the second constraint larger than the first). This essentially means
+  that smaller values of $\beta$ creates filters, which require lot more
+  non-vectorized units, whereas larger values would result in filters
   with more vector requirement.
 \item Skewedness factor ($\gamma$) - This parameter dictates how
   computation is spread across the graph. Smaller values of $\gamma$
@@ -199,8 +199,8 @@ parameters:
   while larger values produces skewed graphs
 \end{itemize}
 
-For our experiments we generated random graphs by choosing values for the input
-parameters from the following sets :
+For our experiments, we generated random graphs by choosing values for
+the input parameters from the following sets :
 
 \begin{itemize}
 \item $\chi_{n} = \{128, 256, 512, 1024, 4096, 8192, 16384\}$
@@ -373,64 +373,101 @@ Intel Xeon E5620 CPU running at 2.4Ghz with 24GB DDR3 RAM. The system
 is running Linux kernel ver 3.0.40-1. Our framework was compiled
 using GCC version 4.7.1 with '-O3' optimization flag.
 
-We ran over 100,000 experiments for using the random application graphs
-and our HMPA heuristic and K-way partitioning..
-The results comparing K-way partitioning using metis and HMAP framework
-are shown in figure \ref{fig:exp-res}. In all the graphs the applications
-graphs that matches a particular criteria are partitioned for a given architecture
-and the latency corresponding latency is calculated. This is then averaged
-for all graphs that belong to the group and these are plotted across the different
-architectures.
+We ran over 100,000 experiments, using the random application graphs and
+our HMAP heuristic and K-way partitioning.  The results comparing K-way
+partitioning using Metis~\cite{gkar95} and our HMAP framework are shown
+in Figure~\ref{fig:exp-res}. 
 
-The results are divided into five
-graphs each representing a common characteristic of the application and
-finally \ref{fig:overall} shows the average application latency based on all
-the input graphs. Overall it just took us 50 seconds more than metis for the
-biggest architecture of 4096 nodes to determine a good partition of the 
+[\textbf{Avinash says: what??}] In all the graphs the applications
+graphs that matches a particular criteria are partitioned for a given
+architecture and the latency corresponding latency is calculated. This
+is then averaged for all graphs that belong to the group and these are
+plotted across the different architectures.
+
+The results are divided into five graphs each representing a common
+characteristic of the application and finally Figure~\ref{fig:overall}
+shows the average application latency based on all the input
+graphs. Overall it took us 50 seconds more than metis for the biggest
+architecture of 4096 nodes to determine a good partition of the
 application graph onto the given hetrogeneous architecture.
 
-Figure \ref{fig:cpu} and \ref{fig:gpu} represents application graphs that
-consists of proportionally larger CPU and GPU intensive filters, respectively.
-The graphs with values for $\beta - 5,25,50$ represents those with more scalar
-requirements i.e. CPU intensive filters. Whereas the graphs with 
-$\beta - 50,25,95$ are those with more vector requirements. On resource architecture
-size of 64 nodes metis performs 1.2x faster than our heuristic but on all bigger
-sizes we start to perform better and for the largest one of 4096 nodes we perform
-over 3x faster than k-way partioning alone.
+Figures~\ref{fig:cpu} and~\ref{fig:gpu} represent application graphs
+that consists of proportionally larger non-vectorized and vectorized
+requirements, respectively. The graphs with values for $\beta = 5,\ 25,\
+\mathrm{and}\ 50$ are more non-vectorized and require a higher MIPS
+count. Whereas the graphs with $\beta = 50,\ 75,\ \mathrm{and}\ 95$ are
+those that require a higher vector count. On resource architecture size
+of 64 nodes Metis results in a application partitioning with the period
+$1.2\times$ faster than the one obtained by our scheme. But, for the
+rest of the architectures we outperform the partition obtained by
+standard Metis. For example, in the case of 4096 node architecture, the
+resultant application period from the HMAP scheme is $3\times$ faster
+compared to the one obtained via Metis.
 
-In the case of figures \ref{fig:serial} and \ref{fig:parallel} which represents
-applications that belong to $\alpha-1,0.1  \beta-50$(serial) and $\alpha-10,1 \beta-50$
-(parallel) respectively.
- are tall consisting of more filters that can only be
-executed serially and fat consisting of more task parallel filters, the trend
-continues and we are able to provide better latencies in the case of larger
-archtiectures when compared with metis alone. We attribute this to the
-following, for smaller architectures, the constraints(tp-weights) are enough to
-show the difference between machines to metis. Whereas, when the architecture
-becomes big, the relative difference between two partitions become so small that
-metis is unable to tell them apart. The problem becomes one of unexpressability.
-Our framework alleviates this by asking for a very small number of
-partitions(usually in the range of 2 to 4) at every stage.
+% performs 1.2x faster than our heuristic but on all bigger sizes we start
+% to perform better and for the largest one of 4096 nodes we perform over
+% 3x faster than k-way partioning alone.
 
-The figure \ref{fig:comm} which shows the set of application graphs which are
-highly communication intensive determined by the CCR $c=1$, we perform
-significantly better in comparison to metis for larger archtiectures. This is
-due to our clustering approach that ensures topology nodes that communicate
-with high bandwidths are combined together at each level. Also, metis is unaware
-of the communication between nodes in the topology as it only cares about a
-min-cut across partitions. Our framework on the other hand, takes into account
-the communication in the topology and indirectly matches heavy edges from the
-filter graph onto high bandwidth edges in the topology graph.
+In the case of Figures~\ref{fig:serial} and~\ref{fig:parallel}, which
+represent more serial and task-parallel application graphs, respectively
+we notice a similar trend. Metis outperforms the HMAP scheme for smaller
+architectures but HMAP outperforms the partition obtained via Metis in
+all other cases.
 
-We also observed that metis performs better than our framework in the case of
-rectangular topologies. We believe this is because rectangular topologies are
-harder to collate into homogenous clusters as there are straddlers in non-square
-architectures.
+% that belong to $\alpha-1,0.1 \beta-50$(serial) and $\alpha-10,1
+% \beta-50$ (parallel) respectively.  are tall consisting of more filters
+% that can only be executed serially and fat consisting of more task
+% parallel filters, the trend continues and we are able to provide better
+% latencies in the case of larger archtiectures when compared with metis
+% alone. 
 
-Finally, in figure \ref{fig:overall} we see that we are able to scale better
-when compared with metis. In smaller architecture sizes metis is able to
-produce good mapping, whereas on larger architecture sizes we are able to
-perform over several magnitudes better in comparison.
+We attribute such behavior to the following; for smaller architectures,
+the variation (in terms of MIPS and vector lengths) in the underlying
+physical architecture can be easily captured in standard Metis using its
+so called constraints (tp-weights). For larger architectures with a very
+large number of nodes as in our HPC case, these variations in the
+underlying architecture cannot be expressed in Metis in the form of
+constraints. We alleviate this inexpressibility by clustering the large
+number of heterogeneous nodes into a smaller number of homogeneous
+clusters as shown in Figure~\ref{fig:res}.
+
+% the constraints (tp-weights) are enough to show the difference between
+% machines to metis. Whereas, when the architecture becomes big, the
+% relative difference between two partitions become so small that metis is
+% unable to tell them apart. The problem becomes one of unexpressability.
+% Our framework alleviates this by asking for a very small number of
+% partitions(usually in the range of 2 to 4) at every stage.
+
+Figure~\ref{fig:comm} shows the result of partitioning communication
+intensive application graphs on the same set of heterogeneous HPC
+physical architectures. We perform significantly better in comparison to
+Metis for larger archtiectures. This is due to our clustering approach
+that ensures topology nodes that communicate with high bandwidths are
+combined together at each level. Moreover, Metis is unaware of the
+communication between nodes in the topology as it only performs a
+min-cut when partitioning the application graphs. Our framework on the
+other hand, takes into account the communication in the topology and
+indirectly matches heavy edges from the filter graph onto high bandwidth
+edges in the topology graph.
+
+Finally, HMAP does not perform as well on physical topologies wherein
+the clustering of the resource graph does not result in clusters with
+equal number of nodes. For example, consider the 2048 node cluster,
+which is a $64\times32$ 2D mesh. In such cases, clustering the given
+topology into virtual clusters (see Figure~\ref{fig:res}) results in
+clusters without equal number of nodes. Improving performance, further
+still, in such topologies remains an open question, which we plan to
+deal with in the future.
+
+% We also observed that metis performs better than our framework in the
+% case of rectangular topologies. We believe this is because rectangular
+% topologies are harder to collate into homogenous clusters as there are
+% straddlers in non-square architectures.
+
+% Finally, in Figure~\ref{fig:overall} we see that we are able to scale
+% better when compared with metis. In smaller architecture sizes metis is
+% able to produce good mapping, whereas on larger architecture sizes we
+% are able to perform over several magnitudes better in comparison.
 
 
 % The results for the experiments with the above experimental set-up

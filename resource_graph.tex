@@ -108,37 +108,41 @@ build the hierarchy are as follows:
   %   levels, where the $ Number\ of\ levels = log_2 ( Number\ of\ Nodes
   %   )$.
 
-\item \textit{Effective communication during clustering:}
-  When clustering nodes the effective communication between two such clusters is
-  hard to determine. This is because the clustering itself is a virtual
-  representation of the actual nodes. Moreover there might be multiple unique 
-  paths between two nodes across different clusters. Choosing a suitable path 
-  is a routing problem and its beyond the scope of this paper.
-
-  Instead we assume that in the worst case scenario the link with the least 
-  bandwidth would act as the bottleneck. These unique links are determined
-  for all the nodes in the cluster. Then to get the \textit{effective
-  bandwidth} between these clusters we aggregate these bandiwdths.
-  The various steps in which this is calculated is explained below:
+\item \textit{Effective communication during clustering:} When
+  clustering nodes the effective communication between two such clusters
+  is hard to determine. This is because the clustering itself is a
+  virtual representation of the actual nodes. Moreover there might be
+  multiple unique paths between two nodes across different
+  clusters. Choosing a suitable path is a routing problem and its beyond
+  the scope of this paper.  In this paper take a pessimistic approach to
+  calculating the effective communication bandwidth between clustered
+  nodes, because this gives us the lower bound on communication. We
+  assume that in the worst case scenario the link with the least
+  bandwidth would act as the bottleneck. These unique links are
+  determined for all the nodes in the cluster. Then to get the
+  \textit{effective bandwidth} between these clusters we aggregate these
+  bandiwdths.  The algorithm to calculate the effective communication
+  between clusters is outlined below:
 
   \begin{enumerate}
 
-  \item We use the all-pair Floyd-Warshall~\cite{sski08} algorithm to calculate
-  the shortest path, in terms of latency of data-transfer, for every
-  communication link in the topology. From this we calculate the bandwidth of
-  these links by inverting its latency. This creates a list which contains all
-  of the best case bandwidth between any two nodes.
+  \item We use the all-pair Floyd-Warshall~\cite{sski08} algorithm to
+    calculate the shortest path, in terms of latency of data-transfer,
+    for every communication link in the topology. From this we calculate
+    the bandwidth of these links by inverting its latency. This creates
+    a list, which contains all of the best case bandwidths between any
+    two nodes.
 
-  \item For any two clusters, we assume a source node in one cluster and
-  determine the paths to all the nodes across the cluster. From this we choose
-  the link with the least bandwidth.
+  \item For any two clusters, we choose a source node in one cluster and
+    determine all the paths to all the nodes in the connecting
+    cluster. From this we choose the link with the least bandwidth.
 
-  \item Then we repeat the step above for the other nodes and end up with the
-  paths which would act as a bottleneck for any given unique source and
-  destination pair.
+  \item Next, we repeat the above step for the other source nodes and
+    end up with the paths, which would act as a bottleneck for any given
+    unique source and destination pair.
 
-  \item On aggregating the bandiwdths of all these links we end up with the
-  effective bandiwdth between the two clusters.
+  \item Addition of these resultant bandiwdths is the effective
+    bandwidth between the two clusters.
 
   \end{enumerate}
 
@@ -161,19 +165,20 @@ build the hierarchy are as follows:
   calculate the best possible paths between every pair of nodes
   \mbox{$(i,j) \in (V_r \times V_r)$}. Now let us consider the example
   of the clustered nodes \texttt{B1} and \texttt{C1}. Node \texttt{B1}
-  is a cluster of the set of children nodes $\{3, 8, 6\}$ and
-  \texttt{C1} is the cluster of the node set $\{2, 1\}$. Being an
-  undirected graph with loss of generality we can consider \texttt{B1}
-  to be the source and \texttt{C1} to be the destination. Hence, the
-  worst path, in terms of latency of data-transfer, following the
-  all-pair Floyd-Warshall algorithm, between nodes $3$ and $2$ within
-  the clustered nodes is given by the maximum latency path amongst the
-  memoized best edges: $max((3,2),\ (8,2),\ (6,2))$. Similar computation
-  is carried out for all link pairs in the clustered node with $1$ as
-  the destination node to find the minimum latency path. Finally, the
-  reciprocal of these two latencies and its addition gives us the
-  effective bandwidth between the two clusters. This effective
-  bandwidth represents the communication link between the two clustered nodes.
+  is a cluster of the set of children nodes $\{C0, H0, F0\}$ and
+  \texttt{C1} is the cluster of the node set $\{B0, A0\}$,
+  respectively. Being an undirected graph with loss of generality we can
+  consider \texttt{B1} to be the source and \texttt{C1} to be the
+  destination. Hence, the worst path, in terms of latency of
+  data-transfer, following the all-pair Floyd-Warshall algorithm,
+  between nodes $C0$ and $B0$ within the clustered nodes is given by the
+  maximum latency path amongst the memoized best edges: $max((C0,B0),\
+  (H0,B0),\ (F0,B0))$. Similar computation is carried out for all link
+  pairs in the clustered node with $A0$ as the destination node to find
+  the minimum latency path. Finally, the reciprocal of these two
+  latencies and its addition gives us the effective bandwidth between
+  the two clusters. This effective bandwidth represents the
+  communication link between the two clustered nodes.
 
   % The communication bandwidth between the clustered nodes is determined
   % by,\\ ${ \sum ( \min for same destn ( \max bw R^i, R^j ) ) ) }$\\ The
@@ -212,7 +217,7 @@ build the hierarchy are as follows:
 % when moving from level 0 to level 1. Overall, we reach three levels
 % and at the top most level all the nodes from a single virtual node.
 
-\subsection{Task graph partitioning}
+\subsection{Filter graph partitioning}
 \label{sec:filter-graph-part}
 
 The filter partitioning on the resulting hierarchical cluster takes a
