@@ -1,5 +1,5 @@
 % -*- mode:latex; mode:flyspell -*-
-\documentclass[10pt, conference, compsocconf]{IEEEtran}
+\documentclass[10pt, conference, compsocconf, reqno]{IEEEtran}
 
 % *** GRAPHICS RELATED PACKAGES ***
 %
@@ -34,6 +34,7 @@
 %
 \usepackage{multirow}
 \usepackage[cmex10]{amsmath}
+\usepackage{amsfonts}
 % A popular package from the American Mathematical Society that provides
 % many useful and powerful commands for dealing with mathematics. If using
 % it, be sure to load this package with the cmex10 option to ensure that
@@ -222,6 +223,8 @@
 
 %squeeze
 
+\renewcommand{\arraystretch}{0.6}
+
 \renewcommand\floatpagefraction{.9}
 \renewcommand\topfraction{.9}
 \renewcommand\bottomfraction{.9}
@@ -329,7 +332,7 @@ Email: avinmali@ie.ibm.com}
 
   In this article we propose a novel framework -- \textit{Hetrogeneous
     Multiconstraint Application Partitioner} (HMAP) for exploiting
-  parallelism on heterogeneous \textit{High Performance Computing} (HPC)
+  parallelism on heterogeneous \textit{High performance computing} (HPC)
   architectures. Given a hetrogeneous HPC cluster with varying compute
   units, communication constraints and topology, HMAP framework can be
   utilized for partitioning applications exhibiting task and data
@@ -341,8 +344,8 @@ Email: avinmali@ie.ibm.com}
   problem using a staged graph partitioning approach. Experimental
   evaluation on a variety of different heterogeneous HPC clusters and
   applications show that our framework can exploit parallelism resulting
-  in more than XXX\% speedup over current state of the art partitioning
-  techniques. HMAP framework finishes within seconds even for
+  in more than $3\times$ speedup over current state of the art partitioning
+  technique. HMAP framework finishes within seconds even for
   architectures with 100's of processing elements, which makes our
   algorithm suitable for exploring parallelism potential.
 
@@ -437,11 +440,15 @@ communication latency of statements.
 
 \begin{table}[h!]
   \centering
-  \begin{tabular}{|c|c|c||c|c|c||c|}
+  \begin{tabular}{|c|c|c||c|c||c|c|c|}
     \hline
-    P0 & $1_0$ & $2_0$ & $1_1$ & & $2_1$ & $1_2$\\
+    P0 & $1_0$ & & $1_1$ & & $1_2$ & & \\
     \hline
-    P1 & & $3_0$ & $4_0$ & $4_0$ & $3_1$ & $4_1$\\
+    P1 & $2_0$ & $3_0$ & $2_1$ & $3_1$ & $2_2$ & &\\
+    \hline
+    P2 & $1'_0$ & & $1'_1$ & & $1'_2$ & &\\
+    \hline
+    P3 & & & $4_0$ & $4_0$ & $4_1$ & $4_1$ & \\
     \hline
   \end{tabular}
   \caption{Example execution trace of the Jacobi kernel}
@@ -450,15 +457,38 @@ communication latency of statements.
 
 In a software pipelined model, the different iterations of the filters
 are run in parallel, e.g., $1_0$ is the $1^{st}$ iteration of statement
-$1$ in the Jacobi example, while $1_1$ is the second iteration and so on
+\textbf{1} in the Jacobi example, while $1_1$ is the second iteration and so on
 and so forth. The \textbf{period} of the application is the time period
-where all filters of the stream graph run simultaneously. Shown within
+where all filters of the stream graph run simultaneously, shown within
 the double lined columns in Table~\ref{tab:3}. In such a model, the
 resource allocation (rather than dependencies) determines the
 application period, especially without back-edges in the filter graph
 (as is the case with our model). In Table~\ref{tab:3}, the resource
-allocation on processing element \texttt{P1} determines the application
-period, because that is the maximum of the two allocation latencies.
+allocation on processing element \texttt{P1} and \texttt{P3} determines the
+application \underline{period}, because it is the \underline{maximum of the
+four allocation latencies}.
+
+\subsection{Task and Data parallelism}
+
+\subsubsection{Task parallelism}
+Task parallel filters are the branches connected to a split node. These
+filters can be run in parallel provided enough resources are available. For
+example, in Figure~\ref{fig:1b} statements \textbf{1} and \textbf{2} are task
+parallel filters connected to the split node start. The execution trace shown
+in Table~\ref{tab:3} exploit this task parallelism by excuting statements
+\textbf{1} and \textbf{2} on processors \texttt{P0} and \texttt{P1}
+concurrently. This type of concurrent execution of different task parallel
+filters is ususally termed as \textit{Multiple Instruction Multiple Data}
+(MIMD).
+
+\subsubsection{Data Parallelism}
+Data parallelism is the ability to exploit the parallelism hidden in stateless
+filters. As shown in Figure~\ref{fig:1b}, statement \textbf{1} is a stateless
+filter. Two copies of this stateless filter are run concurrently on processors
+\texttt{P0} and \texttt{P1} thereby reducing the overall period as shown in
+Table~\ref{tab:3}. The best allocation for a stateless filter is a vector
+processor with the ability to execute large number of concurrent copies --
+ususally termed \textit{Single Instruction Mutiple Data} (SIMD).
 
 \subsection{Notations}
 
@@ -535,7 +565,7 @@ denoted by $E^c$.
 % generation about the generation of the resource graphs is provided later in
 % Section~\ref{sec:gener-reso-graph}.
 
-The problem at hand is to effectively map the stream graph $G_t$ onto
+The problem at hand is to effectively partition the stream graph $G_t$ onto
 given resource graph $G_r$. This problem is known to be
 NP-Hard~\cite{vsar89}. % This immediately implicates that we have to look
 % for heuristic solutions.
@@ -543,9 +573,50 @@ NP-Hard~\cite{vsar89}. % This immediately implicates that we have to look
 %~ For evaluating our mapping, we adapt a cost function used by numerous
 %~ other papers~\cite{ssan05,ajai04,dajw12} for our setup.
 
-Given some filter $t_i \in V_t$ mapped to some resource $r_j \in V_r$,
+\begin{figure}[ht!]
+\begin{scriptsize}
+
+  \begin{equation}
+    \label{eq:3}
+    \begin{array}{c}
+
+      ((T^i_1/R^j_1\times T^i_0)/R^j_0)
+      + (e^c/E^{c'}) | c = (t_i,t_k), t_k \neq t_i, \\ \forall t_k \in V_t, c' =
+      (r_j,r_l), r_l \neq r_j, \forall r_l \in V_r
+
+    \end{array}
+  \end{equation}
+
+  \rule{8.6cm}{0.4pt}
+
+  \begin{equation}
+    \label{eq:1}
+    \begin{array}{c}
+      L^{\mathcal{P}}_s = Lcomp^{\mathcal{P}}_s +
+      Lcomm^{\mathcal{P}}_s\\
+      \\Lcomp^{\mathcal{P}}_s =
+      \sum_{\forall t_i \in V_t} ((T^i_1/R^s_1\times T^i_0)/R^s_0)\\
+      \\Lcomm^{\mathcal{P}}_s =
+      \sum_{\forall t_i \in V_t} e^c / E^{c'}\\
+      \\s.t., d = (t_i,t_k), t_k \neq t_i, \forall t_k
+      \in V_t \wedge\  c' = (r_s,r_l), r_l \neq r_s, \forall r_l \in V_r \\
+      \wedge\ \mathrm{d\ is\ routed\ on\ c'}
+    \end{array}
+  \end{equation}
+
+  \rule{8.6cm}{0.4pt}
+
+  \begin{equation}
+    \label{eq:2}
+    \mathbb{P} = max ({L^{\mathcal{P}}_s}), \forall r_s \in V_r
+  \end{equation}
+
+\end{scriptsize}
+\end{figure}
+
+Given some filter $t_i \in V_t$ partitioned onto some resource $r_j \in V_r$,
 the latency for that node is computed by Equation~(\ref{eq:3}). In this
-formulation for some filter $t_i$ being mapped onto some resource $r_j$,
+formulation for some filter $t_i$ being partitioned onto some resource $r_j$,
 we first calculate the number of vectorized instructions that can be
 executed in parallel (by dividing the required vector length by the
 vector capacity of $r_j$ represented by $R^j_1$). We then multiply this
@@ -565,58 +636,17 @@ MIPS value of the resource denoted by $R^j_0$. Calculation of the
 communication latency requires dividing the number of bits by the
 bandwidth of the shortest path.
 
-Given the filter-graph and the resource-graph, let $\mathcal{M}$ be some
-mapping of the application on the resource-graph. For a particular
+Given the filter-graph and the resource-graph, let $\mathcal{P}$ be some
+partition of the application on the resource-graph. For a particular
 allocation onto some resource node $r_s \in V_r$, we define its
 computation and communication latency as in Equation~(\ref{eq:1}).
+Finally, the complete application period is defined in Equation~(\ref{eq:2})
+as shown in Table~\ref{tab:3}.
 
-%\vspace{-0.7cm}
-
-\begin{scriptsize}
-\begin{equation}
-  \label{eq:3}
-  \begin{array}{c}
-    ((T^i_1/R^j_1\times T^i_0)/R^j_0)
-    + (e^c/E^{c'}) | c = (t_i,t_k), t_k \neq t_i, \\ \forall t_k \in V_t, c' =
-    (r_j,r_l), r_l \neq r_j, \forall r_l \in V_r
-  \end{array}
-\end{equation}
-\end{scriptsize}
-
-\begin{figure}[h!]
-\begin{scriptsize}
-\begin{equation}
-  \begin{array}{c}
-    L^{\mathcal{M}}_s = Lcomp^{\mathcal{M}}_s +
-    Lcomm^{\mathcal{M}}_s\\
-    \\Lcomp^{\mathcal{M}}_s =
-    \sum_{\forall t_i \in V_t} ((T^i_1/R^s_1\times T^i_0)/R^s_0)\\
-    \\Lcomm^{\mathcal{M}}_s =
-    \sum_{\forall t_i \in V_t} e^c / E^{c'}\\
-    \\s.t., d = (t_i,t_k), t_k \neq t_i, \forall t_k
-    \in V_t \wedge\  c' = (r_s,r_l), r_l \neq r_s, \forall r_l \in V_r \\
-    \wedge\ \mathrm{d\ is\ routed\ on\ c'}
-  \end{array}
-  \label{eq:1}
-\end{equation}
-\end{scriptsize}
-\end{figure}
-
-\vspace{-3mm}
-
-Finally, the complete application latency can then be defined as:
-\begin{scriptsize}
-\begin{equation}
-  \label{eq:2}
-  L^{\mathcal{M}} = max ({L^{\mathcal{M}}_s}), \forall r_s \in V_r
-\end{equation}
-\end{scriptsize}
-
-\vspace{-6mm}
-
-The objective of our framework is to find a mapping $\mathcal{M}$
-that minimizes the total application latency as described in
+The objective of our framework is to find a partition $\mathcal{P}$
+that minimizes the total application period as described in
 Equation~(\ref{eq:2}).
+
 
 % \subsection{Key Contributions}
 % Our key contributions in the article are as follows:
@@ -652,7 +682,7 @@ A common approach to solving the homogeneous case is to
 elements~\cite{aale01,kpur99,enys98}.  However, we have found that such
 heuristic partitioning approaches do not work well for heterogeneous
 architectures. Instead we propose a novel approach where the
-architecture is hierarchically partitioned into sub-clusters. 
+architecture is hierarchically partitioned into sub-clusters.
 Our heuristic algorithm does this in such a way that the
 sub-cluster at the same level of the architecture hierarchy has
 approximately the same computing capability and has relatively local
@@ -666,8 +696,8 @@ In this section we describe our heuristic HMAP. There are two
 important concepts that need description. First, we describe how the
 topology clusters are formed from the resource graphs accounting for
 communication and heterogeneity of the topology. Secondly, given a
-filter graph with data parallel filters, task parallel filters, and
-communication extracted as shown in Figure~\ref{fig:1b} how the mapping
+stream graph with data parallel filters, task parallel filters, and
+communication extracted as shown in Figure~\ref{fig:1b} how the partitioning
 is performed.
 
 %\input{task_graph}
@@ -689,7 +719,7 @@ execution architectures. HMAP framework considers both filter and data
 parallelism, which allows the application writers to design and tune their
 applications to extract parallelism. We also consider communication along
 application and underlying architecture edges, which when combined with the
-filter and data parallelism gives a better estimate of the application latency
+filter and data parallelism gives a better estimate of the application period
 than the currently described research literature targeting similar problems.
 
 We have tested our framework on a statistical sample of randomly

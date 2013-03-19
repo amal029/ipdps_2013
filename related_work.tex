@@ -1,52 +1,59 @@
 \section{Related work}
 \label{sec:related-work}
 
-A significant amount of research literature exists for extracting
-parallelism from programs~\cite{mgri98,jdon06,mgor06,gsih93,pcar09}. The
-polyhedral optimization model~\cite{mgri98} concentrates on extracting
-parallelism from loops, which is a form of data-parallelism. The
-polyhedral optimization community has concentrated on optimizing for
-CPUs and GPUs separately, but to our knowledge has not explored the
-combination of the two. Carpenter et. al~\cite{pcar09} have again
-explored ideas for partitioning onto heterogeneous architectures, but at
-a much smaller scale and again ignoring data-allocation costs and
-depending upon the polyhedral model for vectorization. The
-StreamIt~\cite{wthi02} community has also explored parallelization
-techniques, but they have only targeted homogeneous RAW~\cite{ewai97}
-architecture. There are the classical algorithms such as critical path
-scheduling~\cite{Kohler1975} and list scheduling~\cite{atho74}, which
-have been used for scheduling task parallel process onto homogeneous
-architectures. The list scheduling techniques targeting heterogeneous
-architectures such as~\cite{htop02} do not exploit SIMD parallelism onto
-vector processors. Declustering~\cite{gsih93}, is another technique,
-which misses the opportunity to mix SIMD and task-parallel optimizations
-together.
+A significant amount of existing research aims to extract parallelism
+from programs~\cite{mgri98,jdon06,mgor06,gsih93,pcar09}. The
+polyhedral optimization model~\cite{mgri98} concentrates on
+automatically extracting data parallelism from loops operating on
+arrays. The polyhedral optimization community has addressed
+parallelization for CPUs and GPUs separately, but to our knowledge has
+not explored the combination of the two.
 
-Cluster based partitioning techniques~\cite{mmah99,adou04,tbra01} only
-consider independent tasks without communication. The proposed
+Carpenter et. al~\cite{pcar09} provide a heuristic algorithm for
+partitioning stream programs onto heterogeneous architectures.
+However, the heterogeneity of processors is represented purely by
+their clock speed. No distinction is made between processors with
+differing amounts of vector parallelism.
+
+The StreamIt~\cite{wthi02} community also address the problem of
+scheduling and partitioning stream programs onto homogeneous parallel
+hardware, such as the RAW~\cite{ewai97} architecture. StreamIt can
+exploit data parallelism, by replicating stateless filters, but it
+does not exploit vector parallelism.
+
+Classical algorithms such as critical path
+scheduling~\cite{Kohler1975} and list scheduling~\cite{atho74}, which
+are used for scheduling task parallelism onto homogeneous
+architectures. The list scheduling techniques targeting heterogeneous
+architectures such as~\cite{htop02} do not exploit vector SIMD
+parallelism. Declustering~\cite{gsih93}, is another technique for
+partitioning tasks to parallel hardware, which again does not consider
+vector parallelism.
+
+Cluster based partitioning techniques~\cite{mmah99,adou04,tbra01}
+consider only independent tasks without communication. The proposed
 heuristics for partitioning data-parallel applications onto
 clusters~\cite{ssan05,skum02} do not consider vectorization potential
 available on the compute clusters and only concentrate on partitioning
 task parallel processes.
 
-Random search techniques use a specific objective and random choices to
-guide them through a search space to arrive at a solution. The objective
-is usually derived from information obtained from previous random
-searches or a prior knowledge about the system. Genetic Algorithms
-(GA)~\cite{265940,shroff1996genetic,singh1995mapping,wang1996genetic} is
-a commonly used approach and generates reasonably good results. The
-drawback being this requires significantly more time than heusristic
-based algorithms~\cite{tbra01}. Moreover these techniques often give
-such good results due to a unique set of parameters. Determining such
-optimal parameters to fine tune these random techniques to get good
-results is a challenge of its own. % Moreover Parameters that give good
-% results for a certain scenario may not be the same for a different
-% one.
+Heuristic optimization techniques such as genetic algorithms
+(GA)~\cite{265940,shroff1996genetic,singh1995mapping,wang1996genetic}
+use a semi-random search of the space of possible partitions filters on to
+execution resources. These techniques
+can be effective in finding solutions to difficult partitioning
+problems, but they usually require much more time than more
+straightforward heuristics than find just one solution~\cite{tbra01}.
+Moreover the effectiveness of these techniques often depends on
+choosing good values for parameters to the algorithm. Determining
+good values for these parameters is a difficult problem that
+often requires trial and error.
 
-Several other techniques also exist that belong to the same category in
-addition to GA such as simulated annealing ~\cite{shroff1996genetic,664363} and
-local search methods~\cite{622584,537394} which suffer from the same
-disadvantages.
+Simulated annealing ~\cite{shroff1996genetic,664363} and local search
+methods~\cite{622584,537394} are similar to genetic algorithms in that
+they use a randomized search for a good solution. However, they suffer
+many of the same problems as GA.
+
 
 
 

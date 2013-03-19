@@ -23,7 +23,7 @@ signal processing, financial applications, networking,
 telecommunications, etc. In the streaming model statements (also called
 filters/actors/tasks or kernels) execute iteratively, processing the incoming
 tokens of data. Given such a stream application, it is
-difficult to map the available parallelism onto the hardware. For
+difficult to partition the available parallelism onto the hardware. For
 example, how does one decide which parallel filters should run on which
 type of execution unit? Given a system with dozens or hundreds of CPUs,
 GPUs and other units, how does one divide the work between them?  There
@@ -39,7 +39,7 @@ by dividing the work evenly across the units. % At the same time, one must
 We want to allocate the filters to reduce communication costs while at the
 same time taking account of all the other factors.
 
-In this paper we consider the problem of mapping stream graphs onto
+We consider the problem of partitioning stream graphs onto
 heterogeneous HPC computing systems. This problem has been
 studied extensively for homogeneous architectures where all processing
 elements are the same. Although the homogeneous case is
@@ -65,10 +65,10 @@ some processing elements simply being more powerful than others. % For
 % machines exist. But many heterogeneous HPC machines contain different
 % \textit{types} of processing elements, such as CPUs and GPUs.
 A GPU is not simply a more powerful CPU. In fact, some types of
-computation run better on CPUs and some on GPUs.  For a mapping
+computation run better on CPUs and some on GPUs.  For a partitioning
 algorithm to work well, it needs to take account of the strengths and
 weaknesses of different types of processing elements. In this paper we
-present an approach to mapping parallel tasks to heterogeneous
+present an approach to partitioning parallel tasks to heterogeneous
 architectures that addresses both of these concerns.
 
 Our \textbf{main contributions} are as follows:
@@ -77,7 +77,7 @@ Our \textbf{main contributions} are as follows:
   processing elements based on their level of vector parallelism which,
   allows us to distinguish the suitability of different types of units
   to different filters.
-\item We provide a novel algorithm for mapping task and data parallelism
+\item We provide a novel algorithm for partitioning task and data parallelism
   to heterogeneous architectures based on hierarchical graph
   partitioning.
 %\item In addition to mapping filters to processing elements, our framework

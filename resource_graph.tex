@@ -127,11 +127,11 @@ build the hierarchy are as follows:
   \begin{enumerate}
 
   \item We use the all-pair Floyd-Warshall~\cite{sski08} algorithm to
-    calculate the shortest path, in terms of latency of data-transfer,
-    for every communication link in the topology. From this we calculate
-    the bandwidth of these links by inverting its latency. This creates
-    a list, which contains all of the best case bandwidths between any
-    two nodes.
+    calculate the shortest path, in terms of communication latency of
+    data-transfer, for every communication link in the topology. From this we
+    calculate the bandwidth of these links by inverting its communication
+    latency. This creates a list, which contains all of the best case
+    bandwidths between any two nodes.
 
   \item For any two clusters, we choose a source node in one cluster and
     determine all the paths to all the nodes in the connecting
@@ -169,13 +169,14 @@ build the hierarchy are as follows:
   \texttt{C1} is the cluster of the node set $\{B0, A0\}$,
   respectively. Being an undirected graph with loss of generality we can
   consider \texttt{B1} to be the source and \texttt{C1} to be the
-  destination. Hence, the worst path, in terms of latency of
+  destination. Hence, the worst path, in terms of communication latency of
   data-transfer, following the all-pair Floyd-Warshall algorithm,
   between nodes $C0$ and $B0$ within the clustered nodes is given by the
-  maximum latency path amongst the memoized best edges: $max((C0,B0),\
+  maximum communication latency path amongst the memoized best edges:
+  $max((C0,B0),\
   (H0,B0),\ (F0,B0))$. Similar computation is carried out for all link
   pairs in the clustered node with $A0$ as the destination node to find
-  the minimum latency path. Finally, the reciprocal of these two
+  the minimum communication latency path. Finally, the reciprocal of these two
   latencies and its addition gives us the effective bandwidth between
   the two clusters. This effective bandwidth represents the
   communication link between the two clustered nodes.
@@ -258,9 +259,9 @@ Doing it in this top down manner has two important consequences.
   partition at all levels, which results in a complexity of $log_2 |V_r|
   \times O (E_t)$ in the average case.
 
-\item \textit{Refined mapping:} By dividing the mapping on to several
+\item \textit{Refined partitioning:} By dividing the partitioning on to several
   levels we can achieve much better load balancing by considering only
-  fewer nodes to map than if we were to do it directly on to the
+  fewer nodes to partition than if we were to do it directly on to the
   resource graph. % We show this quantitatively in the Experimental
   % results section~\ref{sec:experiments-results}.
 
