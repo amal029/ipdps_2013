@@ -223,7 +223,7 @@
 
 %squeeze
 
-\renewcommand{\arraystretch}{0.6}
+\renewcommand{\arraystretch}{1}
 
 \renewcommand\floatpagefraction{.9}
 \renewcommand\topfraction{.9}
@@ -576,6 +576,8 @@ NP-Hard~\cite{vsar89}. % This immediately implicates that we have to look
 \begin{figure}[ht!]
 \begin{scriptsize}
 
+  \vspace{0.5cm}
+
   \begin{equation}
     \label{eq:3}
     \begin{array}{c}
@@ -666,14 +668,6 @@ Equation~(\ref{eq:2}).
 %   framework.
 % \end{itemize}
 
-\footnotetext[\value{footnote}]{Ellipses represent data
-  stores. Rectangles represent filter nodes. Rounded rectangle
-  represents data parallel nodes. The dots represent other data parallel
-  nodes not shown in the figure. Dashed arrows represent communication
-  between data stores and execution statements. Solid arrows represent
-  dependence edges. Task parallel statements: 1, 2 and data parallel
-  statements: 1, 2, and 4 are marked for convenience.}
-
 \section{HMAP framework}
 \label{sec:our-framework}
 
@@ -699,6 +693,14 @@ communication and heterogeneity of the topology. Secondly, given a
 stream graph with data parallel filters, task parallel filters, and
 communication extracted as shown in Figure~\ref{fig:1b} how the partitioning
 is performed.
+
+\footnotetext[\value{footnote}]{Ellipses represent data
+  stores. Rectangles represent filter nodes. Rounded rectangle
+  represents data parallel nodes. The dots represent other data parallel
+  nodes not shown in the figure. Dashed arrows represent communication
+  between data stores and execution statements. Solid arrows represent
+  dependence edges. Task parallel statements: 1, 2 and data parallel
+  statements: 1, 2, and 4 are marked for convenience.}
 
 %\input{task_graph}
 
