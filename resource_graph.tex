@@ -19,7 +19,8 @@ communication. The properties of the resource graph are described below:
   count. The MIPS capacity of a PE is denoted by the first constraint
   $R^i_0, \forall i \in V_r$. The GPU nodes have a lower MIPS count, but
   have a large vector length, denoted by the second constraint
-  $R^i_1, \forall i \in V_r$. For example, the fifth PE (\texttt{E0}) at
+  $R^i_1, \forall i \in V_r$. For example, the fifth PE (\texttt{E0},
+Figure~\ref{fig:res}) at
   level 0 is a CPU, since it has a small vector count and a large MIPS
   count, the first PE (\texttt{A0}) on the other hand is a GPU, since
   the capabilities are reversed.
@@ -109,19 +110,20 @@ build the hierarchy are as follows:
   %   )$.
 
 \item \textit{Effective communication during clustering:} When
-  clustering nodes the effective communication between two such clusters
+  clustering nodes, the effective communication between two such clusters
   is hard to determine. This is because the clustering itself is a
-  virtual representation of the actual nodes. Moreover there might be
+  virtual representation of the actual nodes. Moreover, there might be
   multiple unique paths between two nodes across different
   clusters. Choosing a suitable path is a routing problem and its beyond
-  the scope of this paper.  In this paper take a pessimistic approach to
+  the scope of this paper. In this paper we take a pessimistic approach to
   calculating the effective communication bandwidth between clustered
   nodes, because this gives us the lower bound on communication. We
-  assume that in the worst case scenario the link with the least
+  assume that in the worst case scenario the link(between any two nodes) with
+the least
   bandwidth would act as the bottleneck. These unique links are
   determined for all the nodes in the cluster. Then to get the
   \textit{effective bandwidth} between these clusters we aggregate these
-  bandiwdths.  The algorithm to calculate the effective communication
+  bandwidths. The algorithm to calculate the effective communication
   between clusters is outlined below:
 
   \begin{enumerate}
@@ -141,7 +143,7 @@ build the hierarchy are as follows:
     end up with the paths, which would act as a bottleneck for any given
     unique source and destination pair.
 
-  \item Addition of these resultant bandiwdths is the effective
+  \item Addition of these resultant bandwidths is the effective
     bandwidth between the two clusters.
 
   \end{enumerate}

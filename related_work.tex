@@ -22,7 +22,7 @@ exploit data parallelism, by replicating stateless filters, but it
 does not exploit vector parallelism.
 
 Classical algorithms such as critical path
-scheduling~\cite{Kohler1975} and list scheduling~\cite{atho74}, which
+scheduling~\cite{Kohler1975} and list scheduling~\cite{atho74}
 are used for scheduling task parallelism onto homogeneous
 architectures. The list scheduling techniques targeting heterogeneous
 architectures such as~\cite{htop02} do not exploit vector SIMD
@@ -40,11 +40,8 @@ task parallel processes.
 Heuristic optimization techniques such as genetic algorithms
 (GA)~\cite{265940,shroff1996genetic,singh1995mapping,wang1996genetic}
 use a semi-random search of the space of possible partitions filters on to
-execution resources. These techniques
-can be effective in finding solutions to difficult partitioning
-problems, but they usually require much more time than more
-straightforward heuristics than find just one solution~\cite{tbra01}.
-Moreover the effectiveness of these techniques often depends on
+execution resources. The effectiveness of these techniques often
+depends on
 choosing good values for parameters to the algorithm. Determining
 good values for these parameters is a difficult problem that
 often requires trial and error.

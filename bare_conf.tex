@@ -474,12 +474,12 @@ four allocation latencies}.
 Task parallel filters are the branches connected to a split node. These
 filters can be run in parallel provided enough resources are available. For
 example, in Figure~\ref{fig:1b} statements \textbf{1} and \textbf{2} are task
-parallel filters connected to the split node start. The execution trace shown
-in Table~\ref{tab:3} exploit this task parallelism by excuting statements
+parallel filters connected to the split node \textbf{start}. The execution trace shown
+in Table~\ref{tab:3} exploits this task parallelism by excuting statements
 \textbf{1} and \textbf{2} on processors \texttt{P0} and \texttt{P1}
 concurrently. This type of concurrent execution of different task parallel
 filters is ususally termed as \textit{Multiple Instruction Multiple Data}
-(MIMD).
+(MIMD) parallelism.
 
 \subsubsection{Data Parallelism}
 Data parallelism is the ability to exploit the parallelism hidden in stateless
@@ -488,7 +488,7 @@ filter. Two copies of this stateless filter are run concurrently on processors
 \texttt{P0} and \texttt{P1} thereby reducing the overall period as shown in
 Table~\ref{tab:3}. The best allocation for a stateless filter is a vector
 processor with the ability to execute large number of concurrent copies --
-ususally termed \textit{Single Instruction Mutiple Data} (SIMD).
+ususally termed \textit{Single Instruction Mutiple Data} (SIMD) parallelism.
 
 \subsection{Notations}
 
@@ -498,8 +498,8 @@ the set of all filters in the stream graph and $E_t$ represents the
 communication buffers between these filters. The system resources are
 represented by a weighted undirected graph $G_r(V_r, E_r)$ where $V_r$
 represents a set of processing elements (PEs), which can have different
-processing capabilities and $E_r$ represent the communication links
-between these PEs with differing latencies and
+processing capabilities and $E_r$ represents the communication links
+between these PEs with differing communication
 bandwidths. % Each vertex in the filter graph, $t_i \in V_t$
 % is referred to as a filter and each vertex in the resource graph, $r_i
 % \in V_r$ is referred to as a processing element
@@ -523,7 +523,7 @@ requirements, while $T^i_1$ represents the vector requirements.
 %~ T^i_1$), i.e., $n_t=2$ for this example.
 
 The communication edges are represented with \mbox{$e^c \in E_t$}, which
-denotes the data the filter requires for processing.
+denotes the data(in bytes), the filter requires for processing.
 % ~ $(t_i,t_j) \in E_t$ ~ between data-stores (statements without the
 % constraints ~ in Figure~\ref{fig:1}) and the execution statements ~
 % represent the amount of data that needs to be transferred from the ~
@@ -548,7 +548,7 @@ capabilities, represented by $R^{i}_{j}$ where $j=0...n_{r-1}$.
 %~ with $n_r$ being the number of constrains for the resource node.
 %~ Please note that for some resource graph shown in Figure~\ref{fig:res}
 %~ (level 0), which has $|V_r|$ nodes and 2 capabilities.
-For each node, capability: $R^i_0$ represents the frequency of the PE or
+For each resource node, capability: $R^i_0$ represents the frequency of the PE or
 how many scalar instructions the PE can perform in one second (the
 \textit{Million Instructions Per Second} (MIPS) count). Capability :
 $R^i_1$ denotes the maximum number of parallel vector operations it can
@@ -617,7 +617,7 @@ NP-Hard~\cite{vsar89}. % This immediately implicates that we have to look
 \end{figure}
 
 Given some filter $t_i \in V_t$ partitioned onto some resource $r_j \in V_r$,
-the latency for that node is computed by Equation~(\ref{eq:3}). In this
+the computation latency for that node is computed by Equation~(\ref{eq:3}). In this
 formulation for some filter $t_i$ being partitioned onto some resource $r_j$,
 we first calculate the number of vectorized instructions that can be
 executed in parallel (by dividing the required vector length by the
@@ -632,18 +632,18 @@ $999$ times. If we assume a processor (most likely a GPU) is able to
 provide $998001$ way vector-parallelism, then the result of
 Equation~(\ref{eq:3}) is: $\frac{998001}{998001}\times999$.
 
-Once we have this number we calculate latency of execution of this
+Once we have this number, we calculate latency of execution of this
 filter-graph node $t_i$ on this resource $r_j$ by dividing it with the
 MIPS value of the resource denoted by $R^j_0$. Calculation of the
-communication latency requires dividing the number of bits by the
+communication latency requires dividing the number of bits to be transferred by the
 bandwidth of the shortest path.
 
 Given the filter-graph and the resource-graph, let $\mathcal{P}$ be some
 partition of the application on the resource-graph. For a particular
 allocation onto some resource node $r_s \in V_r$, we define its
 computation and communication latency as in Equation~(\ref{eq:1}).
-Finally, the complete application period is defined in Equation~(\ref{eq:2})
-as shown in Table~\ref{tab:3}.
+Finally, the complete application period is defined in Equation~(\ref{eq:2}) and
+is the map of all latencies calculated using Equation~(\ref{eq:2}) as shown in Table~\ref{tab:3}.
 
 The objective of our framework is to find a partition $\mathcal{P}$
 that minimizes the total application period as described in
@@ -675,7 +675,7 @@ A common approach to solving the homogeneous case is to
 \textit{partition} the graph across the processing
 elements~\cite{aale01,kpur99,enys98}.  However, we have found that such
 heuristic partitioning approaches do not work well for heterogeneous
-architectures. Instead we propose a novel approach where the
+architectures. Instead, we propose a novel approach where the
 architecture is hierarchically partitioned into sub-clusters.
 Our heuristic algorithm does this in such a way that the
 sub-cluster at the same level of the architecture hierarchy has
@@ -686,7 +686,7 @@ architectures across the sub-clusters at each level of the hierarchy. We
 show that this is an effective approach if the sub-clusters are well
 balanced at each level of the hierarchy.
 
-In this section we describe our heuristic HMAP. There are two
+In this section we describe our heuristic: HMAP. There are two
 important concepts that need description. First, we describe how the
 topology clusters are formed from the resource graphs accounting for
 communication and heterogeneity of the topology. Secondly, given a

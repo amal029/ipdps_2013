@@ -101,7 +101,7 @@ The experimental set up consists of the following.
 \begin{enumerate}
 
 \item An interconnection network with \numtplgynodes
-  nodes. \numtplgynodes vary from 64 to 4096 PEs. A node can be just a
+  nodes. \numtplgynodes varies from 64 to 4096 PEs. A node can be just a
   multi-core CPU or a multi-core CPU with an attached GPU.
 
 \item A set of \gpunum GPUs where \gpunum is at most \numtplgynodes. The
@@ -125,7 +125,7 @@ The experimental set up consists of the following.
   normal distribution ranging from: 1000 to 100000.
 
 \item A set $\bw = \{B_1, B_2, B_3, ... B_{|B|}\}$
-  Every $|E_r|$ node in this experiment has a bandwidth of $B_i$ in MB/s where $B_i$
+  Every $|E_r|$ edge in this experiment has a bandwidth of $B_i$ in MB/s where $B_i$
   is sampled randomly from a normal distribution ranging from: 100 to 100000
 
 \end{enumerate}
@@ -190,7 +190,7 @@ parameters:
   the second constraint larger than the first). This essentially means
   that smaller values of $\beta$ creates filters, which require lot more
   non-vectorized units, whereas larger values would result in filters
-  with more vector requirement.
+  with larger vector requirement.
 \item Skewedness factor ($\gamma$) - This parameter dictates how
   computation is spread across the graph. Smaller values of $\gamma$
   give uniformly distributed values for the constraints of the actors
@@ -377,26 +377,25 @@ using GCC version 4.7.1 with `-O3' optimization flag.
 
 We ran over 100,000 experiments, using the random application graphs and
 our HMAP heuristic and K-way partitioning for seven resource architectures.
-Overall it took us 74 sec on an average for the biggest architecture of 4096
+Overall it took us 74 sec on average for the biggest architecture of 4096
 nodes to determine a partition of the application graph onto the given
-hetrogeneous architecture, which is 50 sec more than metis.
+hetrogeneous architecture, which is 50 sec more than Metis.
 The results comparing K-way partitioning using Metis~\cite{gkar95} and our HMAP
 framework are shown in Figure~\ref{fig:exp-res}. Once the partitioning of the
-application graph for the given architecture is determined by the applciation
-period calculated based on Equation~(\ref{eq:2}).
+application graph for the given architecture is determined, we calculate the
+application period using Equation~(\ref{eq:2}).
 
-The results are divided into five graphs each representing a common
+The results are divided into five graphs, each representing a common
 class (based on section~\ref{sec:filter-graph-setup}) of application
-graphs, based on which we would like to evaluate our HMAP heuristic. We then
-present the average application period for each architecture.
+graphs. The final graph presents the average application period for each architecture.
 
 Figures~\ref{fig:cpu} and~\ref{fig:gpu} represent application graphs
 that consists of proportionally larger non-vectorized and vectorized
-requirements, respectively. The graphs with values for $\beta = 5,\ 25,\
+requirements, respectively. The application graphs with values of $\beta = 5,\ 25,\
 \mathrm{and}\ 50$ are more non-vectorized and require a higher MIPS
-count. Whereas the graphs with $\beta = 50,\ 75,\ \mathrm{and}\ 95$ are
+count. Whereas the application graphs with $\beta = 50,\ 75,\ \mathrm{and}\ 95$ are
 those that require a higher vector count. On resource architecture of size 64
-nodes, Metis results in a application partition with the period being
+nodes, Metis results in an application partition with the period being
 $1.2\times$ faster than the one obtained by our scheme. But, for the
 rest of the architectures we outperform the partition obtained by
 standard Metis. For example, in the case of 4096 node architecture, the
