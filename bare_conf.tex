@@ -716,17 +716,40 @@ is performed.
 \label{sec:conclusion}
 
 In this paper we have described a novel staged graph based partitioning
-technique to partition and schedule applications onto heterogeneous
-execution architectures. HMAP framework considers both filter and data
-parallelism, which allows the application writers to design and tune their
-applications to extract parallelism. We also consider communication along
-application and underlying architecture edges, which when combined with the
-filter and data parallelism gives a better estimate of the application period
-than the currently described research literature targeting similar problems.
+heuristic to partition and schedule stream graphs onto heterogeneous
+execution architectures called HMAP. Our HMAP heuristic is able to
+exploit both multiple instruction multiple data and single instruction
+multiple data parallelism from stream graphs by allocating the task and
+data parallel actors to appropriate computation units -- primarily CPUs
+get allocated the task parallel compute intensive filters, while GPUs
+get allocated the data parallel filters. HMAP is able to detect the
+strengths and weaknesses of the varying compute units in the given
+architecture and perform (if required) an uneven load balance to achieve
+maximum throughput. Moreover, our HMAP framework is also deals with the
+varying bandwidth in the underlying topology.
 
-We have tested our framework on a statistical sample of randomly
-generated filter graphs with varying compute, vector, communication
-requirements.
+We tested HMAP on a statistically significant 100,000 different
+experiments, by differing the features in the stream graph and the
+underlying architecture, with success. HMAP outperforms the current
+state of the art Metis partitioner by providing a stream graph partition
+that outperforms Metis by around $1.5 \times$ on average and by around
+$3 \times$ for large architectures. Finally, partitioning results even
+for large architectures and stream graphs are obtained within seconds,
+thereby making our heuristic suitable fo both off-line and on-line
+partitioning.
+
+
+
+% which allows the application writers to design and tune their
+% applications to extract parallelism. We also consider communication
+% along application and underlying architecture edges, which when combined
+% with the filter and data parallelism gives a better estimate of the
+% application period than the currently described research literature
+% targeting similar problems.
+
+% We have tested our framework on a statistical sample of randomly
+% generated filter graphs with varying compute, vector, communication
+% requirements.
 
 %~ Moreover, we compare our technique with the well
 %~ established \textit{Simulated Annealing} (SA) heuristic. Our framework
