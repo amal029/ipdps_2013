@@ -223,7 +223,7 @@
 
 %squeeze
 
-\renewcommand{\arraystretch}{1}
+\renewcommand{\arraystretch}{0.75}
 
 \renewcommand\floatpagefraction{.9}
 \renewcommand\topfraction{.9}
@@ -326,7 +326,6 @@ Email: avinmali@ie.ibm.com}
 
 % make the title area
 \maketitle
-
 
 \begin{abstract}
 
@@ -576,7 +575,7 @@ NP-Hard~\cite{vsar89}. % This immediately implicates that we have to look
 \begin{figure}[ht!]
 \begin{scriptsize}
 
-  \vspace{0.5cm}
+%  \vspace{0.5cm}
 
   \begin{equation}
     \label{eq:3}
@@ -725,7 +724,7 @@ get allocated the task parallel compute intensive filters, while GPUs
 get allocated the data parallel filters. HMAP is able to detect the
 strengths and weaknesses of the varying compute units in the given
 architecture and perform (if required) an uneven load balance to achieve
-maximum throughput. Moreover, our HMAP framework is also deals with the
+maximum throughput. Moreover, our HMAP framework also deals with the
 varying bandwidth in the underlying topology.
 
 We tested HMAP on a statistically significant 100,000 different
