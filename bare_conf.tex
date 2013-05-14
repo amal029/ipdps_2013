@@ -1,11 +1,121 @@
-% -*- mode:latex; mode:flyspell -*-
+%% bare_conf.tex
+%% V1.3
+%% 2007/01/11
+%% by Michael Shell
+%% See:
+%% http://www.michaelshell.org/
+%% for current contact information.
+%%
+%% This is a skeleton file demonstrating the use of IEEEtran.cls
+%% (requires IEEEtran.cls version 1.7 or later) with an IEEE conference paper.
+%%
+%% Support sites:
+%% http://www.michaelshell.org/tex/ieeetran/
+%% http://www.ctan.org/tex-archive/macros/latex/contrib/IEEEtran/
+%% and
+%% http://www.ieee.org/
+
+%%*************************************************************************
+%% Legal Notice:
+%% This code is offered as-is without any warranty either expressed or
+%% implied; without even the implied warranty of MERCHANTABILITY or
+%% FITNESS FOR A PARTICULAR PURPOSE!
+%% User assumes all risk.
+%% In no event shall IEEE or any contributor to this code be liable for
+%% any damages or losses, including, but not limited to, incidental,
+%% consequential, or any other damages, resulting from the use or misuse
+%% of any information contained here.
+%%
+%% All comments are the opinions of their respective authors and are not
+%% necessarily endorsed by the IEEE.
+%%
+%% This work is distributed under the LaTeX Project Public License (LPPL)
+%% ( http://www.latex-project.org/ ) version 1.3, and may be freely used,
+%% distributed and modified. A copy of the LPPL, version 1.3, is included
+%% in the base LaTeX documentation of all distributions of LaTeX released
+%% 2003/12/01 or later.
+%% Retain all contribution notices and credits.
+%% ** Modified files should be clearly indicated as such, including  **
+%% ** renaming them and changing author support contact information. **
+%%
+%% File list of work: IEEEtran.cls, IEEEtran_HOWTO.pdf, bare_adv.tex,
+%%                    bare_conf.tex, bare_jrnl.tex, bare_jrnl_compsoc.tex
+%%*************************************************************************
+
+% *** Authors should verify (and, if needed, correct) their LaTeX system  ***
+% *** with the testflow diagnostic prior to trusting their LaTeX platform ***
+% *** with production work. IEEE's font choices can trigger bugs that do  ***
+% *** not appear when using other class files.                            ***
+% The testflow support page is at:
+% http://www.michaelshell.org/tex/testflow/
+
+
+
+% Note that the a4paper option is mainly intended so that authors in
+% countries using A4 can easily print to A4 and see how their papers will
+% look in print - the typesetting of the document will not typically be
+% affected with changes in paper size (but the bottom and side margins will).
+% Use the testflow package mentioned above to verify correct handling of
+% both paper sizes by the user's LaTeX system.
+%
+% Also note that the "draftcls" or "draftclsnofoot", not "draft", option
+% should be used if it is desired that the figures are to be displayed in
+% draft mode.
+%
 \documentclass[10pt, conference, compsocconf, reqno]{IEEEtran}
+
+% Add the compsoc option for Computer Society conferences.
+%
+% If IEEEtran.cls has not been installed into the LaTeX system files,
+% manually specify the path to it like:
+% \documentclass[conference]{../sty/IEEEtran}
+
+% Some very useful LaTeX packages include:
+% (uncomment the ones you want to load)
+
+
+% *** MISC UTILITY PACKAGES ***
+%
+%\usepackage{ifpdf}
+% Heiko Oberdiek's ifpdf.sty is very useful if you need conditional
+% compilation based on whether the output is pdf or dvi.
+% usage:
+% \ifpdf
+%   % pdf code
+% \else
+%   % dvi code
+% \fi
+% The latest version of ifpdf.sty can be obtained from:
+% http://www.ctan.org/tex-archive/macros/latex/contrib/oberdiek/
+% Also, note that IEEEtran.cls V1.7 and later provides a builtin
+% \ifCLASSINFOpdf conditional that works the same way.
+% When switching from latex to pdflatex and vice-versa, the compiler may
+% have to be run twice to clear warning/error messages.
+
+
+% *** CITATION PACKAGES ***
+%
+\usepackage{cite}
+% cite.sty was written by Donald Arseneau
+% V1.6 and later of IEEEtran pre-defines the format of the cite.sty package
+% \cite{} output to follow that of IEEE. Loading the cite package will
+% result in citation numbers being automatically sorted and properly
+% "compressed/ranged". e.g., [1], [9], [2], [7], [5], [6] without using
+% cite.sty will become [1], [2], [5]--[7], [9] using cite.sty. cite.sty's
+% \cite will automatically add leading space, if needed. Use cite.sty's
+% noadjust option (cite.sty V3.8 and later) if you want to turn this off.
+% cite.sty is already installed on most LaTeX systems. Be sure and use
+% version 4.0 (2003-05-27) and later if using hyperref.sty. cite.sty does
+% not currently provide for hyperlinked citations.
+% The latest version can be obtained at:
+% http://www.ctan.org/tex-archive/macros/latex/contrib/cite/
+% The documentation is contained in the cite.sty file itself.
+
 
 % *** GRAPHICS RELATED PACKAGES ***
 %
 \ifCLASSINFOpdf
   \usepackage[pdftex]{graphicx}
-  \usepackage{color}
   \usepackage{epstopdf}
   %\usepackage[update]{eps2pdf}
   %\usepackage[pdf]{pstricks}
@@ -25,7 +135,6 @@
   % every instance of \includegraphics
   % \DeclareGraphicsExtensions{.eps}
 \fi
-
 
 %\usepackage{bibspacing}
 % \setlength{\bibspacing}{\baselineskip}
@@ -184,8 +293,6 @@
 
 \usepackage{fmtcount}
 
-
-
 % *** PDF, URL AND HYPERLINK PACKAGES ***
 %
 %\usepackage{url}
@@ -195,8 +302,6 @@
 % http://www.ctan.org/tex-archive/macros/latex/contrib/misc/
 % Read the url.sty source comments for usage information. Basically,
 % \url{my_url_here}.
-
-
 
 
 % *** Do not adjust lengths that control margins, column widths, etc. ***
@@ -247,116 +352,57 @@
 %~ \addtolength{\belowdisplayskip}{-3mm}
 %~ \addtolength{\arraycolsep}{-1mm}
 %~
-\let\oldthebibliography=\thebibliography
-\let\endoldthebibliography=\endthebibliography
-\renewenvironment{thebibliography}[1]{%
-  \begin{oldthebibliography}{#1}%
-    \setlength{\parskip}{0.2ex}%
-    \setlength{\itemsep}{0.2ex}%
-}%
-{%
-  \end{oldthebibliography}%
-}
+%~ \let\oldthebibliography=\thebibliography
+%~ \let\endoldthebibliography=\endthebibliography
+%~ \renewenvironment{thebibliography}[1]{%
+  %~ \begin{oldthebibliography}{#1}%
+    %~ \setlength{\parskip}{0.2ex}%
+    %~ \setlength{\itemsep}{0.2ex}%
+%~ }%
+%~ {%
+  %~ \end{oldthebibliography}%
+%~ }
 
 \captionsetup{justification=centering}
 
-
 \begin{document}
-%
-% paper title
-% can use linebreaks \\ within to get better formatting as desired
-\title{Hetrogeneous Multiconstraint Application Partitioner (HMAP)}
-%- \\Exploiting parallelism in a hetrogeneous HPC environment}
-% \title{A framework for design space exploration for HPC architectures}
 
+\title{Heterogeneous Multiconstraint Application Partitioner (HMAP)}
 
-% author names and affiliations
-% use a multiple column layout for up to two different
-% affiliations
-
-%~ \author{\IEEEauthorblockN{Servesh Muralidharan, Aravind Vasudevan, David Gregg}
-%~ \IEEEauthorblockA{School of Computer Science and\\Statistics\\
-%~ Trinity College Dublin\\
-%~ Dublin 2, Ireland\\
-%~ Email: muralis@tcd.ie}
-%~ \and
-%~ \IEEEauthorblockN{David Gregg}
-%~ \IEEEauthorblockA{School of Computer Science and\\Statistics\\
-%~ Trinity College Dublin\\
-%~ Dublin 2, Ireland\\
-%~ Email: David.Gregg@cs.tcd.ie}}
-%~
-%~ \author{\IEEEauthorblockN{Authors Name/s per 1st Affiliation (Author)}
-%~ \IEEEauthorblockA{line 1 (of Affiliation): dept. name of organization\\
-%~ line 2: name of organization, acronyms acceptable\\
-%~ line 3: City, Country\\
-%~ line 4: Email: name@xyz.com}
-%~ \and
-%~ \IEEEauthorblockN{Authors Name/s per 2nd Affiliation (Author)}
-%~ \IEEEauthorblockA{line 1 (of Affiliation): dept. name of organization\\
-%~ line 2: name of organization, acronyms acceptable\\
-%~ line 3: City, Country\\
-%~ line 4: Email: name@xyz.com}
-%~ }
-
-% conference papers do not typically use \thanks and this command
-% is locked out in conference mode. If really needed, such as for
-% the acknowledgment of grants, issue a \IEEEoverridecommandlockouts
-% after \documentclass
-
-% for over three affiliations, or if they all won't fit within the width
-% of the page, use this alternative format:
-%
 \author{\IEEEauthorblockN{Servesh Muralidharan\IEEEauthorrefmark{2},
 Aravind Vasudevan\IEEEauthorrefmark{2},
 Avinash Malik\IEEEauthorrefmark{4}
-%Shoukat Ali\IEEEauthorrefmark{4}
 and
 David Gregg\IEEEauthorrefmark{2}}
-\IEEEauthorblockA{\IEEEauthorrefmark{2}School of Computer Science and Statistics,
-Trinity College Dublin, Dublin 2, Ireland\\
+\IEEEauthorblockA{\IEEEauthorrefmark{2}Lero and School of Computer Science and
+Statistics, Trinity College Dublin, Dublin 2, Ireland\\
 Email: muralis@scss.tcd.ie, vasudeva@scss.tcd.ie, David.Gregg.cs.tcd.ie }
 \IEEEauthorblockA{\IEEEauthorrefmark{4}IBM Research - Ireland\\
 Email: avinmali@ie.ibm.com}
 }
 
-% use for special paper notices
-%\IEEEspecialpapernotice{(Invited Paper)}
-
-% make the title area
 \maketitle
 
 \begin{abstract}
 
-  In this article we propose a novel framework -- \textit{Hetrogeneous
-    Multiconstraint Application Partitioner} (HMAP) for exploiting
-  parallelism on heterogeneous \textit{High performance computing} (HPC)
-  architectures. Given a hetrogeneous HPC cluster with varying compute
-  units, communication constraints and topology, HMAP framework can be
-  utilized for partitioning applications exhibiting task and data
-  parallelism resulting in increased performance. The challenge lies in
-  the fact that heterogeneous compute clusters consist of processing
-  elements exhibiting different compute speeds, vector lengths, and
-  communication bandwidths, which all need to be considered when
-  partitioning the application and associated data. We tackle this
-  problem using a staged graph partitioning approach. Experimental
-  evaluation on a variety of different heterogeneous HPC clusters and
-  applications show that our framework can exploit parallelism resulting
-  in more than $3\times$ speedup over current state of the art partitioning
-  technique. HMAP framework finishes within seconds even for
-  architectures with 100's of processing elements, which makes our
-  algorithm suitable for exploring parallelism potential.
-
-  % In this paper we solve the problem of partitioning applications with a
-  % mixture of both: filter-parallel and data-parallel parts onto
-  % heterogeneous compute clusters. The challenge lies in the utilization
-  % of vector and non-vector processing elements, while accounting for
-  % varying communication latencies and bandwidths. We propose a graph
-  % partitioning heuristic, which clusters a heterogeneous topology into a
-  % homogeneous one and then partitions the applications onto the
-  % resultant cluster in stages. Our experiments show that our approach is
-  % results in X\% better application run-times, while being fast making
-  % it suitable as a compilation time technique.
+In this article we propose a novel framework -- \textit{Heterogeneous
+Multiconstraint Application Partitioner} (HMAP) for exploiting
+parallelism on heterogeneous \textit{High performance computing} (HPC)
+architectures. Given a heterogeneous HPC cluster with varying compute
+units, communication constraints and topology, HMAP framework can be
+utilized for partitioning applications exhibiting task and data
+parallelism resulting in increased performance. The challenge lies in
+the fact that heterogeneous compute clusters consist of processing
+elements exhibiting different compute speeds, vector lengths, and
+communication bandwidths, which all need to be considered when
+partitioning the application and associated data. We tackle this
+problem using a staged graph partitioning approach. Experimental
+evaluation on a variety of different heterogeneous HPC clusters and
+applications show that our framework can exploit parallelism resulting
+in more than $3\times$ speedup over current state of the art partitioning
+technique. HMAP framework finishes within seconds even for
+architectures with 100's of processing elements, which makes our
+algorithm suitable for exploring parallelism potential.
 
 \end{abstract}
 
@@ -375,6 +421,8 @@ Email: avinmali@ie.ibm.com}
 % For peerreview papers, this IEEEtran command inserts a page break and
 % creates the second title. It will be ignored for other modes.
 \IEEEpeerreviewmaketitle
+
+\vspace{0.5cm}
 
 \input{introduction}
 
@@ -521,28 +569,9 @@ requirements, while $T^i_1$ represents the vector requirements.
 %~ T^i_1$), i.e., $n_t=2$ for this example.
 
 The communication edges are represented with \mbox{$e^c \in E_t$}, which
-denotes the data(in bytes), the filter requires for processing.
-% ~ $(t_i,t_j) \in E_t$ ~ between data-stores (statements without the
-% constraints ~ in Figure~\ref{fig:1}) and the execution statements ~
-% represent the amount of data that needs to be transferred from the ~
-% store and its utilization at the statement level, denoted by $e^c, ~
-% \forall E_t \in (V_t \times V_t)$.  The filter graphs are generated
-% directly from the program by our compiler. More information about the
-% generation of the filter graphs is provided later in
-% Section~\ref{sec:build-appl-graph}.
-
-% From the perspective of the running example, constraint 0 of the first
-% statement ($3$), represented by $T^{1}_{c0}$ denotes ----Avinash add
-% some text here referring to the running jacobi example please----. Each
-% edge $(t_i, t_j) \in E_t$ corresponds to the amount of data that has to
-% be transferred from filter $t_i$ to filter $t_j$.
-
-% Similarly we have a resource graph $G_r(V_r, E_r)$ where each vertex
-% denotes a processing element (PE).  ~ It consists of a set of vertices
-% $V_r = ~ \{r_1, r_2, ... , r_n\}$ and a set of edges $E_r$.
-
-Each resource node $r_i \in V_r$ has a number of computational
-capabilities, represented by $R^{i}_{j}$ where $j=0...n_{r-1}$.
+denotes the data(in bytes), the filter requires for processing.Each resource
+node $r_i \in V_r$ has a number of computational capabilities, represented by
+$R^{i}_{j}$ where $j=0...n_{r-1}$.
 %~ with $n_r$ being the number of constrains for the resource node.
 %~ Please note that for some resource graph shown in Figure~\ref{fig:res}
 %~ (level 0), which has $|V_r|$ nodes and 2 capabilities.
@@ -572,10 +601,7 @@ NP-Hard~\cite{vsar89}. % This immediately implicates that we have to look
 %~ other papers~\cite{ssan05,ajai04,dajw12} for our setup.
 
 \begin{figure}[ht!]
-\begin{scriptsize}
-
-%  \vspace{0.5cm}
-
+\begin{small}
   \begin{equation}
     \label{eq:3}
     \begin{array}{c}
@@ -599,7 +625,7 @@ NP-Hard~\cite{vsar89}. % This immediately implicates that we have to look
       \\Lcomm^{\mathcal{P}}_s =
       \sum_{\forall t_i \in V_t} e^c / E^{c'}\\
       \\s.t., d = (t_i,t_k), t_k \neq t_i, \forall t_k
-      \in V_t \wedge\  c' = (r_s,r_l), r_l \neq r_s, \forall r_l \in V_r \\
+      \in V_t \wedge\  c' = (r_s,r_l), r_l \neq r_s,\\ \forall r_l \in V_r
       \wedge\ \mathrm{d\ is\ routed\ on\ c'}
     \end{array}
   \end{equation}
@@ -610,14 +636,14 @@ NP-Hard~\cite{vsar89}. % This immediately implicates that we have to look
     \label{eq:2}
     \mathbb{P} = max ({L^{\mathcal{P}}_s}), \forall r_s \in V_r
   \end{equation}
-
-\end{scriptsize}
+\end{small}
+\vspace{-1cm}
 \end{figure}
 
 Given some filter $t_i \in V_t$ partitioned onto some resource $r_j \in V_r$,
-the computation latency for that node is computed by Equation~(\ref{eq:3}). In this
-formulation for some filter $t_i$ being partitioned onto some resource $r_j$,
-we first calculate the number of vectorized instructions that can be
+the computation latency for that node is computed by Equation~(\ref{eq:3}). In
+this formulation for some filter $t_i$ being partitioned onto some resource
+$r_j$, we first calculate the number of vectorized instructions that can be
 executed in parallel (by dividing the required vector length by the
 vector capacity of $r_j$ represented by $R^j_1$). We then multiply this
 by the number of iterations in the loop to get the total number of
@@ -633,38 +659,28 @@ Equation~(\ref{eq:3}) is: $\frac{998001}{998001}\times999$.
 Once we have this number, we calculate latency of execution of this
 filter-graph node $t_i$ on this resource $r_j$ by dividing it with the
 MIPS value of the resource denoted by $R^j_0$. Calculation of the
-communication latency requires dividing the number of bits to be transferred by the
-bandwidth of the shortest path.
+communication latency requires dividing the number of bits to be transferred by
+the bandwidth of the shortest path.
 
 Given the filter-graph and the resource-graph, let $\mathcal{P}$ be some
 partition of the application on the resource-graph. For a particular
 allocation onto some resource node $r_s \in V_r$, we define its
 computation and communication latency as in Equation~(\ref{eq:1}).
 Finally, the complete application period is defined in Equation~(\ref{eq:2}) and
-is the map of all latencies calculated using Equation~(\ref{eq:2}) as shown in Table~\ref{tab:3}.
+is the map of all latencies calculated using Equation~(\ref{eq:2}) as shown in
+Table~\ref{tab:3}.
 
 The objective of our framework is to find a partition $\mathcal{P}$
 that minimizes the total application period as described in
 Equation~(\ref{eq:2}).
 
-
-% \subsection{Key Contributions}
-% Our key contributions in the article are as follows:
-% \begin{itemize}
-% \item A novel way for compiler writers and software programmers to gauge
-%   the potential performance of their programs on any given architecture.
-% \item A framework that allows topology designers to efficaciously
-%   explore the design space to determine the type of underlying
-%   architecture that would suit a given application.
-% \item A new heuristic based framework that exploits filter and data
-%   parallelism exhibited by applications for mapping them onto
-%   heterogeneous HPC architectures.
-% \item Along with mapping application-filters onto resource nodes, the
-%   framework also allocates data-stores being utilized by the different
-%   application-filters.
-% \item A rigorous experimental setup to analyse the effectiveness of our
-%   framework.
-% \end{itemize}
+\footnotetext[\value{footnote}]{Ellipses represent data
+stores. Rectangles represent filter nodes. Rounded rectangle
+represents data parallel nodes. The dots represent other data parallel
+nodes not shown in the figure. Dashed arrows represent communication
+between data stores and execution statements. Solid arrows represent
+dependence edges. Task parallel statements: 1, 2 and data parallel
+statements: 1, 2, and 4 are marked for convenience.}
 
 \section{HMAP framework}
 \label{sec:our-framework}
@@ -682,29 +698,16 @@ communication. This allows us to use existing approaches that work well
 for the homogeneous case to partition \textit{heterogeneous}
 architectures across the sub-clusters at each level of the hierarchy. We
 show that this is an effective approach if the sub-clusters are well
-balanced at each level of the hierarchy.
+balanced at each level of the hierarchy.\\
 
-In this section we describe our heuristic: HMAP. There are two
-important concepts that need description. First, we describe how the
-topology clusters are formed from the resource graphs accounting for
-communication and heterogeneity of the topology. Secondly, given a
-stream graph with data parallel filters, task parallel filters, and
-communication extracted as shown in Figure~\ref{fig:1b} how the partitioning
-is performed.
-
-\footnotetext[\value{footnote}]{Ellipses represent data
-  stores. Rectangles represent filter nodes. Rounded rectangle
-  represents data parallel nodes. The dots represent other data parallel
-  nodes not shown in the figure. Dashed arrows represent communication
-  between data stores and execution statements. Solid arrows represent
-  dependence edges. Task parallel statements: 1, 2 and data parallel
-  statements: 1, 2, and 4 are marked for convenience.}
-
-%\input{task_graph}
+Our heuristic HMAP consists of two important concepts that need description.
+First, we describe how the topology clusters are formed from the resource
+graphs accounting for communication and heterogeneity of the topology.
+Secondly, given a stream graph with data parallel filters, task parallel
+filters, and communication extracted as shown in Figure~\ref{fig:1b} how the
+partitioning is performed.
 
 \input{resource_graph}
-
-% \input{implementation}
 
 \input{experiments}
 
@@ -736,52 +739,6 @@ for large architectures and stream graphs are obtained within seconds,
 thereby making our heuristic suitable fo both off-line and on-line
 partitioning.
 
-
-
-% which allows the application writers to design and tune their
-% applications to extract parallelism. We also consider communication
-% along application and underlying architecture edges, which when combined
-% with the filter and data parallelism gives a better estimate of the
-% application period than the currently described research literature
-% targeting similar problems.
-
-% We have tested our framework on a statistical sample of randomly
-% generated filter graphs with varying compute, vector, communication
-% requirements.
-
-%~ Moreover, we compare our technique with the well
-%~ established \textit{Simulated Annealing} (SA) heuristic. Our framework
-%~ outperforms SA substantially on average by XXX times. Finally, being a
-%~ heuristic it can accommodate large resource graphs and filter graphs,
-%~ whereas SA needs to be bounded in time (3 minutes in our case) to obtain
-%~ the results.
-
-% We have tested our framework on a subset of the many high performance
-% computing applications currently in use in the industry against well
-% known heterogeneous bin packing (HBP). Some of our worst case speed-ups
-% were 350 times for Jacobi stencil computations and 107 times for Gram
-% Schmidt linear-algebra kernel. In cases where the resource's
-% capabilities did not match that of the application's requirements such
-% as Gauss-Seidel stencil computations, HBP was not able to determine any
-% mapping of the application. Finally, the execution time of our algorithm
-% is XXX seconds even for 256 PE architectures, which makes it suitable
-% for both on-line and off-line scheduling.
-
-% Our framework was also twice as fast as HBP in the best case for Jacobi
-% stencil computations. We also have speed-ups in the order of 100s for
-% Binomial option pricing and Gram Schmidt which are important
-% applications that are used in HPC clusters, showing that our framework
-% can produce much better mapping solutions for heterogeneous
-% architectures when compared to HBP.
-
-% Our framework clearly shows that utilizing all the available
-% processing elements in the underlying architecture is not a good
-% solution when heterogeneity is in play. We have found that for most
-% applications, given an extremely heterogeneous topology, vector strip
-% size and correct placement of data plays an important role. Imbalanced
-% partitioning not only gives good application latencies, but could also reduce
-% power consumption.
-
 % use section* for acknowledgment
 \section{Acknowledgment}
 
@@ -792,14 +749,13 @@ in collaboration with IBM Research, Ireland.
 % The authors would like to thank...
 % more thanks here
 
-
 % trigger a \newpage just before the given reference
 % number - used to balance the columns on the last page
 % adjust value as needed - may need to be readjusted if
 % the document is modified later
-%\IEEEtriggeratref{8}
+\IEEEtriggeratref{29}
 % The "triggered" command can be changed if desired:
-%\IEEEtriggercmd{\enlargethispage{-5in}}
+%\IEEEtriggercmd{\enlargethispage{3cm}}
 
 % references section
 
@@ -816,19 +772,8 @@ in collaboration with IBM Research, Ireland.
 % set second argument of \begin to the number of references
 % (used to reserve space for the reference number labels box)
 
-
-% \scriptsize{
 \bibliographystyle{IEEEtran}
-% \bibliography{latex8}
 \bibliography{main_bib.bib}
-% }
 
 % that's all folks
 \end{document}
-
-
-
-%%% Local Variables:
-%%% mode: latex
-%%% TeX-master: t
-%%% End:

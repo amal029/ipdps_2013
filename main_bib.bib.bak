@@ -849,66 +849,6 @@
   month = {Apr}
 }
 
-@TECHREPORT{Brooks:EECS-2008-37,
-  author = {Brooks, Christopher and Lee, Edward A. and Liu, Xiaojun and Neuendorffer,
-	Stephen and Zhao, Yang and Zheng, Haiyang},
-  title = {Heterogeneous Concurrent Modeling and Design in {J}ava (Volume 3:
-	Ptolemy {II} Domains)},
-  institution = {EECS Department, University of California, Berkeley},
-  year = {2008},
-  month = {Apr}
-}
-
-@TECHREPORT{Brooks:EECS-2008-37,
-  author = {Brooks, Christopher and Lee, Edward A. and Liu, Xiaojun and Neuendorffer,
-	Stephen and Zhao, Yang and Zheng, Haiyang},
-  title = {Heterogeneous Concurrent Modeling and Design in {J}ava (Volume 3:
-	Ptolemy {II} Domains)},
-  institution = {EECS Department, University of California, Berkeley},
-  year = {2008},
-  month = {Apr}
-}
-
-@TECHREPORT{Brooks:EECS-2008-37,
-  author = {Brooks, Christopher and Lee, Edward A. and Liu, Xiaojun and Neuendorffer,
-	Stephen and Zhao, Yang and Zheng, Haiyang},
-  title = {Heterogeneous Concurrent Modeling and Design in {J}ava (Volume 3:
-	Ptolemy {II} Domains)},
-  institution = {EECS Department, University of California, Berkeley},
-  year = {2008},
-  month = {Apr}
-}
-
-@TECHREPORT{Brooks:EECS-2008-37,
-  author = {Brooks, Christopher and Lee, Edward A. and Liu, Xiaojun and Neuendorffer,
-	Stephen and Zhao, Yang and Zheng, Haiyang},
-  title = {Heterogeneous Concurrent Modeling and Design in {J}ava (Volume 3:
-	Ptolemy {II} Domains)},
-  institution = {EECS Department, University of California, Berkeley},
-  year = {2008},
-  month = {Apr}
-}
-
-@TECHREPORT{Brooks:EECS-2008-37,
-  author = {Brooks, Christopher and Lee, Edward A. and Liu, Xiaojun and Neuendorffer,
-	Stephen and Zhao, Yang and Zheng, Haiyang},
-  title = {Heterogeneous Concurrent Modeling and Design in {J}ava (Volume 3:
-	Ptolemy {II} Domains)},
-  institution = {EECS Department, University of California, Berkeley},
-  year = {2008},
-  month = {Apr}
-}
-
-@TECHREPORT{Brooks:EECS-2008-37,
-  author = {Brooks, Christopher and Lee, Edward A. and Liu, Xiaojun and Neuendorffer,
-	Stephen and Zhao, Yang and Zheng, Haiyang},
-  title = {Heterogeneous Concurrent Modeling and Design in {J}ava (Volume 3:
-	Ptolemy {II} Domains)},
-  institution = {EECS Department, University of California, Berkeley},
-  year = {2008},
-  month = {Apr}
-}
-
 @TECHREPORT{Brooks2008,
   author = {Brooks, Christopher and Lee, Edward A. and Liu, Xiaojun and Neuendorffer,
 	Stephen and Zhao, Yang and Zheng, Haiyang},
@@ -1034,6 +974,23 @@
   url = {http://doi.acm.org/10.1145/1629395.1629406}
 }
 
+@INPROCEEDINGS{Catalyurek:2001:HAC:582034.582062,
+  author = {Catalyurek, Umit and Aykanat, Cevdet},
+  title = {A hypergraph-partitioning approach for coarse-grain decomposition},
+  booktitle = {Proceedings of the 2001 ACM/IEEE conference on Supercomputing (CDROM)},
+  year = {2001},
+  series = {Supercomputing '01},
+  pages = {28--28},
+  address = {New York, NY, USA},
+  publisher = {ACM},
+  acmid = {582062},
+  doi = {10.1145/582034.582062},
+  isbn = {1-58113-293-X},
+  location = {Denver, Colorado},
+  numpages = {1},
+  url = {http://doi.acm.org/10.1145/582034.582062}
+}
+
 @ARTICLE{chaarawi:collective_writes,
   author = {Mohamad Chaarawi and Suneet Chandok and Edgar Gabriel},
   title = {{Performance Evaluation of Collective Write Algorithms in MPI I/O}},
@@ -1056,7 +1013,7 @@
 
 @ARTICLE{cche08,
   author = {Chevalier, C. and Pellegrini, F.},
-  title = {PT-Scotch: A tool for efficient parallel graph ordering},
+  title = {{PT-Scotch}: A tool for efficient parallel graph ordering},
   journal = {Parallel Comput.},
   year = {2008},
   volume = {34},
@@ -2596,7 +2553,7 @@
 }
 
 @INPROCEEDINGS{537394,
-  author = {Yu-Kwong Kwok and Ahmad, I. and Jun Gu},
+  author = {{Yu-Kwong} Kwok and Ahmad, I. and Jun Gu},
   title = {FAST: a low-complexity algorithm for efficient scheduling of DAGs
 	on parallel processors},
   booktitle = {Parallel Processing, 1996. Vol.3. Software., Proceedings of the 1996
@@ -3163,6 +3120,16 @@
   year = {2010},
   number = {7346},
   month = {July}
+}
+
+@TECHREPORT{Malik2012,
+  author = {Avinash Malik and David Gregg},
+  title = {Executing synchronous data flow graphs on heterogeneous execution
+	architectures using integer linear programming},
+  institution = {Trinity College Dublin},
+  year = {2012},
+  owner = {servesh},
+  timestamp = {2013.05.14}
 }
 
 @INPROCEEDINGS{amal091,
@@ -4217,7 +4184,10 @@
   author = {Shroff, Pankaj and Watson, Daniel W and Flann, Nicholas S and Freund,
 	Richard F},
   title = {Genetic simulated annealing for scheduling data-dependent tasks in
-	heterogeneous environments}
+	heterogeneous environments},
+  booktitle = {5th Heterogeneous Computing Workshop (HCW'96)},
+  year = {1996},
+  pages = {98--117}
 }
 
 @INPROCEEDINGS{rsh94,
@@ -4287,7 +4257,9 @@
 
 @MASTERSTHESIS{singh1995mapping,
   author = {Singh, Harmel Karam and Youssef, Abdou},
-  title = {Mapping and scheduling heterogeneous task graphs using genetic algorithms}
+  title = {Mapping and scheduling heterogeneous task graphs using genetic algorithms},
+  school = {George Washington University},
+  year = {1995}
 }
 
 @BOOK{sski08,
@@ -4358,6 +4330,23 @@
   journal = {{C/C++ Users Journal}},
   year = {2005},
   volume = {May}
+}
+
+@INPROCEEDINGS{Sui:2010:PGP:1964536.1964553,
+  author = {Sui, Xin and Nguyen, Donald and Burtscher, Martin and Pingali, Keshav},
+  title = {Parallel graph partitioning on multicore architectures},
+  booktitle = {Proceedings of the 23rd international conference on Languages and
+	compilers for parallel computing},
+  year = {2011},
+  series = {LCPC'10},
+  pages = {246--260},
+  address = {Berlin, Heidelberg},
+  publisher = {Springer-Verlag},
+  acmid = {1964553},
+  isbn = {978-3-642-19594-5},
+  location = {Houston, TX},
+  numpages = {15},
+  url = {http://dl.acm.org/citation.cfm?id=1964536.1964553}
 }
 
 @INPROCEEDINGS{jfer06,
@@ -4446,6 +4435,15 @@
   month = {September}
 }
 
+@PHDTHESIS{Thies2009,
+  author = {William Thies},
+  title = {Language and Compiler Support for Stream Programs},
+  school = {Massachusetts Institute of Technology},
+  year = {2009},
+  owner = {servesh},
+  timestamp = {2013.05.14}
+}
+
 @INPROCEEDINGS{wthi02,
   author = {Thies, William and Karczmarek, Michal and Amarasinghe, Saman P.},
   title = {{StreamIt: A Language for Streaming Applications}},
@@ -4474,7 +4472,7 @@
 }
 
 @ARTICLE{htop02,
-  author = {Topcuoglu, H. and Hariri, S. and Min-You Wu},
+  author = {Topcuoglu, H. and Hariri, S. and {Min-You} Wu},
   title = {Performance-effective and low-complexity task scheduling for heterogeneous
 	computing},
   journal = {Parallel and Distributed Systems, IEEE Transactions on},
@@ -4673,66 +4671,6 @@
   source = {http://www.ncstrl.org:8900/ncstrl/servlet/search?formname=detail\&id=oai%3Ancstrlh%3Amitai%3AMIT-LCS%2F%2FMIT%2FLCS%2FTR-709}
 }
 
-@TECHREPORT{ewai97,
-  author = {Waingold, E. and Taylor, M. and Sarkar, V. and Lee, V. and Lee, W.
-	and Kim, J. and Frank, M. and Finch, P. and Devabhaktumi, S. and
-	Barua, R. and Babb, J. and Amarsinghe, S. and Agarwal, A.},
-  title = {Baring it all to Software: The Raw Machine},
-  institution = {MIT},
-  year = {1997},
-  address = {Cambridge, MA, USA},
-  publisher = {Massachusetts Institute of Technology},
-  source = {http://www.ncstrl.org:8900/ncstrl/servlet/search?formname=detail\&id=oai%3Ancstrlh%3Amitai%3AMIT-LCS%2F%2FMIT%2FLCS%2FTR-709}
-}
-
-@TECHREPORT{ewai97,
-  author = {Waingold, E. and Taylor, M. and Sarkar, V. and Lee, V. and Lee, W.
-	and Kim, J. and Frank, M. and Finch, P. and Devabhaktumi, S. and
-	Barua, R. and Babb, J. and Amarsinghe, S. and Agarwal, A.},
-  title = {Baring it all to Software: The Raw Machine},
-  institution = {MIT},
-  year = {1997},
-  address = {Cambridge, MA, USA},
-  publisher = {Massachusetts Institute of Technology},
-  source = {http://www.ncstrl.org:8900/ncstrl/servlet/search?formname=detail\&id=oai%3Ancstrlh%3Amitai%3AMIT-LCS%2F%2FMIT%2FLCS%2FTR-709}
-}
-
-@TECHREPORT{ewai97,
-  author = {Waingold, E. and Taylor, M. and Sarkar, V. and Lee, V. and Lee, W.
-	and Kim, J. and Frank, M. and Finch, P. and Devabhaktumi, S. and
-	Barua, R. and Babb, J. and Amarsinghe, S. and Agarwal, A.},
-  title = {Baring it all to Software: The Raw Machine},
-  institution = {MIT},
-  year = {1997},
-  address = {Cambridge, MA, USA},
-  publisher = {Massachusetts Institute of Technology},
-  source = {http://www.ncstrl.org:8900/ncstrl/servlet/search?formname=detail\&id=oai%3Ancstrlh%3Amitai%3AMIT-LCS%2F%2FMIT%2FLCS%2FTR-709}
-}
-
-@TECHREPORT{ewai97,
-  author = {Waingold, E. and Taylor, M. and Sarkar, V. and Lee, V. and Lee, W.
-	and Kim, J. and Frank, M. and Finch, P. and Devabhaktumi, S. and
-	Barua, R. and Babb, J. and Amarsinghe, S. and Agarwal, A.},
-  title = {Baring it all to Software: The Raw Machine},
-  institution = {MIT},
-  year = {1997},
-  address = {Cambridge, MA, USA},
-  publisher = {Massachusetts Institute of Technology},
-  source = {http://www.ncstrl.org:8900/ncstrl/servlet/search?formname=detail\&id=oai%3Ancstrlh%3Amitai%3AMIT-LCS%2F%2FMIT%2FLCS%2FTR-709}
-}
-
-@TECHREPORT{ewai97,
-  author = {Waingold, E. and Taylor, M. and Sarkar, V. and Lee, V. and Lee, W.
-	and Kim, J. and Frank, M. and Finch, P. and Devabhaktumi, S. and
-	Barua, R. and Babb, J. and Amarsinghe, S. and Agarwal, A.},
-  title = {Baring it all to Software: The Raw Machine},
-  institution = {MIT},
-  year = {1997},
-  address = {Cambridge, MA, USA},
-  publisher = {Massachusetts Institute of Technology},
-  source = {http://www.ncstrl.org:8900/ncstrl/servlet/search?formname=detail\&id=oai%3Ancstrlh%3Amitai%3AMIT-LCS%2F%2FMIT%2FLCS%2FTR-709}
-}
-
 @TECHREPORT{Waingold1997,
   author = {Waingold, E. and Taylor, M. and Sarkar, V. and Lee, V. and Lee, W.
 	and Kim, J. and Frank, M. and Finch, P. and Devabhaktumi, S. and
@@ -4743,6 +4681,14 @@
   address = {Cambridge, MA, USA},
   publisher = {Massachusetts Institute of Technology},
   source = {http://www.ncstrl.org:8900/ncstrl/servlet/search?formname=detail\&id=oai%3Ancstrlh%3Amitai%3AMIT-LCS%2F%2FMIT%2FLCS%2FTR-709}
+}
+
+@INPROCEEDINGS{wang1996genetic,
+  author = {Wang, Lee and Siegel, Howard Jay and Roychowdhury, Vwani P},
+  title = {A genetic-algorithm-based approach for task matching and scheduling
+	in heterogeneous computing environments},
+  booktitle = {Proc. Heterogeneous Computing Workshop},
+  year = {1996}
 }
 
 @ARTICLE{wroy07,
@@ -4826,7 +4772,7 @@
 }
 
 @INPROCEEDINGS{622584,
-  author = {Min-You Wu and Wei Shu and Jun Gu},
+  author = {{Min-You} Wu and Wei Shu and Jun Gu},
   title = {Local search for DAG scheduling and task assignment},
   booktitle = {Parallel Processing, 1997., Proceedings of the 1997 International
 	Conference on},

@@ -15,7 +15,7 @@ However, the heterogeneity of processors is represented purely by
 their clock speed. No distinction is made between processors with
 differing amounts of vector parallelism.
 
-The StreamIt~\cite{wthi02} community also address the problem of
+The StreamIt~\cite{Thies2009} community also address the problem of
 scheduling and partitioning stream programs onto homogeneous parallel
 hardware, such as the RAW~\cite{ewai97} architecture. StreamIt can
 exploit data parallelism, by replicating stateless filters, but it
@@ -41,20 +41,29 @@ Heuristic optimization techniques such as genetic algorithms
 (GA)~\cite{265940,shroff1996genetic,singh1995mapping,wang1996genetic}
 use a semi-random search of the space of possible partitions filters on to
 execution resources. The effectiveness of these techniques often
-depends on
-choosing good values for parameters to the algorithm. Determining
-good values for these parameters is a difficult problem that
-often requires trial and error.
+depends on choosing good values for parameters to the algorithm. Determining
+good values for these parameters is a difficult problem that often requires
+trial and error.
 
-Simulated annealing ~\cite{shroff1996genetic,664363} and local search
+Simulated annealing~\cite{shroff1996genetic,664363} and local search
 methods~\cite{622584,537394} are similar to genetic algorithms in that
 they use a randomized search for a good solution. However, they suffer
 many of the same problems as GA.
 
+Malik et al. 2012~\cite{Malik2012}, similar to our technique partitions stream
+graphs onto heterogeneous architectures consisting of CPUs and GPUs based on a
+mathematical integer linear programming formulation (ILP). ILP is well known to
+provide optimal solutions to the partitioning problem, but, does not scale well
+to large architectures or stream graphs. Hence, ILP is more suitable for small
+embedded systems, whereas our work is more suited for HPC systems.
 
-
-
-%%% Local Variables:
-%%% mode: latex
-%%% TeX-master: "bare_conf"
-%%% End:
+Sui et al. 2010~\cite{Sui:2010:PGP:1964536.1964553} focus on extracting amorphous
+parallelism, which occur in irregular algorithms working on graph
+data-structures similar to Metis~\cite{gkar95}. We on the other hand target
+streaming applications, and extract data and task-parallelism, which are
+commonly occurring forms of parallelism on SIMD and MIMD architectures. Thus,
+our work is orthogonal to that of Sui et al. Same can be stated about Catalyurek
+et al. 2001~\cite{Catalyurek:2001:HAC:582034.582062}. Both, compare their own
+work of extracting irregular parallelism against Metis, we on the other hand
+use Metis for extracting regular parallelism onto MIMD and SIMD architectures.
+\\

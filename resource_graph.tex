@@ -97,18 +97,6 @@ build the hierarchy are as follows:
   partitioning the application on the resulting top-down cluster, we
   have fine grained details within each of the cluster.
 
-  % \item Firstly, we form virtual representations of the resource graph
-  %   by clustering the nodes. These virtual nodes are formed by min
-  %   cutting communication volume and load balancing the virtual nodes
-  %   capabilities.  The formation of these virtual nodes creates
-  %   homogeneous partitions from hetrogeneous PEs.
-
-  % \item Secondly, instead of doing this in a single step, we construct
-  %   this in several level by clustering half the nodes from the
-  %   previous level. We end up with a structure consisting of several
-  %   levels, where the $ Number\ of\ levels = log_2 ( Number\ of\ Nodes
-  %   )$.
-
 \item \textit{Effective communication during clustering:} When
   clustering nodes, the effective communication between two such clusters
   is hard to determine. This is because the clustering itself is a
