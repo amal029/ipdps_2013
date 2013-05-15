@@ -135,46 +135,36 @@ the least
     bandwidth between the two clusters.
 
   \end{enumerate}
+\end{itemize}
 
-  The purpose of calculating this effective bandwidth is that during clustering
-  of the nodes at each level we would like to balance the nodes not only based on
-  their compute capabilities but also their communication potential. This would
-  give us more balanced clusters with both computation and communication taken
-  into account.
+The purpose of calculating this effective bandwidth is that during clustering
+of the nodes at each level we would like to balance the nodes not only based on
+their compute capabilities but also their communication potential. This would
+give us more balanced clusters with both computation and communication taken
+into account. For the topology, at level 0, in Figure~\ref{fig:res}, we first
+calculate the best possible paths between every pair of nodes
+\mbox{$(i,j) \in (V_r \times V_r)$}. Now let us consider the example
+of the clustered nodes \texttt{B1} and \texttt{C1}. Node \texttt{B1}
+is a cluster of the set of children nodes $\{C0, H0, F0\}$ and
+\texttt{C1} is the cluster of the node set $\{B0, A0\}$,
+respectively. Being an undirected graph with loss of generality we can
+consider \texttt{B1} to be the source and \texttt{C1} to be the
+destination. Hence, the worst path, in terms of communication latency of
+data-transfer, following the all-pair Floyd-Warshall algorithm,
+between nodes $C0$ and $B0$ within the clustered nodes is given by the
+maximum communication latency path amongst the memoized best edges:
+$max((C0,B0),\
+(H0,B0),\ (F0,B0))$. Similar computation is carried out for all link
+pairs in the clustered node with $A0$ as the destination node to find
+the minimum communication latency path. Finally, the reciprocal of these two
+latencies and its addition gives us the effective bandwidth between
+the two clusters. This effective bandwidth represents the
+communication link between the two clustered nodes.
 
-  %~ There are a number of paths that communication between two
-  %~ nodes might follow. The \underline{effective bandwidth} between any
-  %~ two nodes in different cluster depends upon the route in the topology graph
-  %~ between these contracted nodes.
-%~
-%~
-   %~ Once the nodes are contracted we use the bottleneck
-  %~ amongst these possible links as our effective bandwidth.
-
-  For the topology, at level 0, in Figure~\ref{fig:res}, we first
-  calculate the best possible paths between every pair of nodes
-  \mbox{$(i,j) \in (V_r \times V_r)$}. Now let us consider the example
-  of the clustered nodes \texttt{B1} and \texttt{C1}. Node \texttt{B1}
-  is a cluster of the set of children nodes $\{C0, H0, F0\}$ and
-  \texttt{C1} is the cluster of the node set $\{B0, A0\}$,
-  respectively. Being an undirected graph with loss of generality we can
-  consider \texttt{B1} to be the source and \texttt{C1} to be the
-  destination. Hence, the worst path, in terms of communication latency of
-  data-transfer, following the all-pair Floyd-Warshall algorithm,
-  between nodes $C0$ and $B0$ within the clustered nodes is given by the
-  maximum communication latency path amongst the memoized best edges:
-  $max((C0,B0),\
-  (H0,B0),\ (F0,B0))$. Similar computation is carried out for all link
-  pairs in the clustered node with $A0$ as the destination node to find
-  the minimum communication latency path. Finally, the reciprocal of these two
-  latencies and its addition gives us the effective bandwidth between
-  the two clusters. This effective bandwidth represents the
-  communication link between the two clustered nodes.
-
-  % The communication bandwidth between the clustered nodes is determined
-  % by,\\ ${ \sum ( \min for same destn ( \max bw R^i, R^j ) ) ) }$\\ The
-  % max bandiwdths between any ${R^i}$ is determined by floyd warshall
-  % algorithm.
+% The communication bandwidth between the clustered nodes is determined
+% by,\\ ${ \sum ( \min for same destn ( \max bw R^i, R^j ) ) ) }$\\ The
+% max bandiwdths between any ${R^i}$ is determined by floyd warshall
+% algorithm.
 
 % \item The capabity of each of the PEs that are clustered together are
 % aggregated to form the larger virtual node.
@@ -185,13 +175,14 @@ the least
 % form without ignoring communication links between the nodes. This also
 % avoids the formation of dangling nodes in the graph.
 
-\end{itemize}
+
 
 \begin{figure}[ht]
   % \centering
-  \includegraphics[scale=0.43]{./figures/resource}
+  \includegraphics[scale=0.4]{./figures/resource}
   \caption{Clustering of a resource graph}
   \label{fig:res}
+  \vspace{-0.4cm}
 \end{figure}
 
 % \begin{figure*}[ht!]

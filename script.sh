@@ -1,5 +1,5 @@
 #!/bin/sh
-while inotifywait *.tex; do
+while inotifywait *.tex main_bib.bib; do
 #    pdflatex -interaction=nonstopmode bare_conf.tex
 #     make
     pdflatex -interaction=nonstopmode bare_conf.tex

@@ -122,7 +122,7 @@
   author = {Alet\`{a}, Alex and Codina, Josep M. and S\'{a}nchez, Jes\'{u}s and
 	Gonz\'{a}lez, Antonio},
   title = {Graph-partitioning based instruction scheduling for clustered processors},
-  booktitle = {Proceedings of the 34th annual ACM/IEEE international symposium on
+  booktitle = {Proceedings of the 34th annual ACM/IEEE International Symposium on
 	Microarchitecture},
   year = {2001},
   series = {MICRO 34},
@@ -752,8 +752,6 @@
   pages = {256--266},
   number = {4},
   address = {Piscataway, NJ, USA},
-  doi = {http://dx.doi.org/10.1109/32.491649},
-  issn = {0098-5589},
   publisher = {IEEE Press}
 }
 
@@ -766,6 +764,8 @@
   pages = {256--266},
   number = {4},
   address = {Piscataway, NJ, USA},
+  doi = {http://dx.doi.org/10.1109/32.491649},
+  issn = {0098-5589},
   publisher = {IEEE Press}
 }
 
@@ -958,8 +958,8 @@
 @INPROCEEDINGS{pcar09,
   author = {Carpenter, Paul M. and Ramirez, Alex and Ayguade, Eduard},
   title = {Mapping stream programs onto heterogeneous multiprocessor systems},
-  booktitle = {Proceedings of the 2009 international conference on Compilers, architecture,
-	and synthesis for embedded systems},
+  booktitle = {Proceedings of the 2009 International Conference on Compilers, Architecture,
+	and Synthesis for Embedded Systems},
   year = {2009},
   series = {CASES '09},
   pages = {57--66},
@@ -2578,20 +2578,20 @@
   isbn = {0879305436}
 }
 
-@BOOK{Lamport:LaTeX,
-  title = {LaTeX User's Guide and Document Reference Manual},
-  publisher = {Addison-Wesley Publishing Company},
-  year = {1986},
-  author = {Leslie Lamport},
-  address = {Reading, Massachusetts}
-}
-
 @BOOK{lamport:latex,
   title = {\it {\LaTeX}: A Document Preparation System},
   publisher = {Addison-Wesley},
   year = {1986},
   author = {Leslie Lamport},
   address = {Reading, MA.}
+}
+
+@BOOK{Lamport:LaTeX,
+  title = {LaTeX User's Guide and Document Reference Manual},
+  publisher = {Addison-Wesley Publishing Company},
+  year = {1986},
+  author = {Leslie Lamport},
+  address = {Reading, Massachusetts}
 }
 
 @BOOK{Lamport1986,
@@ -3486,7 +3486,7 @@
 @INPROCEEDINGS{enys98,
   author = {Nystrom, Erik and Eichenberger, Alexandre E.},
   title = {Effective cluster assignment for modulo scheduling},
-  booktitle = {Proceedings of the 31st annual ACM/IEEE international symposium on
+  booktitle = {Proceedings of the 31st annual ACM/IEEE International Symposium on
 	Microarchitecture},
   year = {1998},
   series = {MICRO 31},
@@ -3690,7 +3690,7 @@
   volume = {48},
   pages = {579 -590},
   number = {6},
-  month = {jun},
+  month = {Jun.},
   doi = {10.1109/12.773795},
   issn = {0018-9340},
   keywords = {configurable computing unit;data flow graphs scheduling;emulation
@@ -4437,7 +4437,7 @@
 
 @PHDTHESIS{Thies2009,
   author = {William Thies},
-  title = {Language and Compiler Support for Stream Programs},
+  title = {{Language and Compiler Support for Stream Programs}},
   school = {Massachusetts Institute of Technology},
   year = {2009},
   owner = {servesh},
@@ -4480,7 +4480,7 @@
   volume = {13},
   pages = {260 -274},
   number = {3},
-  month = {mar},
+  month = {Mar.},
   doi = {10.1109/71.993206},
   issn = {1045-9219},
   keywords = {Processor scheduling;directed graphs;processor scheduling;workstation

@@ -328,40 +328,40 @@
 
 %squeeze
 
-%~ \renewcommand{\arraystretch}{0.75}
-%~
-%~ \renewcommand\floatpagefraction{.9}
-%~ \renewcommand\topfraction{.9}
-%~ \renewcommand\bottomfraction{.9}
-%~ \renewcommand\textfraction{.1}
-%~ \setcounter{totalnumber}{50}
-%~ \setcounter{topnumber}{50}
-%~ \setcounter{bottomnumber}{50}
+\renewcommand{\arraystretch}{0.75}
+%~ %~
+\renewcommand\floatpagefraction{.9}
+\renewcommand\topfraction{.9}
+\renewcommand\bottomfraction{.9}
+\renewcommand\textfraction{.1}
+\setcounter{totalnumber}{50}
+\setcounter{topnumber}{50}
+\setcounter{bottomnumber}{50}
 %~
 %~ \raggedbottom
 %~
-%~ \addtolength{\floatsep}{-8mm}
-%~ \addtolength{\textfloatsep}{-6mm}
-%~ \addtolength{\intextsep}{-2mm}
-%~ \addtolength{\dbltextfloatsep}{-6mm}
-%~ \addtolength{\dblfloatsep}{-1mm}
-%~ \addtolength{\abovecaptionskip}{-1mm}
-%~ \addtolength{\belowcaptionskip}{-1mm}
-%~
-%~ \addtolength{\abovedisplayskip}{-3mm}
-%~ \addtolength{\belowdisplayskip}{-3mm}
-%~ \addtolength{\arraycolsep}{-1mm}
-%~
-%~ \let\oldthebibliography=\thebibliography
-%~ \let\endoldthebibliography=\endthebibliography
-%~ \renewenvironment{thebibliography}[1]{%
-  %~ \begin{oldthebibliography}{#1}%
-    %~ \setlength{\parskip}{0.2ex}%
-    %~ \setlength{\itemsep}{0.2ex}%
-%~ }%
-%~ {%
-  %~ \end{oldthebibliography}%
-%~ }
+\addtolength{\floatsep}{-8mm}
+\addtolength{\textfloatsep}{-6mm}
+\addtolength{\intextsep}{-2mm}
+%~ \addtolength{\dbltextfloatsep}{-0.5mm}
+\addtolength{\dblfloatsep}{-1mm}
+\addtolength{\abovecaptionskip}{-1mm}
+\addtolength{\belowcaptionskip}{-1mm}
+%~ %~
+\addtolength{\abovedisplayskip}{-3mm}
+\addtolength{\belowdisplayskip}{-3mm}
+\addtolength{\arraycolsep}{-1mm}
+%~ %~
+\let\oldthebibliography=\thebibliography
+\let\endoldthebibliography=\endthebibliography
+\renewenvironment{thebibliography}[1]{%
+  \begin{oldthebibliography}{#1}%
+    \setlength{\parskip}{0.2ex}%
+    \setlength{\itemsep}{0.2ex}%
+}%
+{%
+  \end{oldthebibliography}%
+}
 
 \captionsetup{justification=centering}
 
@@ -411,7 +411,6 @@ algorithm suitable for exploring parallelism potential.
   architectures, clusters.
 \end{IEEEkeywords}
 
-
 % For peer review papers, you can put extra information on the cover
 % page as needed:
 % \ifCLASSOPTIONpeerreview
@@ -422,7 +421,7 @@ algorithm suitable for exploring parallelism potential.
 % creates the second title. It will be ignored for other modes.
 \IEEEpeerreviewmaketitle
 
-\vspace{0.5cm}
+\vspace{-0.25cm}
 
 \input{introduction}
 
@@ -463,6 +462,7 @@ algorithm suitable for exploring parallelism potential.
   }
   \caption{Jacobi example and its filter-graph}
   \label{fig:1}
+  \vspace{-0.7cm}
 \end{figure*}
 
 
@@ -601,7 +601,7 @@ NP-Hard~\cite{vsar89}. % This immediately implicates that we have to look
 %~ other papers~\cite{ssan05,ajai04,dajw12} for our setup.
 
 \begin{figure}[ht!]
-\begin{small}
+\begin{scriptsize}
   \begin{equation}
     \label{eq:3}
     \begin{array}{c}
@@ -636,7 +636,7 @@ NP-Hard~\cite{vsar89}. % This immediately implicates that we have to look
     \label{eq:2}
     \mathbb{P} = max ({L^{\mathcal{P}}_s}), \forall r_s \in V_r
   \end{equation}
-\end{small}
+\end{scriptsize}
 \vspace{-1cm}
 \end{figure}
 
@@ -671,16 +671,8 @@ is the map of all latencies calculated using Equation~(\ref{eq:2}) as shown in
 Table~\ref{tab:3}.
 
 The objective of our framework is to find a partition $\mathcal{P}$
-that minimizes the total application period as described in
+that minimizes the total application period as in
 Equation~(\ref{eq:2}).
-
-\footnotetext[\value{footnote}]{Ellipses represent data
-stores. Rectangles represent filter nodes. Rounded rectangle
-represents data parallel nodes. The dots represent other data parallel
-nodes not shown in the figure. Dashed arrows represent communication
-between data stores and execution statements. Solid arrows represent
-dependence edges. Task parallel statements: 1, 2 and data parallel
-statements: 1, 2, and 4 are marked for convenience.}
 
 \section{HMAP framework}
 \label{sec:our-framework}
@@ -707,7 +699,17 @@ Secondly, given a stream graph with data parallel filters, task parallel
 filters, and communication extracted as shown in Figure~\ref{fig:1b} how the
 partitioning is performed.
 
+\footnotetext[\value{footnote}]{Ellipses represent data
+stores. Rectangles represent filter nodes. Rounded rectangle
+represents data parallel nodes. The dots represent other data parallel
+nodes not shown in the figure. Dashed arrows represent communication
+between data stores and execution statements. Solid arrows represent
+dependence edges. Task parallel statements: 1, 2 and data parallel
+statements: 1, 2, and 4 are marked for convenience.}
+
 \input{resource_graph}
+
+\vspace{-0.3cm}
 
 \input{experiments}
 
@@ -739,13 +741,15 @@ for large architectures and stream graphs are obtained within seconds,
 thereby making our heuristic suitable fo both off-line and on-line
 partitioning.
 
+\vspace{-0.2cm}
+
 % use section* for acknowledgment
 \section{Acknowledgment}
 
 This work is partly funded by the IRCSET Enterprise Partnership Scheme
 in collaboration with IBM Research, Ireland.
 
-
+\vspace{-0.35cm}
 % The authors would like to thank...
 % more thanks here
 
@@ -753,7 +757,7 @@ in collaboration with IBM Research, Ireland.
 % number - used to balance the columns on the last page
 % adjust value as needed - may need to be readjusted if
 % the document is modified later
-\IEEEtriggeratref{29}
+%\IEEEtriggeratref{27}
 % The "triggered" command can be changed if desired:
 %\IEEEtriggercmd{\enlargethispage{3cm}}
 
@@ -772,8 +776,9 @@ in collaboration with IBM Research, Ireland.
 % set second argument of \begin to the number of references
 % (used to reserve space for the reference number labels box)
 
+\scriptsize{
 \bibliographystyle{IEEEtran}
 \bibliography{main_bib.bib}
-
+}
 % that's all folks
 \end{document}

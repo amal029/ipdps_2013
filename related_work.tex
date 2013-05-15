@@ -2,7 +2,7 @@
 \label{sec:related-work}
 
 A significant amount of existing research aims to extract parallelism
-from programs~\cite{mgri98,jdon06,mgor06,gsih93,pcar09}. The
+from programs~\cite{mgri98,mgor06,gsih93}. The
 polyhedral optimization model~\cite{mgri98} concentrates on
 automatically extracting data parallelism from loops operating on
 arrays. The polyhedral optimization community has addressed
@@ -30,7 +30,7 @@ parallelism. Declustering~\cite{gsih93}, is another technique for
 partitioning tasks to parallel hardware, which again does not consider
 vector parallelism.
 
-Cluster based partitioning techniques~\cite{mmah99,adou04,tbra01}
+Cluster based partitioning techniques~\cite{adou04}
 consider only independent tasks without communication. The proposed
 heuristics for partitioning data-parallel applications onto
 clusters~\cite{ssan05,skum02} do not consider vectorization potential
@@ -38,32 +38,23 @@ available on the compute clusters and only concentrate on partitioning
 task parallel processes.
 
 Heuristic optimization techniques such as genetic algorithms
-(GA)~\cite{265940,shroff1996genetic,singh1995mapping,wang1996genetic}
-use a semi-random search of the space of possible partitions filters on to
-execution resources. The effectiveness of these techniques often
-depends on choosing good values for parameters to the algorithm. Determining
-good values for these parameters is a difficult problem that often requires
-trial and error.
-
-Simulated annealing~\cite{shroff1996genetic,664363} and local search
-methods~\cite{622584,537394} are similar to genetic algorithms in that
-they use a randomized search for a good solution. However, they suffer
-many of the same problems as GA.
+(GA) and Simulated annealing~\cite{265940,shroff1996genetic} and local search
+methods~\cite{622584} use a semi-random search of the space of possible
+partitions filters on to execution resources. The effectiveness of these
+techniques often depends on choosing good values for parameters to the
+algorithm. Determining good values for these parameters is a difficult problem
+that often requires trial and error.
 
 Malik et al. 2012~\cite{Malik2012}, similar to our technique partitions stream
 graphs onto heterogeneous architectures consisting of CPUs and GPUs based on a
-mathematical integer linear programming formulation (ILP). ILP is well known to
-provide optimal solutions to the partitioning problem, but, does not scale well
-to large architectures or stream graphs. Hence, ILP is more suitable for small
-embedded systems, whereas our work is more suited for HPC systems.
-
-Sui et al. 2010~\cite{Sui:2010:PGP:1964536.1964553} focus on extracting amorphous
+mathematical integer linear programming formulation (ILP) to provide optimal
+solutions but, does not scale well to large architectures or stream graphs.
+Hence, ILP is more suitable for small
+embedded systems, whereas our work is more suited for HPC systems. Sui et al.
+2010~\cite{Sui:2010:PGP:1964536.1964553} focus on extracting amorphous
 parallelism, which occur in irregular algorithms working on graph
 data-structures similar to Metis~\cite{gkar95}. We on the other hand target
 streaming applications, and extract data and task-parallelism, which are
 commonly occurring forms of parallelism on SIMD and MIMD architectures. Thus,
 our work is orthogonal to that of Sui et al. Same can be stated about Catalyurek
-et al. 2001~\cite{Catalyurek:2001:HAC:582034.582062}. Both, compare their own
-work of extracting irregular parallelism against Metis, we on the other hand
-use Metis for extracting regular parallelism onto MIMD and SIMD architectures.
-\\
+et al. 2001~\cite{Catalyurek:2001:HAC:582034.582062}.
